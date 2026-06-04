@@ -108,6 +108,12 @@
     .pkg-card-price { font-size: 1.6rem; font-weight: 800; color: var(--white); }
     .pkg-card-retail { font-size: .65rem; color: rgba(255,255,255,.3); text-decoration: line-through; margin-top: .1rem; }
     .pkg-popular { font-size: .58rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; background: var(--blue-bright); color: #fff; padding: .2rem .5rem; border-radius: 20px; display: inline-block; margin-top: .4rem; }
+    .pkg-divider { height: 1px; background: rgba(255,255,255,.07); margin: .9rem 0; }
+    .pkg-includes { list-style: none; text-align: left; display: flex; flex-direction: column; gap: .4rem; }
+    .pkg-includes li { font-size: .73rem; font-weight: 500; color: rgba(255,255,255,.4); line-height: 1.4; display: flex; align-items: flex-start; gap: .45rem; }
+    .pkg-includes li::before { content: '—'; color: rgba(255,255,255,.18); flex-shrink: 0; font-size: .65rem; margin-top: 1px; }
+    .pkg-card.selected .pkg-includes li { color: rgba(255,255,255,.65); }
+    .pkg-card.selected .pkg-includes li::before { color: var(--blue-bright); }
 
     /* ── Day tabs ── */
     .day-tabs { display: flex; gap: .8rem; margin-bottom: 1.4rem; }
@@ -265,22 +271,46 @@
     <h2 class="step-title">Choose Your Package</h2>
     <p class="step-subtitle">Conference-exclusive pricing — half the retail rate, available this week only.</p>
     <div class="pkg-grid">
+
       <div class="pkg-card" onclick="selectPkg('Standard','$197','$394',this)">
         <div class="pkg-card-name">Standard</div>
         <div class="pkg-card-price">$197</div>
         <div class="pkg-card-retail">Retail $394</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-includes">
+          <li>AI avatar tailored to your brand</li>
+          <li>5 platform-ready social posts</li>
+          <li>Delivered in 5–7 business days</li>
+        </ul>
       </div>
+
       <div class="pkg-card selected" onclick="selectPkg('Pro','$297','$594',this)">
         <div class="pkg-card-name">Pro</div>
         <div class="pkg-card-price">$297</div>
         <div class="pkg-card-retail">Retail $594</div>
         <div class="pkg-popular">Popular</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-includes">
+          <li>Everything in Standard</li>
+          <li>Enhanced avatar customization</li>
+          <li>Priority production queue</li>
+          <li>Extended teleprompter session</li>
+        </ul>
       </div>
+
       <div class="pkg-card" onclick="selectPkg('VIP','$497','$994',this)">
         <div class="pkg-card-name">VIP</div>
         <div class="pkg-card-price">$497</div>
         <div class="pkg-card-retail">Retail $994</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-includes">
+          <li>Everything in Pro</li>
+          <li>Multiple avatar variations</li>
+          <li>White-glove production experience</li>
+          <li>Onboarding to Thumbprint Amplify</li>
+        </ul>
       </div>
+
     </div>
     <p class="error-msg" id="err-1">Please select a package to continue.</p>
     <div class="step-nav">
