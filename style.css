@@ -176,15 +176,122 @@ section { width:100%; }
 .hero-sub { font-size:clamp(.95rem,1.4vw,1.1rem); font-weight:400; color:rgba(255,255,255,.6); line-height:1.75; max-width:480px; margin-bottom:2.4rem; }
 .hero-actions { display:flex; gap:1rem; flex-wrap:wrap; }
 .hero-visual { animation:fadeUp .8s .55s both ease-out; display:flex; justify-content:center; align-items:center; }
-.hero-card { background:rgba(255,255,255,.04); border:1px solid rgba(34,174,228,.2); border-radius:12px; padding:2.5rem 2rem; width:100%; max-width:380px; backdrop-filter:blur(8px); }
-.hero-card-label { font-size:.7rem; font-weight:700; letter-spacing:.25em; text-transform:uppercase; color:var(--blue-bright); margin-bottom:1.6rem; }
-.hero-stat-row { display:flex; flex-direction:column; gap:1.2rem; }
-.hero-stat { display:flex; align-items:center; gap:1rem; }
-.hero-stat-bar-wrap { flex:1; height:4px; background:rgba(255,255,255,.08); border-radius:2px; overflow:hidden; }
-.hero-stat-bar { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--blue-dark),var(--blue-bright)); animation:growBar 1.2s 1s both ease-out; transform-origin:left; }
-@keyframes growBar { from{transform:scaleX(0)} to{transform:scaleX(1)} }
-.hero-stat-label { font-size:.75rem; font-weight:600; color:rgba(255,255,255,.55); width:130px; flex-shrink:0; }
-.hero-stat-val { font-size:.9rem; font-weight:800; color:var(--white); width:48px; text-align:right; flex-shrink:0; }
+
+/* Bold stats card */
+.hero-bold-stats {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(34,174,228,.15);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 380px;
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.hero-bold-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.6rem 1rem;
+  text-align: center;
+  animation: fadeUp .8s both ease-out;
+}
+.hero-bold-stat:nth-child(1) { animation-delay: .5s; }
+.hero-bold-stat:nth-child(3) { animation-delay: .7s; }
+.hero-bold-stat:nth-child(5) { animation-delay: .9s; }
+.hero-bold-num {
+  font-size: clamp(3rem,6vw,4rem);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -.03em;
+}
+.hero-bold-sup {
+  font-size: .55em;
+  font-weight: 800;
+  color: var(--blue-bright);
+  vertical-align: super;
+  letter-spacing: 0;
+}
+.hero-bold-label {
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  margin-top: .4rem;
+}
+.hero-bold-divider {
+  height: 1px;
+  background: rgba(255,255,255,.07);
+  margin: 0 1.5rem;
+}
+
+/* Client logo scroller */
+.client-scroller {
+  background: var(--white);
+  padding: 2rem 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(15,110,183,.08);
+  border-bottom: 1px solid rgba(15,110,183,.08);
+}
+.client-scroller-label {
+  text-align: center;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: rgba(89,86,95,.4);
+  margin-bottom: 1.2rem;
+}
+.client-track-wrap {
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+.client-track {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  animation: scrollClients 25s linear infinite;
+  width: max-content;
+}
+.client-track:hover { animation-play-state: paused; }
+@keyframes scrollClients {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.client-logo {
+  flex-shrink: 0;
+  width: 140px;
+  height: 56px;
+  border-radius: 8px;
+  border: 1.5px dashed rgba(89,86,95,.2);
+  background: rgba(89,86,95,.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.client-logo span {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(89,86,95,.3);
+}
+/* When real logos are added, replace .client-logo span with img */
+.client-logo img {
+  max-width: 110px;
+  max-height: 40px;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: .6;
+  transition: opacity .2s, filter .2s;
+}
+.client-logo:hover img { opacity: 1; filter: grayscale(0); }
 
 /* ── SOCIAL CAROUSEL ── */
 .social-section { background:var(--dark); padding:clamp(3rem,6vw,5rem) 0; overflow:hidden; }
