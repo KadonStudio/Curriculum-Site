@@ -510,12 +510,7 @@
   };
 
   function toggleAccordion(id) {
-    const item = document.getElementById(id);
-    const isOpen = item.classList.contains('open');
-    // Close all
-    document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
-    // Open clicked if it was closed
-    if (!isOpen) item.classList.add('open');
+    document.getElementById(id).classList.toggle('open');
   }
 
   function selectPkg(product, name, price, period) {
