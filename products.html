@@ -6,6 +6,253 @@
   <title>Products — Thumbprint Curriculum</title>
   <link rel="icon" type="image/png" href="Gemini_Generated_Image_bbju21bbju21bbju.png" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background: var(--off-white); }
+
+    /* ── Page header ── */
+    .products-header {
+      padding: clamp(3.5rem,7vw,5rem) 0 clamp(2rem,4vw,3rem);
+      border-bottom: 1px solid rgba(15,110,183,.1);
+      background: var(--white);
+    }
+    .products-header h1 {
+      font-size: clamp(2rem,4vw,2.8rem);
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -.02em;
+      margin-bottom: .4rem;
+    }
+    .products-header p {
+      font-size: 1rem;
+      color: var(--gray);
+      font-weight: 400;
+    }
+
+    /* ── Accordion ── */
+    .accordion-wrap {
+      max-width: 780px;
+      margin: 3rem auto;
+      padding: 0 clamp(1rem,4vw,2rem);
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .accordion-item {
+      background: var(--white);
+      border: 1px solid rgba(15,110,183,.12);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: box-shadow .25s;
+    }
+    .accordion-item.open {
+      box-shadow: 0 8px 32px rgba(15,110,183,.1);
+    }
+
+    /* Trigger row */
+    .accordion-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.4rem 1.6rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: background .15s;
+    }
+    .accordion-trigger:hover { background: rgba(15,110,183,.03); }
+
+    .accordion-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .accordion-trigger-text { flex: 1; }
+    .accordion-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -.01em;
+      line-height: 1.2;
+    }
+    .accordion-tagline {
+      font-size: .8rem;
+      font-weight: 400;
+      color: var(--gray);
+      margin-top: .15rem;
+      font-style: italic;
+    }
+
+    .accordion-meta {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      flex-shrink: 0;
+    }
+    .accordion-price-hint {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--gray);
+    }
+    .accordion-chevron {
+      font-size: .9rem;
+      color: var(--gray);
+      transition: transform .3s ease;
+      flex-shrink: 0;
+    }
+    .accordion-item.open .accordion-chevron { transform: rotate(180deg); }
+
+    /* Collapsible content */
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s cubic-bezier(.4,0,.2,1);
+    }
+    .accordion-item.open .accordion-body { max-height: 700px; }
+
+    .accordion-inner {
+      padding: 0 1.6rem 1.8rem;
+      border-top: 1px solid rgba(15,110,183,.08);
+    }
+
+    .accordion-desc {
+      font-size: .88rem;
+      color: var(--gray);
+      line-height: 1.7;
+      padding: 1rem 0 1.2rem;
+    }
+
+    /* Package options */
+    .pkg-row {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+
+    .pkg-chip {
+      flex: 1;
+      min-width: 120px;
+      border: 1.5px solid rgba(15,110,183,.18);
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      cursor: pointer;
+      background: var(--white);
+      transition: all .18s;
+      text-align: left;
+    }
+    .pkg-chip:hover { border-color: var(--blue-bright); background: rgba(34,174,228,.04); }
+    .pkg-chip.selected { border-color: var(--blue-bright); background: rgba(34,174,228,.07); }
+
+    .pkg-chip-name {
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .pkg-chip-price {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-top: .2rem;
+      line-height: 1;
+    }
+    .pkg-chip-period {
+      font-size: .65rem;
+      font-weight: 500;
+      color: var(--gray);
+    }
+    .pkg-chip.selected .pkg-chip-name,
+    .pkg-chip.selected .pkg-chip-price { color: var(--blue-dark); }
+
+    .popular-pip {
+      font-size: .55rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      background: var(--blue-bright);
+      color: var(--white);
+      padding: .15rem .45rem;
+      border-radius: 20px;
+    }
+
+    /* Stripe CTA inside accordion */
+    .accordion-stripe {
+      display: none;
+      align-items: center;
+      gap: .8rem;
+      padding: .9rem 1rem;
+      background: rgba(99,91,255,.06);
+      border: 1.5px solid rgba(99,91,255,.2);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background .2s, box-shadow .2s;
+      margin-top: .4rem;
+    }
+    .accordion-stripe.visible { display: flex; }
+    .accordion-stripe:hover {
+      background: rgba(99,91,255,.1);
+      box-shadow: 0 4px 16px rgba(99,91,255,.2);
+    }
+    .stripe-icon {
+      width: 32px; height: 32px;
+      background: #635bff;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .stripe-icon svg { width: 16px; height: 16px; }
+    .accordion-stripe-text { flex: 1; }
+    .accordion-stripe-label {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .accordion-stripe-url {
+      font-size: .72rem;
+      color: var(--gray);
+      margin-top: .1rem;
+    }
+    .accordion-stripe-arrow {
+      font-size: .9rem;
+      color: #635bff;
+      font-weight: 700;
+    }
+
+    /* Renew — contact CTA */
+    .renew-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .85rem 1.6rem;
+      background: #f59e0b;
+      color: var(--dark);
+      font-family: var(--font);
+      font-size: .85rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+      margin-top: .4rem;
+    }
+    .renew-cta-btn:hover { background: #d97706; transform: translateY(-1px); }
+
+    @media(max-width:600px) {
+      .pkg-row { flex-direction: column; }
+      .pkg-chip { min-width: unset; }
+    }
+  </style>
 </head>
 <body>
 
@@ -29,214 +276,165 @@
 
 <div class="page-body">
 
-  <!-- PAGE HERO -->
-  <div class="page-hero">
+  <div class="products-header">
     <div class="container">
-      <p class="page-hero-eyebrow">The Thumbprint Ecosystem</p>
       <h1>Our Products</h1>
-      <p>Create your mark. Grow your reach. Connect with your people. Evolve what you've built.</p>
+      <p>Select a product, choose your package, and check out — all in one place.</p>
     </div>
   </div>
 
-  <!-- ECOSYSTEM CARDS -->
-  <section class="product-ecosystem section-pad">
-    <div class="container">
-      <div class="ecosystem-grid">
+  <div class="accordion-wrap">
 
-        <div class="eco-card sig">
-          <p class="eco-num">01 · Avatar Creation</p>
-          <h3 class="eco-title">Thumbprint Signature</h3>
-          <p class="eco-tagline">"Start with your story."</p>
-          <p class="eco-desc">A one-time AI avatar creation package — your identity and brand fused into a professional digital avatar with 5 platform-optimized social posts, delivered in 5–7 business days.</p>
-          <a href="signature.html" style="display:inline-block;margin-top:1.2rem;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-bright);text-decoration:none">Get Started →</a>
-        </div>
-
-        <div class="eco-card amp">
-          <p class="eco-num">02 · Monthly Content</p>
-          <h3 class="eco-title">Thumbprint Amplify</h3>
-          <p class="eco-tagline">"Show up everywhere, every month."</p>
-          <p class="eco-desc">Done-for-you monthly marketing content built off your Signature package — branded posts, micro-learning videos, and content assets delivered every month without you lifting a finger.</p>
-          <a href="amplify.html" style="display:inline-block;margin-top:1.2rem;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green);text-decoration:none">Get Started →</a>
-        </div>
-
-        <div class="eco-card circ">
-          <p class="eco-num">03 · AI Community</p>
-          <h3 class="eco-title">Thumbprint Circle</h3>
-          <p class="eco-tagline">"Connect with your people."</p>
-          <p class="eco-desc">An AI learning and connection community for wellness entrepreneurs — weekly 1-hour live sessions, a growing async curriculum library, and an AI-powered peer support network.</p>
-          <a href="circle.html" style="display:inline-block;margin-top:1.2rem;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#a78bfa;text-decoration:none">Join the Circle →</a>
-        </div>
-
-        <div class="eco-card renew">
-          <p class="eco-num">04 · Content Modernization</p>
-          <h3 class="eco-title">Thumbprint Renew</h3>
-          <p class="eco-tagline">"Your best content, reborn."</p>
-          <p class="eco-desc">Transform existing training programs, curricula, and onboarding materials into modern, multi-modal learning experiences. Includes LMS hosting and fractional CLO services.</p>
-          <a href="renew.html" style="display:inline-block;margin-top:1.2rem;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fbbf24;text-decoration:none">Request a Call →</a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- AMPLIFY PRICING -->
-  <section class="pricing-block">
-    <div class="container">
-      <div class="pricing-block-header">
-        <p class="pricing-block-tag" style="color:var(--green)">Thumbprint Amplify</p>
-        <h2>Monthly Content Subscription</h2>
-        <p>Branded posts, videos, and content assets — produced and delivered every month, built around your brand voice and ideal customer.</p>
-      </div>
-      <div class="pricing-cards cols-4">
-
-        <div class="price-card">
-          <p class="price-tier">Standard</p>
-          <div class="price-amount"><sup>$</sup>219</div>
-          <p class="price-period">/ month</p>
-          <hr class="price-divider" />
-          <ul class="price-includes">
-            <li>8 branded posts / month</li>
-            <li>1 content asset / month</li>
-            <li>Built on your brand voice &amp; ICP</li>
-          </ul>
-          <a href="get-started.html" class="btn btn-outline price-cta" style="color:var(--dark);border-color:rgba(15,110,183,.3)">Get Started</a>
-        </div>
-
-        <div class="price-card featured-blue">
-          <span class="price-card-badge blue">Popular</span>
-          <p class="price-tier">Growth</p>
-          <div class="price-amount"><sup>$</sup>349</div>
-          <p class="price-period">/ month</p>
-          <hr class="price-divider" />
-          <ul class="price-includes">
-            <li>16 posts / month</li>
-            <li>2 content assets / month</li>
-            <li>Expanded platform coverage</li>
-          </ul>
-          <a href="get-started.html" class="btn btn-primary price-cta">Get Started</a>
-        </div>
-
-        <div class="price-card">
-          <p class="price-tier">Premium</p>
-          <div class="price-amount"><sup>$</sup>499</div>
-          <p class="price-period">/ month</p>
-          <hr class="price-divider" />
-          <ul class="price-includes">
-            <li>16 posts / month</li>
-            <li>Custom video production</li>
-            <li>Full brand content suite</li>
-          </ul>
-          <a href="get-started.html" class="btn btn-outline price-cta" style="color:var(--dark);border-color:rgba(15,110,183,.3)">Get Started</a>
-        </div>
-
-        <div class="price-card" style="border-style:dashed;background:var(--off-white)">
-          <p class="price-tier" style="color:var(--blue-bright)">Custom</p>
-          <div class="price-amount" style="font-size:1.4rem;margin-top:.5rem">Let's Talk</div>
-          <p class="price-period" style="margin-bottom:0">Enterprise &amp; teams</p>
-          <hr class="price-divider" />
-          <ul class="price-includes">
-            <li>Volume content needs</li>
-            <li>Multi-brand or team accounts</li>
-            <li>Fully scoped to your goals</li>
-          </ul>
-          <a href="contact.html" class="btn btn-outline price-cta" style="color:var(--dark);border-color:rgba(15,110,183,.3)">Contact Us</a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CIRCLE PRICING -->
-  <section class="pricing-block">
-    <div class="container">
-      <div class="pricing-block-header">
-        <p class="pricing-block-tag" style="color:#8b5cf6">Thumbprint Circle</p>
-        <h2>AI Learning Community</h2>
-        <p>Weekly live sessions and a growing async library — your AI-powered business team, available every week.</p>
-      </div>
-
-      <div style="background:var(--dark);border-radius:12px;padding:1.6rem 2rem;margin-bottom:1.6rem;border:1px solid rgba(139,92,246,.2);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem">
-        <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:1rem 1.2rem">
-          <p style="font-size:.7rem;font-weight:800;color:#a78bfa;letter-spacing:.15em;margin-bottom:.4rem">0–10 MIN</p>
-          <p style="font-size:.85rem;color:rgba(255,255,255,.7)">New AI tool or feature worth knowing this week</p>
-        </div>
-        <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:1rem 1.2rem">
-          <p style="font-size:.7rem;font-weight:800;color:#a78bfa;letter-spacing:.15em;margin-bottom:.4rem">10–30 MIN</p>
-          <p style="font-size:.85rem;color:rgba(255,255,255,.7)">Real use case from inside the community</p>
-        </div>
-        <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:1rem 1.2rem">
-          <p style="font-size:.7rem;font-weight:800;color:#a78bfa;letter-spacing:.15em;margin-bottom:.4rem">30–60 MIN</p>
-          <p style="font-size:.85rem;color:rgba(255,255,255,.7)">Open problem-solving / hot seat</p>
-        </div>
-      </div>
-
-      <div class="pricing-cards cols-2" style="max-width:580px">
-        <div class="price-card">
-          <p class="price-tier">Standard</p>
-          <div class="price-amount"><sup>$</sup>97</div>
-          <p class="price-period">/ month</p>
-          <hr class="price-divider" />
-          <ul class="price-includes">
-            <li>Weekly 1-hour live sessions</li>
-            <li>Full async curriculum library</li>
-            <li>Community access</li>
-          </ul>
-          <a href="get-started.html" class="btn btn-outline price-cta" style="color:var(--dark);border-color:rgba(15,110,183,.3)">Join Circle</a>
-        </div>
-        <div class="price-card featured" style="border-color:#8b5cf6;background:linear-gradient(160deg,rgba(139,92,246,.07) 0%,var(--white) 60%)">
-          <span class="price-card-badge" style="background:#8b5cf6">Best Value</span>
-          <p class="price-tier" style="color:#8b5cf6">Annual</p>
-          <div class="price-amount"><sup>$</sup>970</div>
-          <p class="price-period">/ year · 2 months free</p>
-          <hr class="price-divider" />
-          <ul class="price-includes">
-            <li class="green">All Standard features</li>
-            <li class="green">Priority hot seat access</li>
-            <li class="green">Save $194 vs monthly</li>
-          </ul>
-          <a href="get-started.html" class="btn price-cta" style="background:#8b5cf6;color:white;border-color:#8b5cf6">Join Annual</a>
+    <!-- ── SIGNATURE ── -->
+    <div class="accordion-item" id="acc-sig">
+      <button class="accordion-trigger" onclick="toggleAccordion('acc-sig')">
+        <span class="accordion-dot" style="background:var(--blue-bright)"></span>
+        <span class="accordion-trigger-text">
+          <span class="accordion-name">Thumbprint Signature</span>
+          <span class="accordion-tagline">Start with your story — AI avatar creation</span>
+        </span>
+        <span class="accordion-meta">
+          <span class="accordion-price-hint">From $394</span>
+          <span class="accordion-chevron">▾</span>
+        </span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p class="accordion-desc">A one-time package that fuses your identity and brand into a professional AI avatar + 5 platform-optimized social posts. Delivered in 5–7 business days.</p>
+          <div class="pkg-row" id="sig-pkgs">
+            <div class="pkg-chip" onclick="selectPkg('sig','Standard','$394','')">
+              <div class="pkg-chip-name">Standard</div>
+              <div class="pkg-chip-price">$394<span class="pkg-chip-period"> one-time</span></div>
+            </div>
+            <div class="pkg-chip" onclick="selectPkg('sig','Pro','$594','')">
+              <div class="pkg-chip-name">Pro <span class="popular-pip">Popular</span></div>
+              <div class="pkg-chip-price">$594<span class="pkg-chip-period"> one-time</span></div>
+            </div>
+            <div class="pkg-chip" onclick="selectPkg('sig','VIP','$994','')">
+              <div class="pkg-chip-name">VIP</div>
+              <div class="pkg-chip-price">$994<span class="pkg-chip-period"> one-time</span></div>
+            </div>
+          </div>
+          <a class="accordion-stripe" id="sig-stripe" href="#" target="_blank">
+            <div class="stripe-icon">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M14 2H2a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V3a1 1 0 00-1-1z" stroke="white" stroke-width="1.3"/><path d="M1 6h14" stroke="white" stroke-width="1.3"/></svg>
+            </div>
+            <span class="accordion-stripe-text">
+              <span class="accordion-stripe-label" id="sig-stripe-label">Continue to Checkout</span>
+              <span class="accordion-stripe-url" id="sig-stripe-url"></span>
+            </span>
+            <span class="accordion-stripe-arrow">→</span>
+          </a>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- RENEW -->
-  <section class="pricing-block" style="background:var(--dark)">
-    <div class="container">
-      <div class="renew-card">
-        <div>
-          <p class="renew-card-tag">Thumbprint Renew</p>
-          <h2 class="renew-card-title">Your Best Content, Reborn.</h2>
-          <p class="renew-card-desc">We take your existing training programs, curricula, and onboarding materials and transform them into modern, multi-modal experiences. Includes fractional LMS administration and Chief Learning Officer services for organizations that need expert stewardship without a full-time hire.</p>
-          <a href="contact.html" class="btn btn-outline" style="color:white;border-color:rgba(245,158,11,.5)">Request a Discovery Call</a>
-        </div>
-        <div>
-          <ul class="renew-includes">
-            <li>Full curriculum audit &amp; analysis</li>
-            <li>Multi-modal redesign — video, interactive, micro-learning</li>
-            <li>Engagement upgrade — storytelling &amp; gamification</li>
-            <li>Brand alignment — visuals, voice &amp; delivery</li>
-            <li>LMS platform setup, migration &amp; administration</li>
-            <li>Fractional CLO services &amp; learning roadmap</li>
-            <li>Outcome measurement &amp; reporting</li>
-          </ul>
-          <p style="margin-top:1.2rem;font-size:.78rem;color:rgba(255,255,255,.3);font-style:italic">Custom-scoped — pricing set after discovery call</p>
+    <!-- ── AMPLIFY ── -->
+    <div class="accordion-item" id="acc-amp">
+      <button class="accordion-trigger" onclick="toggleAccordion('acc-amp')">
+        <span class="accordion-dot" style="background:var(--green)"></span>
+        <span class="accordion-trigger-text">
+          <span class="accordion-name">Thumbprint Amplify</span>
+          <span class="accordion-tagline">Show up everywhere, every month — done-for-you content</span>
+        </span>
+        <span class="accordion-meta">
+          <span class="accordion-price-hint">From $219/mo</span>
+          <span class="accordion-chevron">▾</span>
+        </span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p class="accordion-desc">Monthly branded posts, micro-learning videos, and content assets built off your Signature package — delivered every month without you lifting a finger.</p>
+          <div class="pkg-row" id="amp-pkgs">
+            <div class="pkg-chip" onclick="selectPkg('amp','Standard','$219','/mo')">
+              <div class="pkg-chip-name">Standard</div>
+              <div class="pkg-chip-price">$219<span class="pkg-chip-period">/mo</span></div>
+            </div>
+            <div class="pkg-chip" onclick="selectPkg('amp','Growth','$349','/mo')">
+              <div class="pkg-chip-name">Growth <span class="popular-pip">Popular</span></div>
+              <div class="pkg-chip-price">$349<span class="pkg-chip-period">/mo</span></div>
+            </div>
+            <div class="pkg-chip" onclick="selectPkg('amp','Premium','$499','/mo')">
+              <div class="pkg-chip-name">Premium</div>
+              <div class="pkg-chip-price">$499<span class="pkg-chip-period">/mo</span></div>
+            </div>
+          </div>
+          <a class="accordion-stripe" id="amp-stripe" href="#" target="_blank">
+            <div class="stripe-icon">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M14 2H2a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V3a1 1 0 00-1-1z" stroke="white" stroke-width="1.3"/><path d="M1 6h14" stroke="white" stroke-width="1.3"/></svg>
+            </div>
+            <span class="accordion-stripe-text">
+              <span class="accordion-stripe-label" id="amp-stripe-label">Continue to Checkout</span>
+              <span class="accordion-stripe-url" id="amp-stripe-url"></span>
+            </span>
+            <span class="accordion-stripe-arrow">→</span>
+          </a>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- CTA -->
-  <section style="background:var(--off-white);padding:clamp(3rem,5vw,4.5rem) 0;text-align:center">
-    <div class="container">
-      <h2 class="section-h2" style="margin-bottom:.75rem">Ready to Get Started?</h2>
-      <p style="color:var(--gray);font-size:1rem;margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto">Tell us about your goals and we'll help you find the right fit across the Thumbprint ecosystem.</p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-        <a href="get-started.html" class="btn btn-primary">Get Started</a>
-        <a href="contact.html" class="btn btn-dark">Contact Us</a>
+    <!-- ── CIRCLE ── -->
+    <div class="accordion-item" id="acc-circ">
+      <button class="accordion-trigger" onclick="toggleAccordion('acc-circ')">
+        <span class="accordion-dot" style="background:#8b5cf6"></span>
+        <span class="accordion-trigger-text">
+          <span class="accordion-name">Thumbprint Circle</span>
+          <span class="accordion-tagline">Connect with your people — AI learning community</span>
+        </span>
+        <span class="accordion-meta">
+          <span class="accordion-price-hint">$97/mo</span>
+          <span class="accordion-chevron">▾</span>
+        </span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p class="accordion-desc">Weekly 1-hour live sessions, a growing async curriculum library, and an AI-powered peer network for wellness entrepreneurs. Cancel anytime.</p>
+          <div class="pkg-row" id="circ-pkgs">
+            <div class="pkg-chip" onclick="selectPkg('circ','Monthly','$97','/mo')">
+              <div class="pkg-chip-name">Monthly</div>
+              <div class="pkg-chip-price">$97<span class="pkg-chip-period">/mo</span></div>
+            </div>
+            <div class="pkg-chip" onclick="selectPkg('circ','Annual','$970','/yr')">
+              <div class="pkg-chip-name">Annual <span class="popular-pip">Save $194</span></div>
+              <div class="pkg-chip-price">$970<span class="pkg-chip-period">/yr</span></div>
+            </div>
+          </div>
+          <a class="accordion-stripe" id="circ-stripe" href="#" target="_blank">
+            <div class="stripe-icon">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M14 2H2a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V3a1 1 0 00-1-1z" stroke="white" stroke-width="1.3"/><path d="M1 6h14" stroke="white" stroke-width="1.3"/></svg>
+            </div>
+            <span class="accordion-stripe-text">
+              <span class="accordion-stripe-label" id="circ-stripe-label">Continue to Checkout</span>
+              <span class="accordion-stripe-url" id="circ-stripe-url"></span>
+            </span>
+            <span class="accordion-stripe-arrow">→</span>
+          </a>
+        </div>
       </div>
     </div>
-  </section>
+
+    <!-- ── RENEW ── -->
+    <div class="accordion-item" id="acc-renew">
+      <button class="accordion-trigger" onclick="toggleAccordion('acc-renew')">
+        <span class="accordion-dot" style="background:#f59e0b"></span>
+        <span class="accordion-trigger-text">
+          <span class="accordion-name">Thumbprint Renew</span>
+          <span class="accordion-tagline">Your best content, reborn — content modernization &amp; CLO</span>
+        </span>
+        <span class="accordion-meta">
+          <span class="accordion-price-hint">Custom</span>
+          <span class="accordion-chevron">▾</span>
+        </span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p class="accordion-desc">We transform your existing training programs, curricula, and onboarding materials into modern, multi-modal experiences. Includes LMS hosting and fractional CLO services. Pricing is custom-scoped after a discovery call.</p>
+          <a href="renew.html" class="renew-cta-btn">Request a Discovery Call →</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /accordion-wrap -->
 
 </div>
 
@@ -257,10 +455,10 @@
       <div>
         <p class="footer-col-title">Products</p>
         <ul class="footer-links">
-          <li><a href="products.html">Thumbprint Signature</a></li>
-          <li><a href="products.html">Thumbprint Amplify</a></li>
-          <li><a href="products.html">Thumbprint Circle</a></li>
-          <li><a href="products.html">Thumbprint Renew</a></li>
+          <li><a href="signature.html">Thumbprint Signature</a></li>
+          <li><a href="amplify.html">Thumbprint Amplify</a></li>
+          <li><a href="circle.html">Thumbprint Circle</a></li>
+          <li><a href="renew.html">Thumbprint Renew</a></li>
         </ul>
       </div>
       <div>
@@ -291,6 +489,53 @@
     </div>
   </div>
 </footer>
+
+<script>
+  // ── Stripe Payment Links — replace with your real links ──
+  const STRIPE = {
+    sig: {
+      Standard: 'https://buy.stripe.com/REPLACE_SIGNATURE_STANDARD',
+      Pro:      'https://buy.stripe.com/REPLACE_SIGNATURE_PRO',
+      VIP:      'https://buy.stripe.com/REPLACE_SIGNATURE_VIP'
+    },
+    amp: {
+      Standard: 'https://buy.stripe.com/REPLACE_AMPLIFY_STANDARD',
+      Growth:   'https://buy.stripe.com/REPLACE_AMPLIFY_GROWTH',
+      Premium:  'https://buy.stripe.com/REPLACE_AMPLIFY_PREMIUM'
+    },
+    circ: {
+      Monthly: 'https://buy.stripe.com/REPLACE_CIRCLE_MONTHLY',
+      Annual:  'https://buy.stripe.com/REPLACE_CIRCLE_ANNUAL'
+    }
+  };
+
+  function toggleAccordion(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+    // Open clicked if it was closed
+    if (!isOpen) item.classList.add('open');
+  }
+
+  function selectPkg(product, name, price, period) {
+    // Highlight selected chip
+    document.querySelectorAll('#' + product + '-pkgs .pkg-chip')
+      .forEach(c => c.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+
+    // Update Stripe button
+    const url = STRIPE[product][name];
+    const stripeEl  = document.getElementById(product + '-stripe');
+    const labelEl   = document.getElementById(product + '-stripe-label');
+    const urlEl     = document.getElementById(product + '-stripe-url');
+
+    stripeEl.href = url;
+    labelEl.textContent = name + '  ' + price + period + '  — Continue to Checkout';
+    urlEl.textContent   = url.replace('https://', '');
+    stripeEl.classList.add('visible');
+  }
+</script>
 
 </body>
 </html>
