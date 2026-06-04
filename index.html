@@ -7,69 +7,86 @@
   <link rel="icon" type="image/png" href="Gemini_Generated_Image_bbju21bbju21bbju.png" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── Juicer feed — horizontal scroll carousel ── */
+    /* ── Juicer feed — single-card centered carousel ── */
 
-    /* Outer wrapper: clip + fade edges */
     .juicer-wrap {
       overflow: hidden;
       position: relative;
       padding: 0;
-      mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
     }
 
-    /* Kill Juicer's default grid and make it a horizontal row */
-    .juicer-feed { background: transparent !important; }
-    .juicer-feed h1.referral { display: none !important; }
+    /* Slide rail — clipped by .juicer-wrap */
+    .juicer-feed { background: transparent !important; overflow: visible !important; }
+    .juicer-feed h1.referral,
+    .juicer-feed .j-paginate { display: none !important; }
     .juicer-feed ul.j-column-item-list,
     .juicer-feed .j-column-item-list {
       display: flex !important;
       flex-direction: row !important;
       flex-wrap: nowrap !important;
-      overflow-x: auto !important;
-      overflow-y: visible !important;
-      scrollbar-width: none !important;
-      -ms-overflow-style: none !important;
-      gap: 1.4rem !important;
-      padding: 1.2rem 2rem !important;
+      overflow: visible !important;
+      gap: 0 !important;
+      padding: 1.5rem 0 !important;
       background: transparent !important;
       column-count: unset !important;
       columns: unset !important;
-      width: max-content !important;
       max-width: none !important;
+      /* transition set by JS */
     }
-    .juicer-feed ul.j-column-item-list::-webkit-scrollbar { display: none !important; }
 
-    /* Each post card — fixed width */
+    /* Every card — identical fixed size */
     .juicer-feed li.feed-item {
       flex-shrink: 0 !important;
-      width: min(300px, 80vw) !important;
+      width: min(520px, 88vw) !important;
+      height: 380px !important;
+      overflow: hidden !important;
       background: rgba(255,255,255,.05) !important;
       border: 1px solid rgba(255,255,255,.09) !important;
-      border-radius: 12px !important;
-      overflow: hidden !important;
-      transition: transform .25s, box-shadow .25s !important;
+      border-radius: 14px !important;
       float: none !important;
       display: flex !important;
       flex-direction: column !important;
-    }
-    .juicer-feed li.feed-item:hover {
-      transform: translateY(-4px) !important;
-      box-shadow: 0 12px 36px rgba(0,0,0,.45) !important;
     }
 
     /* Post text */
     .juicer-feed .j-text, .juicer-feed .j-text p, .juicer-feed .j-text span {
       color: rgba(255,255,255,.75) !important;
       font-family: 'Montserrat', sans-serif !important;
-      font-size: .83rem !important;
-      line-height: 1.65 !important;
+      font-size: .85rem !important;
+      line-height: 1.7 !important;
     }
-    /* Author / meta */
-    .juicer-feed .j-poster, .juicer-feed .j-poster a { color: var(--blue-bright) !important; font-weight: 700 !important; font-size: .78rem !important; }
-    .juicer-feed .j-meta, .juicer-feed .j-meta a, .juicer-feed time { color: rgba(255,255,255,.3) !important; font-size: .7rem !important; }
-    /* Load more */
-    .juicer-feed .j-paginate { background: rgba(34,174,228,.12) !important; color: var(--blue-bright) !important; border: 1px solid rgba(34,174,228,.3) !important; border-radius: 6px !important; font-family: 'Montserrat', sans-serif !important; font-weight: 700 !important; }
+    .juicer-feed .j-poster, .juicer-feed .j-poster a { color: var(--blue-bright) !important; font-weight: 700 !important; font-size: .8rem !important; }
+    .juicer-feed .j-meta, .juicer-feed .j-meta a, .juicer-feed time { color: rgba(255,255,255,.3) !important; font-size: .72rem !important; }
+    .juicer-feed img { width: 100% !important; height: 180px !important; object-fit: cover !important; }
+
+    /* Injected slider controls */
+    .j-slider-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: .5rem 0 1.5rem;
+    }
+    .j-slider-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.6);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .j-slider-btn:hover { border-color: var(--blue-bright); color: var(--blue-bright); background: rgba(34,174,228,.08); }
+    .j-slider-dots { display: flex; gap: .45rem; }
+    .j-slider-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,.2);
+      border: none; cursor: pointer; padding: 0;
+      transition: background .25s, transform .25s;
+    }
+    .j-slider-dot.active { background: var(--blue-bright); transform: scale(1.3); }
   </style>
 </head>
 <body>
@@ -376,52 +393,102 @@
 
 <script src="nav.js"></script>
 <script>
-// Auto-scroll the Juicer feed horizontally once posts have loaded
 (function () {
-  var paused = false;
-  var raf;
+  var current = 0;
+  var total   = 0;
+  var paused  = false;
+  var timer;
+  var list;
+  var wrap;
 
-  function getList() {
-    return document.querySelector(
-      '.juicer-feed ul.j-column-item-list, .juicer-feed .j-column-item-list'
-    );
+  /* ── slide to card i, centered in the viewport ── */
+  function goTo(i, animate) {
+    if (total === 0) return;
+    current = ((i % total) + total) % total;
+
+    var cardW   = list.children[0].offsetWidth;
+    var wrapW   = wrap.offsetWidth;
+    var offset  = Math.round((wrapW - cardW) / 2) - current * cardW;
+
+    list.style.transition = animate === false
+      ? 'none'
+      : 'transform .55s cubic-bezier(.4,0,.2,1)';
+    list.style.transform  = 'translateX(' + offset + 'px)';
+
+    /* update dots */
+    var dots = document.querySelectorAll('.j-slider-dot');
+    dots.forEach(function (d, idx) { d.classList.toggle('active', idx === current); });
   }
 
-  function startScroll(list) {
-    paused = false;
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
 
-    list.addEventListener('mouseenter', function () { paused = true; });
-    list.addEventListener('mouseleave', function () { paused = false; });
-    list.addEventListener('touchstart', function () { paused = true; }, { passive: true });
-    list.addEventListener('touchend',   function () {
-      setTimeout(function () { paused = false; }, 2500);
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(function () { if (!paused) next(); }, 4500);
+  }
+
+  /* ── inject prev/next/dots controls ── */
+  function buildNav() {
+    var nav  = document.createElement('div');
+    nav.className = 'j-slider-nav';
+
+    var prevBtn = document.createElement('button');
+    prevBtn.className = 'j-slider-btn';
+    prevBtn.innerHTML = '&#8592;';
+    prevBtn.addEventListener('click', function () { prev(); resetTimer(); });
+
+    var dotsWrap = document.createElement('div');
+    dotsWrap.className = 'j-slider-dots';
+    for (var i = 0; i < total; i++) {
+      var dot = document.createElement('button');
+      dot.className = 'j-slider-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+      (function (idx) {
+        dot.addEventListener('click', function () { goTo(idx); resetTimer(); });
+      })(i);
+      dotsWrap.appendChild(dot);
+    }
+
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'j-slider-btn';
+    nextBtn.innerHTML = '&#8594;';
+    nextBtn.addEventListener('click', function () { next(); resetTimer(); });
+
+    nav.appendChild(prevBtn);
+    nav.appendChild(dotsWrap);
+    nav.appendChild(nextBtn);
+    wrap.parentElement.appendChild(nav);
+  }
+
+  /* ── wait for Juicer to finish rendering ── */
+  function init() {
+    list = document.querySelector('.juicer-feed ul.j-column-item-list, .juicer-feed .j-column-item-list');
+    wrap = document.querySelector('.juicer-wrap');
+
+    if (!list || list.children.length < 2 || !wrap) {
+      setTimeout(init, 800);
+      return;
+    }
+
+    total = list.children.length;
+
+    /* pause on hover/touch */
+    wrap.addEventListener('mouseenter', function () { paused = true; });
+    wrap.addEventListener('mouseleave', function () { paused = false; });
+    wrap.addEventListener('touchstart', function () { paused = true; }, { passive: true });
+    wrap.addEventListener('touchend',   function () {
+      setTimeout(function () { paused = false; }, 2000);
     }, { passive: true });
 
-    function tick() {
-      if (!paused && list) {
-        list.scrollLeft += 0.45;
-        // Seamless loop: when near the right edge, jump to start
-        if (list.scrollLeft >= list.scrollWidth - list.clientWidth - 2) {
-          list.scrollLeft = 0;
-        }
-      }
-      raf = requestAnimationFrame(tick);
-    }
-    raf = requestAnimationFrame(tick);
+    window.addEventListener('resize', function () { goTo(current, false); });
+
+    buildNav();
+    goTo(0, false);
+    resetTimer();
   }
 
-  function waitForPosts() {
-    var list = getList();
-    if (list && list.children.length > 1) {
-      // Give Juicer a moment to finish rendering images/heights
-      setTimeout(function () { startScroll(list); }, 400);
-    } else {
-      setTimeout(waitForPosts, 700);
-    }
-  }
-
-  // Start polling after a short delay to let Juicer initialise
-  setTimeout(waitForPosts, 1200);
+  setTimeout(init, 1400);
 })();
 </script>
 </body>
