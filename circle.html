@@ -113,55 +113,19 @@
                   <span class="order-line-val" style="color:#8b5cf6">✓</span>
                 </div>
               </div>
-              <div class="order-total-line" style="margin-bottom:1.6rem">
+              <div class="order-total-line">
                 <span class="order-total-label">Due Today</span>
                 <span class="order-total-val" id="orderTotal">$97</span>
               </div>
 
-              <div class="pay-field">
-                <label class="pay-label">Full Name</label>
-                <input class="pay-input" type="text" placeholder="Jane Smith" />
+              <div class="stripe-cta visible" id="stripeCta">
+                <a id="stripeBtn" href="#" target="_blank" class="stripe-cta-btn" style="background:#8b5cf6">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 2H2a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V3a1 1 0 00-1-1z" stroke="white" stroke-width="1.2"/><path d="M1 6h14" stroke="white" stroke-width="1.2"/></svg>
+                  Continue to Checkout
+                </a>
+                <p class="stripe-cta-url">🔗 <a id="stripeUrlText" href="#" target="_blank">buy.stripe.com / Circle — Monthly</a></p>
+                <p class="stripe-cta-note">🔒 Secured by Stripe — you won't enter card details here</p>
               </div>
-              <div class="pay-field">
-                <label class="pay-label">Email Address</label>
-                <input class="pay-input" type="email" placeholder="jane@example.com" />
-              </div>
-              <div class="pay-field">
-                <label class="pay-label">Card Number</label>
-                <div class="card-input-wrap">
-                  <input class="pay-input" type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)" />
-                  <div class="card-brand-icons"><span>VISA</span><span>MC</span><span>AMEX</span></div>
-                </div>
-              </div>
-              <div class="pay-row">
-                <div class="pay-field">
-                  <label class="pay-label">Expiration</label>
-                  <input class="pay-input" type="text" placeholder="MM / YY" maxlength="7" oninput="fmtExp(this)" />
-                </div>
-                <div class="pay-field">
-                  <label class="pay-label">CVV</label>
-                  <input class="pay-input" type="text" placeholder="123" maxlength="4" />
-                </div>
-              </div>
-              <div class="pay-field">
-                <label class="pay-label">Billing ZIP</label>
-                <input class="pay-input" type="text" placeholder="12345" maxlength="10" />
-              </div>
-
-              <button class="btn pay-btn" style="background:#8b5cf6;color:white;border-color:#8b5cf6" onclick="submitPayment()">
-                🔒 &nbsp;Join Thumbprint Circle
-              </button>
-              <div class="trust-bar">
-                <span class="trust-item">🔒 SSL Secured</span>
-                <span class="trust-item">🔄 Cancel Anytime</span>
-                <span class="trust-item">📅 Weekly Sessions</span>
-              </div>
-            </div>
-            <div class="checkout-success" id="checkoutSuccess">
-              <div class="checkout-success-icon">🌐</div>
-              <h3>Welcome to the Circle!</h3>
-              <p>You're in. Check your inbox for onboarding details and your first session link. We'll see you inside the community.</p>
-              <a href="index.html" class="btn pay-btn" style="background:#8b5cf6;border-color:#8b5cf6;color:white;display:inline-flex;width:auto;margin-top:1.5rem">Back to Home</a>
             </div>
           </div>
         </div>
@@ -194,6 +158,12 @@
 </footer>
 
 <script>
+  // Replace these URLs with your actual Stripe Payment Links
+  const STRIPE_LINKS = {
+    Monthly: 'https://buy.stripe.com/REPLACE_CIRCLE_MONTHLY',
+    Annual:  'https://buy.stripe.com/REPLACE_CIRCLE_ANNUAL'
+  };
+
   function selectPlan(el, name, display, amount) {
     document.querySelectorAll('.plan-option').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
@@ -201,12 +171,12 @@
     document.getElementById('orderLabel').textContent = 'Thumbprint Circle — ' + name;
     document.getElementById('orderAmt').textContent = display + suffix;
     document.getElementById('orderTotal').textContent = display;
-  }
-  function fmtCard(el) { let v=el.value.replace(/\D/g,'').substring(0,16); el.value=v.match(/.{1,4}/g)?.join(' ')||v; }
-  function fmtExp(el) { let v=el.value.replace(/\D/g,'').substring(0,4); if(v.length>=3)v=v.substring(0,2)+' / '+v.substring(2); el.value=v; }
-  function submitPayment() {
-    document.getElementById('checkoutForm').style.display = 'none';
-    document.getElementById('checkoutSuccess').style.display = 'block';
+
+    const url = STRIPE_LINKS[name];
+    document.getElementById('stripeBtn').href = url;
+    document.getElementById('stripeUrlText').href = url;
+    document.getElementById('stripeUrlText').textContent = url.replace('https://', '');
+    document.getElementById('stripeCta').classList.add('visible');
   }
 </script>
 </body>
