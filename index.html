@@ -7,67 +7,41 @@
   <link rel="icon" type="image/png" href="Gemini_Generated_Image_bbju21bbju21bbju.png" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── Juicer feed — single-card centered carousel ── */
-
-    .juicer-wrap {
+    /* ── LinkedIn native embed carousel ── */
+    .li-carousel-outer {
       overflow: hidden;
       position: relative;
-      padding: 0;
     }
-
-    /* Slide rail — clipped by .juicer-wrap */
-    .juicer-feed { background: transparent !important; overflow: visible !important; }
-    .juicer-feed h1.referral,
-    .juicer-feed .j-paginate { display: none !important; }
-    .juicer-feed ul.j-column-item-list,
-    .juicer-feed .j-column-item-list {
-      display: flex !important;
-      flex-direction: row !important;
-      flex-wrap: nowrap !important;
-      overflow: visible !important;
-      gap: 0 !important;
-      padding: 1.5rem 0 !important;
-      background: transparent !important;
-      column-count: unset !important;
-      columns: unset !important;
-      max-width: none !important;
-      /* transition set by JS */
+    .li-carousel-track {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      transition: transform .55s cubic-bezier(.4,0,.2,1);
+      will-change: transform;
     }
-
-    /* Every card — identical fixed size */
-    .juicer-feed li.feed-item {
-      flex-shrink: 0 !important;
-      width: min(520px, 88vw) !important;
-      height: 380px !important;
-      overflow: hidden !important;
-      background: rgba(255,255,255,.05) !important;
-      border: 1px solid rgba(255,255,255,.09) !important;
-      border-radius: 14px !important;
-      float: none !important;
-      display: flex !important;
-      flex-direction: column !important;
+    .li-slide {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 0;
     }
-
-    /* Post text */
-    .juicer-feed .j-text, .juicer-feed .j-text p, .juicer-feed .j-text span {
-      color: rgba(255,255,255,.75) !important;
-      font-family: 'Montserrat', sans-serif !important;
-      font-size: .85rem !important;
-      line-height: 1.7 !important;
+    /* Scale iframe down on narrow screens */
+    .li-slide iframe {
+      border-radius: 12px;
+      display: block;
+      max-width: 100%;
+      transform-origin: top center;
     }
-    .juicer-feed .j-poster, .juicer-feed .j-poster a { color: var(--blue-bright) !important; font-weight: 700 !important; font-size: .8rem !important; }
-    .juicer-feed .j-meta, .juicer-feed .j-meta a, .juicer-feed time { color: rgba(255,255,255,.3) !important; font-size: .72rem !important; }
-    .juicer-feed img { width: 100% !important; height: 180px !important; object-fit: cover !important; }
-
-    /* Injected slider controls */
-    .j-slider-nav {
+    /* Nav */
+    .li-carousel-nav {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 1rem;
-      padding: .5rem 0 1.5rem;
+      padding: .25rem 0 1.8rem;
     }
-    .j-slider-btn {
+    .li-nav-btn {
       width: 40px; height: 40px;
       border-radius: 50%;
       border: 1.5px solid rgba(255,255,255,.2);
@@ -77,16 +51,18 @@
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       transition: all .2s;
+      font-family: var(--font);
     }
-    .j-slider-btn:hover { border-color: var(--blue-bright); color: var(--blue-bright); background: rgba(34,174,228,.08); }
-    .j-slider-dots { display: flex; gap: .45rem; }
-    .j-slider-dot {
+    .li-nav-btn:hover { border-color: var(--blue-bright); color: var(--blue-bright); background: rgba(34,174,228,.08); }
+    .li-nav-btn:disabled { opacity: .3; cursor: default; }
+    .li-dots { display: flex; gap: .5rem; }
+    .li-dot {
       width: 7px; height: 7px; border-radius: 50%;
-      background: rgba(255,255,255,.2);
-      border: none; cursor: pointer; padding: 0;
+      background: rgba(255,255,255,.2); border: none;
+      cursor: pointer; padding: 0;
       transition: background .25s, transform .25s;
     }
-    .j-slider-dot.active { background: var(--blue-bright); transform: scale(1.3); }
+    .li-dot.active { background: var(--blue-bright); transform: scale(1.3); }
   </style>
 </head>
 <body>
@@ -158,21 +134,36 @@
   </div>
 </section>
 
-<!-- SOCIAL FEED (Juicer.io) -->
+<!-- SOCIAL CAROUSEL — native LinkedIn embeds -->
 <section class="social-section" id="social">
   <div class="container">
     <div class="center-header">
       <p class="section-label">Follow Along</p>
       <h2 class="section-h2">Stay Connected With Us</h2>
-      <p class="section-sub">See what we're creating, sharing, and building across our social channels.</p>
+      <p class="section-sub">Real posts from our LinkedIn — follow us for updates, tips, and behind-the-scenes content.</p>
     </div>
   </div>
 
-  <div class="juicer-wrap">
-    <div class="juicer-feed" data-feed-id="thumbprint-curriculum" data-per="9"></div>
-    <script type="text/javascript" src="https://www.juicer.io/embed/thumbprint-curriculum/embed-code.js" async defer></script>
+  <div class="li-carousel-outer" id="liOuter">
+    <div class="li-carousel-track" id="liTrack">
+
+      <!-- ── Post 1 ── -->
+      <div class="li-slide">
+        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7468336662109065219?collapsed=1" height="525" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+      </div>
+
+      <!-- ── Add more posts below as you get embed codes ── -->
+      <!-- PASTE NEXT <div class="li-slide"><iframe ...></iframe></div> HERE -->
+
+    </div>
   </div>
-  <div style="display:none" id="carouselViewport">
+
+  <div class="li-carousel-nav" id="liNav">
+    <button class="li-nav-btn" id="liPrev" aria-label="Previous">&#8592;</button>
+    <div class="li-dots" id="liDots"></div>
+    <button class="li-nav-btn" id="liNext" aria-label="Next">&#8594;</button>
+  </div>
+  <div style="display:none">
     <div class="carousel-track" id="carouselTrack">
       <div class="post-card">
         <div class="post-img ig"><div class="post-img-content"><div class="post-img-icon">🎬</div><div class="post-img-label">Instagram</div></div></div>
@@ -393,102 +384,83 @@
 
 <script src="nav.js"></script>
 <script>
+/* ── LinkedIn native embed carousel ── */
 (function () {
+  var slides  = [];
   var current = 0;
-  var total   = 0;
-  var paused  = false;
-  var timer;
-  var list;
-  var wrap;
-
-  /* ── slide to card i, centered in the viewport ── */
-  function goTo(i, animate) {
-    if (total === 0) return;
-    current = ((i % total) + total) % total;
-
-    var cardW   = list.children[0].offsetWidth;
-    var wrapW   = wrap.offsetWidth;
-    var offset  = Math.round((wrapW - cardW) / 2) - current * cardW;
-
-    list.style.transition = animate === false
-      ? 'none'
-      : 'transform .55s cubic-bezier(.4,0,.2,1)';
-    list.style.transform  = 'translateX(' + offset + 'px)';
-
-    /* update dots */
-    var dots = document.querySelectorAll('.j-slider-dot');
-    dots.forEach(function (d, idx) { d.classList.toggle('active', idx === current); });
-  }
-
-  function next() { goTo(current + 1); }
-  function prev() { goTo(current - 1); }
-
-  function resetTimer() {
-    clearInterval(timer);
-    timer = setInterval(function () { if (!paused) next(); }, 4500);
-  }
-
-  /* ── inject prev/next/dots controls ── */
-  function buildNav() {
-    var nav  = document.createElement('div');
-    nav.className = 'j-slider-nav';
-
-    var prevBtn = document.createElement('button');
-    prevBtn.className = 'j-slider-btn';
-    prevBtn.innerHTML = '&#8592;';
-    prevBtn.addEventListener('click', function () { prev(); resetTimer(); });
-
-    var dotsWrap = document.createElement('div');
-    dotsWrap.className = 'j-slider-dots';
-    for (var i = 0; i < total; i++) {
-      var dot = document.createElement('button');
-      dot.className = 'j-slider-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', 'Slide ' + (i + 1));
-      (function (idx) {
-        dot.addEventListener('click', function () { goTo(idx); resetTimer(); });
-      })(i);
-      dotsWrap.appendChild(dot);
-    }
-
-    var nextBtn = document.createElement('button');
-    nextBtn.className = 'j-slider-btn';
-    nextBtn.innerHTML = '&#8594;';
-    nextBtn.addEventListener('click', function () { next(); resetTimer(); });
-
-    nav.appendChild(prevBtn);
-    nav.appendChild(dotsWrap);
-    nav.appendChild(nextBtn);
-    wrap.parentElement.appendChild(nav);
-  }
-
-  /* ── wait for Juicer to finish rendering ── */
+  var track, outer;
   function init() {
-    list = document.querySelector('.juicer-feed ul.j-column-item-list, .juicer-feed .j-column-item-list');
-    wrap = document.querySelector('.juicer-wrap');
+    track  = document.getElementById('liTrack');
+    outer  = document.getElementById('liOuter');
+    var dotsEl = document.getElementById('liDots');
+    var prevBtn = document.getElementById('liPrev');
+    var nextBtn = document.getElementById('liNext');
 
-    if (!list || list.children.length < 2 || !wrap) {
-      setTimeout(init, 800);
-      return;
+    if (!track || !outer) return;
+    slides = Array.from(track.querySelectorAll('.li-slide'));
+    var total = slides.length;
+
+    /* Set each slide width = outer width so one fills the view */
+    function setWidths() {
+      var w = outer.offsetWidth;
+      slides.forEach(function (s) {
+        s.style.width = w + 'px';
+        s.style.flexShrink = '0';
+        /* Scale iframe down if narrower than 504px */
+        var iframe = s.querySelector('iframe');
+        if (iframe) {
+          var iw = iframe.getAttribute('width') || 504;
+          var scale = Math.min(1, (w - 32) / iw);
+          iframe.style.transform = 'scale(' + scale + ')';
+          iframe.style.transformOrigin = 'top center';
+          s.style.height = Math.round(525 * scale + 40) + 'px';
+        }
+      });
+    }
+    setWidths();
+    window.addEventListener('resize', function () { setWidths(); goTo(current, false); });
+
+    /* Build dots */
+    dotsEl.innerHTML = '';
+    slides.forEach(function (_, i) {
+      var d = document.createElement('button');
+      d.className = 'li-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Slide ' + (i + 1));
+      d.addEventListener('click', function () { goTo(i); });
+      dotsEl.appendChild(d);
+    });
+
+    /* Navigate */
+    function goTo(i, animate) {
+      current = ((i % total) + total) % total;
+      var w = outer.offsetWidth;
+      track.style.transition = animate === false ? 'none' : 'transform .5s cubic-bezier(.4,0,.2,1)';
+      track.style.transform  = 'translateX(-' + (current * w) + 'px)';
+      Array.from(dotsEl.children).forEach(function (d, idx) {
+        d.classList.toggle('active', idx === current);
+      });
+      /* disable prev/next at edges if only 1 slide */
+      if (total <= 1) {
+        prevBtn.disabled = nextBtn.disabled = true;
+      }
     }
 
-    total = list.children.length;
+    prevBtn.addEventListener('click', function () { goTo(current - 1); });
+    nextBtn.addEventListener('click', function () { goTo(current + 1); });
 
-    /* pause on hover/touch */
-    wrap.addEventListener('mouseenter', function () { paused = true; });
-    wrap.addEventListener('mouseleave', function () { paused = false; });
-    wrap.addEventListener('touchstart', function () { paused = true; }, { passive: true });
-    wrap.addEventListener('touchend',   function () {
-      setTimeout(function () { paused = false; }, 2000);
-    }, { passive: true });
+    /* Hide nav if only 1 slide */
+    if (total <= 1) {
+      document.getElementById('liNav').style.display = 'none';
+    }
 
-    window.addEventListener('resize', function () { goTo(current, false); });
-
-    buildNav();
     goTo(0, false);
-    resetTimer();
   }
 
-  setTimeout(init, 1400);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
 </script>
 </body>
