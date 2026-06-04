@@ -6,16 +6,6 @@
   <title>Get Started — Thumbprint Curriculum</title>
   <link rel="icon" type="image/png" href="Gemini_Generated_Image_bbju21bbju21bbju.png" />
   <link rel="stylesheet" href="style.css" />
-  <style>
-    .pkg-selector { display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-bottom:1.8rem; }
-    .pkg-option { border:1.5px solid rgba(255,255,255,.12); border-radius:10px; padding:1rem; cursor:pointer; transition:all .2s; background:rgba(255,255,255,.04); text-align:center; }
-    .pkg-option:hover { border-color:var(--blue-bright); }
-    .pkg-option.selected { border-color:var(--blue-bright); background:rgba(34,174,228,.1); }
-    .pkg-name { font-size:.8rem; font-weight:800; color:var(--white); letter-spacing:.08em; }
-    .pkg-price { font-size:1.4rem; font-weight:800; color:var(--blue-bright); margin:.25rem 0; }
-    .pkg-retail { font-size:.65rem; color:rgba(255,255,255,.35); text-decoration:line-through; }
-    @media(max-width:600px){ .pkg-selector { grid-template-columns:1fr; } }
-  </style>
 </head>
 <body>
 
@@ -41,195 +31,56 @@
 
   <div class="page-hero" style="background:var(--black)">
     <div class="container">
-      <p class="page-hero-eyebrow">MagnaCon 2026 · Louisville, KY</p>
+      <p class="page-hero-eyebrow">Let's Work Together</p>
       <h1>Get Started</h1>
-      <p>Book your Thumbprint Signature recording slot for Wednesday, June 10 or Thursday, June 11 — or send us a message about any of our products.</p>
+      <p>Tell us about your project and what you're looking to build. We'll reach out within one business day.</p>
     </div>
   </div>
 
   <section class="gs-section section-pad">
     <div class="container">
 
-      <!-- ── CONFERENCE BOOKING ── -->
-      <div class="conf-booking">
-        <div class="conf-booking-header">
-          <div class="conf-booking-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="4" width="18" height="18" rx="2"/>
-              <path d="M16 2v4M8 2v4M3 10h18"/>
-              <circle cx="8" cy="14" r="1" fill="#00C896"/>
-              <circle cx="12" cy="14" r="1" fill="#00C896"/>
-              <circle cx="16" cy="14" r="1" fill="#00C896"/>
-            </svg>
-          </div>
-          <div class="conf-booking-title-wrap">
-            <p class="conf-booking-tag">🎬 Thumbprint Signature — MagnaCon Conference Special</p>
-            <h2 class="conf-booking-title">Book Your 15-Minute Green Screen Session</h2>
-            <p class="conf-booking-sub">June 10–11, 2026 · MagnaCon · Louisville, KY &nbsp;·&nbsp; 9 AM – 4 PM daily<br>AI avatar + 5 social posts delivered in 5–7 business days — at half the retail price.</p>
-          </div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label light">First Name</label>
+          <input class="form-input dark-field" type="text" placeholder="Jane" />
         </div>
-
-        <!-- Step 1: Package -->
-        <p class="slots-label">Step 1 — Select Your Package</p>
-        <div class="pkg-selector">
-          <div class="pkg-option" onclick="selectPkg('standard',this)">
-            <div class="pkg-name">Standard</div>
-            <div class="pkg-price">$197</div>
-            <div class="pkg-retail">Retail $394</div>
-          </div>
-          <div class="pkg-option selected" onclick="selectPkg('pro',this)">
-            <div class="pkg-name" style="color:var(--blue-bright)">Pro ✦ Popular</div>
-            <div class="pkg-price">$297</div>
-            <div class="pkg-retail">Retail $594</div>
-          </div>
-          <div class="pkg-option" onclick="selectPkg('vip',this)">
-            <div class="pkg-name">VIP</div>
-            <div class="pkg-price">$497</div>
-            <div class="pkg-retail">Retail $994</div>
-          </div>
+        <div class="form-field">
+          <label class="form-label light">Last Name</label>
+          <input class="form-input dark-field" type="text" placeholder="Smith" />
         </div>
-
-        <!-- Step 2: Day + Time Slot -->
-        <p class="slots-label">Step 2 — Choose Your Day &amp; Time</p>
-        <div class="day-tabs">
-          <div class="day-tab active" onclick="selectDay('wed', this)">
-            <div class="day-tab-day">Wednesday</div>
-            <div class="day-tab-date">June 10, 2026</div>
-            <div class="day-tab-label">9 AM – 4 PM</div>
-          </div>
-          <div class="day-tab" onclick="selectDay('thu', this)">
-            <div class="day-tab-day">Thursday</div>
-            <div class="day-tab-date">June 11, 2026</div>
-            <div class="day-tab-label">9 AM – 4 PM</div>
-          </div>
+        <div class="form-field">
+          <label class="form-label light">Email Address *</label>
+          <input class="form-input dark-field" type="email" placeholder="jane@example.com" id="gsEmail" />
         </div>
-
-        <div class="slots-grid" id="slotsGrid"></div>
-        <div class="selected-slot-display hidden" id="selectedSlotDisplay">
-          📅 Selected: <span id="selectedSlotText"></span>
+        <div class="form-field">
+          <label class="form-label light">Phone Number</label>
+          <input class="form-input dark-field" type="tel" placeholder="(555) 000-0000" />
         </div>
-
-        <!-- Step 3: Your Info -->
-        <p class="slots-label" style="margin-top:1.6rem">Step 3 — Your Information</p>
-        <div class="booking-form-grid" style="margin-bottom:1.5rem">
-          <div class="form-field">
-            <label class="form-label light">First Name *</label>
-            <input class="form-input dark-field" type="text" placeholder="Jane" id="bkFirst" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">Last Name *</label>
-            <input class="form-input dark-field" type="text" placeholder="Smith" id="bkLast" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">Email Address *</label>
-            <input class="form-input dark-field" type="email" placeholder="jane@example.com" id="bkEmail" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">Phone / SMS</label>
-            <input class="form-input dark-field" type="tel" placeholder="(555) 000-0000" />
-          </div>
+        <div class="form-field">
+          <label class="form-label light">Organization</label>
+          <input class="form-input dark-field" type="text" placeholder="Your organization or company" />
         </div>
-
-        <!-- Step 4: Intake Questions -->
-        <p class="slots-label">Step 4 — Session Prep</p>
-        <p style="font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:1.2rem;line-height:1.6">These answers help us personalize your avatar and social posts before your session.</p>
-
-        <div class="booking-form-grid">
-          <div class="form-field full">
-            <label class="form-label light">What's your business and what do you do?</label>
-            <input class="form-input dark-field" type="text" placeholder="e.g. MagnaWave practitioner, wellness coach, PEMF therapy practice…" />
-          </div>
-          <div class="form-field full">
-            <label class="form-label light">Who is your ideal customer?</label>
-            <input class="form-input dark-field" type="text" placeholder="e.g. Women 40–60 with chronic pain, athletes seeking recovery…" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">How do you want to show up in your avatar?</label>
-            <input class="form-input dark-field" type="text" placeholder="e.g. Powerful, warm, bold, professional, radiant…" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">What platforms are you most active on?</label>
-            <select class="form-select dark-field">
-              <option value="">Select primary platform…</option>
-              <option>Instagram</option>
-              <option>Facebook</option>
-              <option>LinkedIn</option>
-              <option>TikTok</option>
-              <option>YouTube</option>
-              <option>Multiple platforms</option>
-            </select>
-          </div>
-          <div class="form-field full">
-            <label class="form-label light">What offer or message do you want to amplify?</label>
-            <input class="form-input dark-field" type="text" placeholder="e.g. Launching a 6-week program, promoting a client special, building brand awareness…" />
-          </div>
-          <div class="form-field full">
-            <label class="form-label light">Brand colors or logo? (describe, or bring files on your phone)</label>
-            <input class="form-input dark-field" type="text" placeholder="e.g. Deep teal and gold, will bring logo on my phone…" />
-          </div>
+        <div class="form-field">
+          <label class="form-label light">I'm interested in…</label>
+          <select class="form-select dark-field">
+            <option value="">Select a product</option>
+            <option>Thumbprint Signature (Avatar Creation)</option>
+            <option>Thumbprint Amplify (Monthly Content)</option>
+            <option>Thumbprint Circle (AI Community)</option>
+            <option>Thumbprint Renew (Content Modernization)</option>
+            <option>General Inquiry</option>
+          </select>
         </div>
-
-        <button class="btn btn-green" style="margin-top:1.4rem;width:100%;justify-content:center;font-size:.9rem;padding:1rem" id="bookingBtn" onclick="submitBooking()">
-          Confirm My Session →
-        </button>
-
-        <div class="booking-success" id="bookingSuccess">
-          <h3>You're Booked! 🎉</h3>
-          <p>We'll send a confirmation to your email and a text reminder the night before your session. Come with your energy — the team handles everything else. Your avatar arrives in 5–7 business days.</p>
+        <div class="form-field full">
+          <label class="form-label light">Message *</label>
+          <textarea class="form-textarea dark-field" style="min-height:130px" placeholder="Tell us about your project, goals, or questions…" id="gsMsg"></textarea>
         </div>
       </div>
 
-      <!-- ── DIVIDER ── -->
-      <hr class="section-divider" />
-
-      <!-- ── GENERAL INQUIRY ── -->
-      <div>
-        <p class="section-label" style="color:var(--blue-bright)">General Inquiry</p>
-        <h2 class="section-h2" style="color:var(--white);margin-bottom:.5rem">Interested in Our Products?</h2>
-        <p style="color:rgba(255,255,255,.5);font-size:.95rem;margin-bottom:2rem;max-width:560px;line-height:1.7">Tell us about your project. We'll reach out within one business day.</p>
-
-        <div class="form-grid">
-          <div class="form-field">
-            <label class="form-label light">First Name</label>
-            <input class="form-input dark-field" type="text" placeholder="Jane" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">Last Name</label>
-            <input class="form-input dark-field" type="text" placeholder="Smith" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">Email Address *</label>
-            <input class="form-input dark-field" type="email" placeholder="jane@example.com" id="gsEmail" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">Phone Number</label>
-            <input class="form-input dark-field" type="tel" placeholder="(555) 000-0000" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">Organization</label>
-            <input class="form-input dark-field" type="text" placeholder="Your organization or company" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">I'm interested in…</label>
-            <select class="form-select dark-field">
-              <option value="">Select a product</option>
-              <option>Thumbprint Signature (Avatar Creation)</option>
-              <option>Thumbprint Amplify (Monthly Content)</option>
-              <option>Thumbprint Circle (AI Community)</option>
-              <option>Thumbprint Renew (Content Modernization)</option>
-              <option>General Inquiry</option>
-            </select>
-          </div>
-          <div class="form-field full">
-            <label class="form-label light">Message *</label>
-            <textarea class="form-textarea dark-field" style="min-height:110px" placeholder="Tell us about your project, goals, or questions…" id="gsMsg"></textarea>
-          </div>
-        </div>
-
-        <button class="btn btn-primary" style="margin-top:1.4rem" id="gsBtn" onclick="submitGeneral()">Send Message</button>
-        <div id="gsSuccess" style="display:none;margin-top:1rem;padding:1rem 1.4rem;background:rgba(34,174,228,.08);border:1px solid rgba(34,174,228,.25);border-radius:8px">
-          <p style="font-weight:700;color:var(--blue-bright);font-size:.95rem">✓ Message sent! We'll be in touch within one business day.</p>
-        </div>
+      <button class="btn btn-primary" style="margin-top:1.4rem" id="gsBtn" onclick="submitGeneral()">Send Message</button>
+      <div id="gsSuccess" style="display:none;margin-top:1rem;padding:1rem 1.4rem;background:rgba(34,174,228,.08);border:1px solid rgba(34,174,228,.25);border-radius:8px">
+        <p style="font-weight:700;color:var(--blue-bright);font-size:.95rem">✓ Message sent! We'll be in touch within one business day.</p>
       </div>
 
     </div>
@@ -237,7 +88,6 @@
 
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-inner">
@@ -271,9 +121,8 @@
       <div>
         <p class="footer-col-title">MagnaCon 2026</p>
         <ul class="footer-links">
-          <li><a href="get-started.html">Book Avatar Session</a></li>
-          <li><a href="get-started.html">Wed June 10 &amp; Thu June 11</a></li>
-          <li><a href="get-started.html">Louisville, KY</a></li>
+          <li><a href="magnacon.html">Book Avatar Session</a></li>
+          <li><a href="magnacon.html">June 10 &amp; 11 · Louisville</a></li>
           <li><a href="contact.html">Questions?</a></li>
         </ul>
       </div>
@@ -291,81 +140,6 @@
 </footer>
 
 <script>
-  // Generate 9 AM – 4 PM slots at 15-min intervals = 28 slots
-  function makeSlots() {
-    const slots = [];
-    let h = 9, m = 0;
-    while (h < 16) {
-      const h12  = h > 12 ? h - 12 : h;
-      const ampm = h >= 12 ? 'PM' : 'AM';
-      const mm   = m === 0 ? '00' : m;
-      slots.push(h12 + ':' + mm + ' ' + ampm);
-      m += 15;
-      if (m >= 60) { m = 0; h++; }
-    }
-    return slots; // 28 slots: 9:00 AM → 3:45 PM
-  }
-
-  const ALL_SLOTS = makeSlots();
-
-  const TAKEN = {
-    wed: ['9:15 AM', '10:30 AM', '11:00 AM', '1:00 PM', '2:30 PM'],
-    thu: ['9:00 AM', '10:00 AM', '12:15 PM', '2:00 PM', '3:30 PM']
-  };
-
-  let selectedDay  = 'wed';
-  let selectedTime = null;
-  let selectedPkg  = 'pro';
-
-  function renderSlots() {
-    const grid = document.getElementById('slotsGrid');
-    grid.innerHTML = '';
-    ALL_SLOTS.forEach(time => {
-      const taken = TAKEN[selectedDay].includes(time);
-      const div   = document.createElement('div');
-      div.className = 'slot' + (taken ? ' taken' : '');
-      div.textContent = time;
-      if (!taken) div.onclick = () => pickSlot(time, div);
-      grid.appendChild(div);
-    });
-    // Clear selection when switching days
-    selectedTime = null;
-    document.getElementById('selectedSlotDisplay').classList.add('hidden');
-  }
-
-  function selectDay(day, el) {
-    selectedDay = day;
-    document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    renderSlots();
-  }
-
-  function pickSlot(time, el) {
-    document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedTime = time;
-    const label = selectedDay === 'wed' ? 'Wednesday, June 10' : 'Thursday, June 11';
-    document.getElementById('selectedSlotText').textContent = label + ' at ' + time;
-    document.getElementById('selectedSlotDisplay').classList.remove('hidden');
-  }
-
-  function selectPkg(pkg, el) {
-    selectedPkg = pkg;
-    document.querySelectorAll('.pkg-option').forEach(o => o.classList.remove('selected'));
-    el.classList.add('selected');
-  }
-
-  function submitBooking() {
-    const first = document.getElementById('bkFirst').value.trim();
-    const email = document.getElementById('bkEmail').value.trim();
-    if (!first || !email) { alert('Please enter your name and email address.'); return; }
-    if (!selectedTime)    { alert('Please select a time slot.');                return; }
-    document.getElementById('bookingBtn').style.display = 'none';
-    const s = document.getElementById('bookingSuccess');
-    s.style.display = 'block';
-    s.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-
   function submitGeneral() {
     const email = document.getElementById('gsEmail').value.trim();
     const msg   = document.getElementById('gsMsg').value.trim();
@@ -373,9 +147,6 @@
     document.getElementById('gsBtn').style.display = 'none';
     document.getElementById('gsSuccess').style.display = 'block';
   }
-
-  // Init
-  renderSlots();
 </script>
 
 </body>

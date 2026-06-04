@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MagnaCon 2026 — Thumbprint Curriculum</title>
+  <link rel="icon" type="image/png" href="Gemini_Generated_Image_bbju21bbju21bbju.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .pkg-selector { display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-bottom:1.8rem; }
+    .pkg-option { border:1.5px solid rgba(255,255,255,.12); border-radius:10px; padding:1rem; cursor:pointer; transition:all .2s; background:rgba(255,255,255,.04); text-align:center; }
+    .pkg-option:hover { border-color:var(--blue-bright); }
+    .pkg-option.selected { border-color:var(--blue-bright); background:rgba(34,174,228,.1); }
+    .pkg-name { font-size:.8rem; font-weight:800; color:var(--white); letter-spacing:.08em; }
+    .pkg-price { font-size:1.4rem; font-weight:800; color:var(--blue-bright); margin:.25rem 0; }
+    .pkg-retail { font-size:.65rem; color:rgba(255,255,255,.35); text-decoration:line-through; }
+    @media(max-width:600px){
+      .pkg-selector { grid-template-columns:1fr; }
+      .day-tabs { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-img-crop" aria-hidden="true"><img src="Gemini_Generated_Image_bbju21bbju21bbju.png" alt="" /></div>
+      <div class="nav-logo-wrap">
+        <span><span class="thumb">THUMB</span><span class="print">PRINT</span></span>
+        <span class="nav-sub">Curriculum</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li class="hide-sm"><a href="products.html">Products</a></li>
+      <li class="hide-sm"><a href="about.html">About</a></li>
+      <li class="hide-sm"><a href="contact.html">Contact</a></li>
+      <li><a href="get-started.html" class="nav-cta">Get Started</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-body">
+
+  <div class="page-hero" style="background:var(--black)">
+    <div class="container">
+      <p class="page-hero-eyebrow" style="color:var(--green)">MagnaCon 2026 · Louisville, KY</p>
+      <h1>Book Your Green Screen Session</h1>
+      <p>15-minute avatar creation slots available Wednesday, June 10 and Thursday, June 11 — 9 AM to 4 PM daily. AI avatar + 5 social posts delivered in 5–7 business days.</p>
+    </div>
+  </div>
+
+  <section class="gs-section section-pad">
+    <div class="container">
+      <div class="conf-booking">
+        <div class="conf-booking-header">
+          <div class="conf-booking-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <path d="M16 2v4M8 2v4M3 10h18"/>
+              <circle cx="8" cy="14" r="1" fill="#00C896"/>
+              <circle cx="12" cy="14" r="1" fill="#00C896"/>
+              <circle cx="16" cy="14" r="1" fill="#00C896"/>
+            </svg>
+          </div>
+          <div class="conf-booking-title-wrap">
+            <p class="conf-booking-tag">Thumbprint Signature — MagnaCon Special</p>
+            <h2 class="conf-booking-title">Book Your 15-Minute Green Screen Session</h2>
+            <p class="conf-booking-sub">June 10–11, 2026 · MagnaCon · Louisville, KY &nbsp;·&nbsp; 9 AM – 4 PM daily<br>AI avatar + 5 social posts delivered in 5–7 business days — at half the retail price.</p>
+          </div>
+        </div>
+
+        <!-- Step 1: Package -->
+        <p class="slots-label">Step 1 — Select Your Package</p>
+        <div class="pkg-selector">
+          <div class="pkg-option" onclick="selectPkg('standard',this)">
+            <div class="pkg-name">Standard</div>
+            <div class="pkg-price">$197</div>
+            <div class="pkg-retail">Retail $394</div>
+          </div>
+          <div class="pkg-option selected" onclick="selectPkg('pro',this)">
+            <div class="pkg-name" style="color:var(--blue-bright)">Pro ✦ Popular</div>
+            <div class="pkg-price">$297</div>
+            <div class="pkg-retail">Retail $594</div>
+          </div>
+          <div class="pkg-option" onclick="selectPkg('vip',this)">
+            <div class="pkg-name">VIP</div>
+            <div class="pkg-price">$497</div>
+            <div class="pkg-retail">Retail $994</div>
+          </div>
+        </div>
+
+        <!-- Step 2: Day + Time Slot -->
+        <p class="slots-label">Step 2 — Choose Your Day &amp; Time</p>
+        <div class="day-tabs">
+          <div class="day-tab active" onclick="selectDay('wed', this)">
+            <div class="day-tab-day">Wednesday</div>
+            <div class="day-tab-date">June 10, 2026</div>
+            <div class="day-tab-label">9 AM – 4 PM</div>
+          </div>
+          <div class="day-tab" onclick="selectDay('thu', this)">
+            <div class="day-tab-day">Thursday</div>
+            <div class="day-tab-date">June 11, 2026</div>
+            <div class="day-tab-label">9 AM – 4 PM</div>
+          </div>
+        </div>
+
+        <div class="slots-grid" id="slotsGrid"></div>
+        <div class="selected-slot-display hidden" id="selectedSlotDisplay">
+          📅 Selected: <span id="selectedSlotText"></span>
+        </div>
+
+        <!-- Step 3: Your Info -->
+        <p class="slots-label" style="margin-top:1.6rem">Step 3 — Your Information</p>
+        <div class="booking-form-grid" style="margin-bottom:1.5rem">
+          <div class="form-field">
+            <label class="form-label light">First Name *</label>
+            <input class="form-input dark-field" type="text" placeholder="Jane" id="bkFirst" />
+          </div>
+          <div class="form-field">
+            <label class="form-label light">Last Name *</label>
+            <input class="form-input dark-field" type="text" placeholder="Smith" id="bkLast" />
+          </div>
+          <div class="form-field">
+            <label class="form-label light">Email Address *</label>
+            <input class="form-input dark-field" type="email" placeholder="jane@example.com" id="bkEmail" />
+          </div>
+          <div class="form-field">
+            <label class="form-label light">Phone / SMS</label>
+            <input class="form-input dark-field" type="tel" placeholder="(555) 000-0000" />
+          </div>
+        </div>
+
+        <!-- Step 4: Intake Questions -->
+        <p class="slots-label">Step 4 — Session Prep</p>
+        <p style="font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:1.2rem;line-height:1.6">These answers help us personalize your avatar and social posts before your session.</p>
+
+        <div class="booking-form-grid">
+          <div class="form-field full">
+            <label class="form-label light">What's your business and what do you do?</label>
+            <input class="form-input dark-field" type="text" placeholder="e.g. MagnaWave practitioner, wellness coach, PEMF therapy practice…" />
+          </div>
+          <div class="form-field full">
+            <label class="form-label light">Who is your ideal customer?</label>
+            <input class="form-input dark-field" type="text" placeholder="e.g. Women 40–60 with chronic pain, athletes seeking recovery…" />
+          </div>
+          <div class="form-field">
+            <label class="form-label light">How do you want to show up in your avatar?</label>
+            <input class="form-input dark-field" type="text" placeholder="e.g. Powerful, warm, bold, professional, radiant…" />
+          </div>
+          <div class="form-field">
+            <label class="form-label light">What platforms are you most active on?</label>
+            <select class="form-select dark-field">
+              <option value="">Select primary platform…</option>
+              <option>Instagram</option>
+              <option>Facebook</option>
+              <option>LinkedIn</option>
+              <option>TikTok</option>
+              <option>YouTube</option>
+              <option>Multiple platforms</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label class="form-label light">What offer or message do you want to amplify?</label>
+            <input class="form-input dark-field" type="text" placeholder="e.g. Launching a 6-week program, promoting a client special, building brand awareness…" />
+          </div>
+          <div class="form-field full">
+            <label class="form-label light">Brand colors or logo? (describe, or bring files on your phone)</label>
+            <input class="form-input dark-field" type="text" placeholder="e.g. Deep teal and gold, will bring logo on my phone…" />
+          </div>
+        </div>
+
+        <button class="btn btn-green" style="margin-top:1.4rem;width:100%;justify-content:center;font-size:.9rem;padding:1rem" id="bookingBtn" onclick="submitBooking()">
+          Confirm My Session →
+        </button>
+
+        <div class="booking-success" id="bookingSuccess">
+          <h3>You're Booked! 🎉</h3>
+          <p>We'll send a confirmation to your email and a text reminder the night before your session. Come with your energy — the team handles everything else. Your avatar arrives in 5–7 business days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-img-crop footer-sz" aria-hidden="true"><img src="Gemini_Generated_Image_bbju21bbju21bbju.png" alt="" /></div>
+          <div class="nav-logo-wrap">
+            <span><span class="thumb">THUMB</span><span class="print">PRINT</span></span>
+            <span class="nav-sub">Curriculum</span>
+          </div>
+        </a>
+        <p class="footer-tagline">Strategic curriculum design that shapes futures and leaves a lasting impression.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Products</p>
+        <ul class="footer-links">
+          <li><a href="products.html">Thumbprint Signature</a></li>
+          <li><a href="products.html">Thumbprint Amplify</a></li>
+          <li><a href="products.html">Thumbprint Circle</a></li>
+          <li><a href="products.html">Thumbprint Renew</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Company</p>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="get-started.html">Get Started</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">MagnaCon 2026</p>
+        <ul class="footer-links">
+          <li><a href="magnacon.html">Book Avatar Session</a></li>
+          <li><a href="magnacon.html">June 10 &amp; 11 · Louisville</a></li>
+          <li><a href="contact.html">Questions?</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Thumbprint Curriculum. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="#" title="LinkedIn">in</a>
+        <a href="#" title="Instagram">ig</a>
+        <a href="#" title="X">𝕏</a>
+        <a href="#" title="Facebook">fb</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function makeSlots() {
+    const slots = [];
+    let h = 9, m = 0;
+    while (h < 16) {
+      const h12 = h > 12 ? h - 12 : h;
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const mm = m === 0 ? '00' : m;
+      slots.push(h12 + ':' + mm + ' ' + ampm);
+      m += 15;
+      if (m >= 60) { m = 0; h++; }
+    }
+    return slots;
+  }
+
+  const ALL_SLOTS = makeSlots();
+  const TAKEN = {
+    wed: ['9:15 AM','10:30 AM','11:00 AM','1:00 PM','2:30 PM'],
+    thu: ['9:00 AM','10:00 AM','12:15 PM','2:00 PM','3:30 PM']
+  };
+
+  let selectedDay = 'wed', selectedTime = null, selectedPkg = 'pro';
+
+  function renderSlots() {
+    const grid = document.getElementById('slotsGrid');
+    grid.innerHTML = '';
+    ALL_SLOTS.forEach(time => {
+      const taken = TAKEN[selectedDay].includes(time);
+      const div = document.createElement('div');
+      div.className = 'slot' + (taken ? ' taken' : '');
+      div.textContent = time;
+      if (!taken) div.onclick = () => pickSlot(time, div);
+      grid.appendChild(div);
+    });
+    selectedTime = null;
+    document.getElementById('selectedSlotDisplay').classList.add('hidden');
+  }
+
+  function selectDay(day, el) {
+    selectedDay = day;
+    document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderSlots();
+  }
+
+  function pickSlot(time, el) {
+    document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedTime = time;
+    const label = selectedDay === 'wed' ? 'Wednesday, June 10' : 'Thursday, June 11';
+    document.getElementById('selectedSlotText').textContent = label + ' at ' + time;
+    document.getElementById('selectedSlotDisplay').classList.remove('hidden');
+  }
+
+  function selectPkg(pkg, el) {
+    selectedPkg = pkg;
+    document.querySelectorAll('.pkg-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function submitBooking() {
+    const first = document.getElementById('bkFirst').value.trim();
+    const email = document.getElementById('bkEmail').value.trim();
+    if (!first || !email) { alert('Please enter your name and email address.'); return; }
+    if (!selectedTime) { alert('Please select a time slot.'); return; }
+    document.getElementById('bookingBtn').style.display = 'none';
+    const s = document.getElementById('bookingSuccess');
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  renderSlots();
+</script>
+
+</body>
+</html>
