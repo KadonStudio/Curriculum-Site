@@ -6,6 +6,34 @@
   <title>Thumbprint Curriculum</title>
   <link rel="icon" type="image/png" href="Gemini_Generated_Image_bbju21bbju21bbju.png" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Juicer feed dark-theme overrides ── */
+    .juicer-wrap { padding: 0 clamp(1rem,3vw,2rem) 1rem; }
+
+    .juicer-feed { background: transparent !important; }
+    .juicer-feed h1.referral { display: none !important; }
+
+    /* Grid of posts */
+    .juicer-feed ul.j-column-item-list { background: transparent !important; }
+    .juicer-feed li.feed-item { background: rgba(255,255,255,.05) !important; border: 1px solid rgba(255,255,255,.09) !important; border-radius: 10px !important; overflow: hidden; transition: transform .2s, box-shadow .2s; }
+    .juicer-feed li.feed-item:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.4) !important; }
+
+    /* Post text */
+    .juicer-feed .j-text p, .juicer-feed .j-text span, .juicer-feed p.j-text { color: rgba(255,255,255,.75) !important; font-family: 'Montserrat', sans-serif !important; font-size: .85rem !important; line-height: 1.65 !important; }
+
+    /* Meta / author */
+    .juicer-feed .j-meta a, .juicer-feed .j-meta span { color: rgba(255,255,255,.4) !important; font-family: 'Montserrat', sans-serif !important; font-size: .72rem !important; }
+    .juicer-feed .j-poster { color: rgba(255,255,255,.55) !important; }
+    .juicer-feed .j-poster a { color: var(--blue-bright) !important; font-weight: 700 !important; }
+    .juicer-feed time { color: rgba(255,255,255,.3) !important; }
+
+    /* Buttons */
+    .juicer-feed .j-paginate, .juicer-feed .j-read-more { background: rgba(34,174,228,.15) !important; color: var(--blue-bright) !important; border: 1px solid rgba(34,174,228,.3) !important; border-radius: 6px !important; font-family: 'Montserrat', sans-serif !important; font-weight: 700 !important; font-size: .78rem !important; letter-spacing: .08em !important; }
+    .juicer-feed .j-paginate:hover { background: rgba(34,174,228,.25) !important; }
+
+    /* Loading state */
+    .juicer-feed .j-loading { color: var(--blue-bright) !important; }
+  </style>
 </head>
 <body>
 
@@ -76,8 +104,8 @@
   </div>
 </section>
 
-<!-- SOCIAL CAROUSEL -->
-<section class="social-section">
+<!-- SOCIAL FEED (Juicer.io) -->
+<section class="social-section" id="social">
   <div class="container">
     <div class="center-header">
       <p class="section-label">Follow Along</p>
@@ -86,7 +114,11 @@
     </div>
   </div>
 
-  <div class="carousel-viewport" id="carouselViewport">
+  <div class="juicer-wrap">
+    <div class="juicer-feed" data-feed-id="thumbprint-curriculum" data-per="9"></div>
+    <script type="text/javascript" src="https://www.juicer.io/embed/thumbprint-curriculum/embed-code.js" async defer></script>
+  </div>
+  <div style="display:none" id="carouselViewport">
     <div class="carousel-track" id="carouselTrack">
       <div class="post-card">
         <div class="post-img ig"><div class="post-img-content"><div class="post-img-icon">🎬</div><div class="post-img-label">Instagram</div></div></div>
@@ -155,8 +187,7 @@
     </div>
   </div>
 
-  <!-- Controls -->
-  <div class="carousel-nav">
+  <div style="display:none" class="carousel-nav">
     <button class="carousel-arrow" id="carouselPrev" aria-label="Previous">&#8592;</button>
     <div class="carousel-dots" id="carouselDots"></div>
     <button class="carousel-arrow" id="carouselNext" aria-label="Next">&#8594;</button>
