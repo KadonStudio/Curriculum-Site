@@ -3,20 +3,204 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MagnaCon 2026 — Thumbprint Curriculum</title>
+  <title>MagnaCon 2026 — Avatar Creation Experience</title>
   <link rel="icon" type="image/png" href="Gemini_Generated_Image_bbju21bbju21bbju.png" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    .pkg-selector { display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-bottom:1.8rem; }
-    .pkg-option { border:1.5px solid rgba(255,255,255,.12); border-radius:10px; padding:1rem; cursor:pointer; transition:all .2s; background:rgba(255,255,255,.04); text-align:center; }
-    .pkg-option:hover { border-color:var(--blue-bright); }
-    .pkg-option.selected { border-color:var(--blue-bright); background:rgba(34,174,228,.1); }
-    .pkg-name { font-size:.8rem; font-weight:800; color:var(--white); letter-spacing:.08em; }
-    .pkg-price { font-size:1.4rem; font-weight:800; color:var(--blue-bright); margin:.25rem 0; }
-    .pkg-retail { font-size:.65rem; color:rgba(255,255,255,.35); text-decoration:line-through; }
-    @media(max-width:600px){
-      .pkg-selector { grid-template-columns:1fr; }
-      .day-tabs { flex-direction:column; }
+    body { background: #111118; }
+
+    /* ── Page hero ── */
+    .mc-hero {
+      padding: calc(var(--nav-h) + 2.5rem) clamp(1.5rem,5vw,4rem) 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .mc-hero-eyebrow {
+      font-size: .72rem; font-weight: 700; letter-spacing: .28em;
+      text-transform: uppercase; color: var(--green); margin-bottom: .8rem;
+    }
+    .mc-hero h1 {
+      font-size: clamp(1.9rem,4vw,3rem); font-weight: 800;
+      color: var(--white); letter-spacing: -.02em; margin-bottom: .5rem;
+    }
+    .mc-hero p { font-size: .95rem; color: rgba(255,255,255,.45); }
+
+    /* ── Wizard shell ── */
+    .wizard { max-width: 720px; margin: 0 auto; padding: 3rem clamp(1rem,4vw,2rem) 5rem; }
+
+    /* ── Step indicator ── */
+    .step-indicator {
+      display: flex; align-items: center; margin-bottom: 3rem;
+    }
+    .step-node {
+      display: flex; flex-direction: column; align-items: center; gap: .35rem;
+      flex-shrink: 0;
+    }
+    .step-circle {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.04);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .78rem; font-weight: 800; color: rgba(255,255,255,.3);
+      transition: all .3s;
+    }
+    .step-node.active .step-circle {
+      border-color: var(--blue-bright);
+      background: rgba(34,174,228,.15);
+      color: var(--blue-bright);
+    }
+    .step-node.done .step-circle {
+      border-color: var(--green);
+      background: rgba(0,200,150,.15);
+      color: var(--green);
+    }
+    .step-label {
+      font-size: .6rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: rgba(255,255,255,.2);
+      white-space: nowrap; transition: color .3s;
+    }
+    .step-node.active .step-label { color: var(--blue-bright); }
+    .step-node.done  .step-label { color: var(--green); }
+    .step-line {
+      flex: 1; height: 2px; margin: 0 .5rem; margin-bottom: 1.25rem;
+      background: rgba(255,255,255,.08);
+      position: relative; overflow: hidden;
+    }
+    .step-line-fill {
+      position: absolute; inset: 0; background: var(--green);
+      transform-origin: left; transform: scaleX(0);
+      transition: transform .4s ease;
+    }
+    .step-line.done .step-line-fill { transform: scaleX(1); }
+
+    /* ── Step panels ── */
+    .step-panel { display: none; animation: stepIn .3s ease; }
+    .step-panel.active { display: block; }
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .step-panel.going-back { animation: stepInBack .3s ease; }
+    @keyframes stepInBack {
+      from { opacity: 0; transform: translateX(-20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .step-title {
+      font-size: 1.3rem; font-weight: 800; color: var(--white);
+      margin-bottom: .4rem; letter-spacing: -.01em;
+    }
+    .step-subtitle {
+      font-size: .88rem; color: rgba(255,255,255,.4);
+      margin-bottom: 1.8rem; line-height: 1.6;
+    }
+
+    /* ── Package cards ── */
+    .pkg-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: .9rem; margin-bottom: 1.5rem; }
+    .pkg-card {
+      border: 1.5px solid rgba(255,255,255,.1); border-radius: 10px;
+      padding: 1.2rem 1rem; cursor: pointer; background: rgba(255,255,255,.03);
+      transition: all .18s; text-align: center;
+    }
+    .pkg-card:hover { border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.06); }
+    .pkg-card.selected { border-color: var(--blue-bright); background: rgba(34,174,228,.08); }
+    .pkg-card-name { font-size: .75rem; font-weight: 800; color: rgba(255,255,255,.5); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .3rem; }
+    .pkg-card.selected .pkg-card-name { color: var(--blue-bright); }
+    .pkg-card-price { font-size: 1.6rem; font-weight: 800; color: var(--white); }
+    .pkg-card-retail { font-size: .65rem; color: rgba(255,255,255,.3); text-decoration: line-through; margin-top: .1rem; }
+    .pkg-popular { font-size: .58rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; background: var(--blue-bright); color: #fff; padding: .2rem .5rem; border-radius: 20px; display: inline-block; margin-top: .4rem; }
+
+    /* ── Day tabs ── */
+    .day-tabs { display: flex; gap: .8rem; margin-bottom: 1.4rem; }
+    .day-tab { flex:1; background: rgba(255,255,255,.04); border: 1.5px solid rgba(255,255,255,.12); border-radius: 10px; padding: 1rem 1.2rem; cursor: pointer; transition: all .2s; text-align: center; }
+    .day-tab.active { background: rgba(0,200,150,.1); border-color: var(--green); }
+    .day-tab-day { font-size: .72rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: .25rem; }
+    .day-tab.active .day-tab-day { color: var(--green); }
+    .day-tab-date { font-size: 1.05rem; font-weight: 800; color: var(--white); }
+    .day-tab-hours { font-size: .7rem; color: rgba(255,255,255,.35); margin-top: .2rem; }
+    .day-tab.active .day-tab-hours { color: rgba(0,200,150,.6); }
+
+    /* ── Slot grid ── */
+    .slots-label { font-size: .68rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: .75rem; }
+    .slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px,1fr)); gap: .5rem; margin-bottom: 1rem; }
+    .slot { background: rgba(255,255,255,.04); border: 1.5px solid rgba(255,255,255,.1); border-radius: 7px; padding: .5rem; text-align: center; cursor: pointer; font-size: .78rem; font-weight: 700; color: rgba(255,255,255,.55); transition: all .18s; }
+    .slot:hover { border-color: var(--blue-bright); color: #fff; background: rgba(34,174,228,.08); }
+    .slot.selected { background: rgba(34,174,228,.15); border-color: var(--blue-bright); color: #fff; }
+    .slot.taken { opacity: .28; cursor: not-allowed; text-decoration: line-through; }
+
+    .selected-slot-badge { display: none; background: rgba(34,174,228,.1); border: 1px solid rgba(34,174,228,.25); border-radius: 7px; padding: .6rem 1rem; font-size: .82rem; font-weight: 700; color: var(--blue-bright); margin-bottom: 1rem; }
+    .selected-slot-badge.show { display: block; }
+
+    /* ── Form fields ── */
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
+    .field-grid.single { grid-template-columns: 1fr; }
+    .form-field { display: flex; flex-direction: column; gap: .4rem; }
+    .form-label { font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.4); }
+    .form-input, .form-select, .form-textarea {
+      font-family: var(--font); font-size: .88rem; font-weight: 500;
+      padding: .8rem 1rem; border-radius: 7px;
+      border: 1.5px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05); color: var(--white);
+      outline: none; transition: border-color .2s; width: 100%;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,.22); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--blue-bright); }
+    .form-select option { background: #2E2E36; }
+    .form-textarea { resize: vertical; min-height: 80px; }
+
+    /* ── Nav buttons ── */
+    .step-nav {
+      display: flex; align-items: center; gap: 1rem;
+      margin-top: 2rem; padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+    .btn-prev {
+      font-family: var(--font); font-size: .82rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4);
+      background: none; border: 1.5px solid rgba(255,255,255,.12);
+      border-radius: 6px; padding: .8rem 1.5rem; cursor: pointer;
+      transition: all .2s; display: none;
+    }
+    .btn-prev:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+    .btn-prev.show { display: block; }
+    .btn-next {
+      font-family: var(--font); font-size: .88rem; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase;
+      background: var(--blue-bright); color: #fff;
+      border: none; border-radius: 6px; padding: .9rem 2rem; cursor: pointer;
+      transition: all .2s; margin-left: auto;
+    }
+    .btn-next:hover { background: var(--blue-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(34,174,228,.35); }
+    .btn-next.green { background: var(--green); }
+    .btn-next.green:hover { background: #00a87e; box-shadow: 0 6px 20px rgba(0,200,150,.35); }
+    .step-count { font-size: .75rem; color: rgba(255,255,255,.3); font-weight: 600; margin-left: auto; }
+
+    /* ── Confirmation ── */
+    .confirm-summary {
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;
+    }
+    .confirm-row { display: flex; justify-content: space-between; align-items: baseline;
+      padding: .6rem 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .confirm-row:last-child { border-bottom: none; }
+    .confirm-key { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.35); }
+    .confirm-val { font-size: .88rem; font-weight: 700; color: var(--white); text-align: right; max-width: 60%; }
+
+    /* ── Success ── */
+    .success-panel { display: none; text-align: center; padding: 3rem 1rem; }
+    .success-panel.show { display: block; animation: stepIn .4s ease; }
+    .success-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .success-panel h2 { font-size: 1.8rem; font-weight: 800; color: var(--white); margin-bottom: .6rem; }
+    .success-panel p { font-size: .92rem; color: rgba(255,255,255,.5); line-height: 1.75; max-width: 460px; margin: 0 auto; }
+
+    .error-msg { font-size: .78rem; color: #f87171; font-weight: 600; margin-top: .5rem; display: none; }
+    .error-msg.show { display: block; }
+
+    @media(max-width:600px) {
+      .pkg-grid { grid-template-columns: 1fr; }
+      .field-grid { grid-template-columns: 1fr; }
+      .day-tabs { flex-direction: column; }
+      .slots-grid { grid-template-columns: repeat(3,1fr); }
+      .step-label { display: none; }
     }
   </style>
 </head>
@@ -40,160 +224,212 @@
   </div>
 </nav>
 
-<div class="page-body">
+<div class="mc-hero">
+  <p class="mc-hero-eyebrow">MagnaCon 2026 · Louisville, KY</p>
+  <h1>Avatar Creation Experience</h1>
+  <p>June 10–11, 2026 · 9 AM – 4 PM · 15-minute sessions · AI avatar + 5 social posts</p>
+</div>
 
-  <div class="page-hero" style="background:var(--black)">
-    <div class="container">
-      <p class="page-hero-eyebrow" style="color:var(--green)">MagnaCon 2026 · Louisville, KY</p>
-      <h1>Avatar Creation Experience</h1>
-      <p>15-minute avatar creation slots available Wednesday, June 10 and Thursday, June 11 — 9 AM to 4 PM daily. AI avatar + 5 social posts delivered in 5–7 business days.</p>
+<div class="wizard">
+
+  <!-- Step indicator -->
+  <div class="step-indicator" id="stepIndicator">
+    <div class="step-node active" id="node-1">
+      <div class="step-circle">1</div>
+      <span class="step-label">Package</span>
+    </div>
+    <div class="step-line" id="line-1"><div class="step-line-fill"></div></div>
+    <div class="step-node" id="node-2">
+      <div class="step-circle">2</div>
+      <span class="step-label">Date &amp; Time</span>
+    </div>
+    <div class="step-line" id="line-2"><div class="step-line-fill"></div></div>
+    <div class="step-node" id="node-3">
+      <div class="step-circle">3</div>
+      <span class="step-label">Your Info</span>
+    </div>
+    <div class="step-line" id="line-3"><div class="step-line-fill"></div></div>
+    <div class="step-node" id="node-4">
+      <div class="step-circle">4</div>
+      <span class="step-label">Session Prep</span>
+    </div>
+    <div class="step-line" id="line-4"><div class="step-line-fill"></div></div>
+    <div class="step-node" id="node-5">
+      <div class="step-circle">✓</div>
+      <span class="step-label">Confirm</span>
     </div>
   </div>
 
-  <section class="gs-section section-pad">
-    <div class="container">
-      <div class="conf-booking">
-        <div class="conf-booking-header">
-          <div class="conf-booking-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="4" width="18" height="18" rx="2"/>
-              <path d="M16 2v4M8 2v4M3 10h18"/>
-              <circle cx="8" cy="14" r="1" fill="#00C896"/>
-              <circle cx="12" cy="14" r="1" fill="#00C896"/>
-              <circle cx="16" cy="14" r="1" fill="#00C896"/>
-            </svg>
-          </div>
-          <div class="conf-booking-title-wrap">
-            <p class="conf-booking-tag">Thumbprint Signature — MagnaCon Special</p>
-            <h2 class="conf-booking-title">Book Your 15-Minute Green Screen Session</h2>
-            <p class="conf-booking-sub">June 10–11, 2026 · MagnaCon · Louisville, KY &nbsp;·&nbsp; 9 AM – 4 PM daily<br>AI avatar + 5 social posts delivered in 5–7 business days — at half the retail price.</p>
-          </div>
-        </div>
-
-        <!-- Step 1: Package -->
-        <p class="slots-label">Step 1 — Select Your Package</p>
-        <div class="pkg-selector">
-          <div class="pkg-option" onclick="selectPkg('standard',this)">
-            <div class="pkg-name">Standard</div>
-            <div class="pkg-price">$197</div>
-            <div class="pkg-retail">Retail $394</div>
-          </div>
-          <div class="pkg-option selected" onclick="selectPkg('pro',this)">
-            <div class="pkg-name" style="color:var(--blue-bright)">Pro ✦ Popular</div>
-            <div class="pkg-price">$297</div>
-            <div class="pkg-retail">Retail $594</div>
-          </div>
-          <div class="pkg-option" onclick="selectPkg('vip',this)">
-            <div class="pkg-name">VIP</div>
-            <div class="pkg-price">$497</div>
-            <div class="pkg-retail">Retail $994</div>
-          </div>
-        </div>
-
-        <!-- Step 2: Day + Time Slot -->
-        <p class="slots-label">Step 2 — Choose Your Day &amp; Time</p>
-        <div class="day-tabs">
-          <div class="day-tab active" onclick="selectDay('wed', this)">
-            <div class="day-tab-day">Wednesday</div>
-            <div class="day-tab-date">June 10, 2026</div>
-            <div class="day-tab-label">9 AM – 4 PM</div>
-          </div>
-          <div class="day-tab" onclick="selectDay('thu', this)">
-            <div class="day-tab-day">Thursday</div>
-            <div class="day-tab-date">June 11, 2026</div>
-            <div class="day-tab-label">9 AM – 4 PM</div>
-          </div>
-        </div>
-
-        <div class="slots-grid" id="slotsGrid"></div>
-        <div class="selected-slot-display hidden" id="selectedSlotDisplay">
-          📅 Selected: <span id="selectedSlotText"></span>
-        </div>
-
-        <!-- Step 3: Your Info -->
-        <p class="slots-label" style="margin-top:1.6rem">Step 3 — Your Information</p>
-        <div class="booking-form-grid" style="margin-bottom:1.5rem">
-          <div class="form-field">
-            <label class="form-label light">First Name *</label>
-            <input class="form-input dark-field" type="text" placeholder="Jane" id="bkFirst" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">Last Name *</label>
-            <input class="form-input dark-field" type="text" placeholder="Smith" id="bkLast" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">Email Address *</label>
-            <input class="form-input dark-field" type="email" placeholder="jane@example.com" id="bkEmail" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">Phone / SMS</label>
-            <input class="form-input dark-field" type="tel" placeholder="(555) 000-0000" />
-          </div>
-        </div>
-
-        <!-- Step 4: Intake Questions -->
-        <p class="slots-label">Step 4 — Session Prep</p>
-        <p style="font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:1.2rem;line-height:1.6">These answers help us personalize your avatar and social posts before your session.</p>
-
-        <div class="booking-form-grid">
-          <div class="form-field full">
-            <label class="form-label light">What's your business and what do you do?</label>
-            <input class="form-input dark-field" type="text" placeholder="e.g. MagnaWave practitioner, wellness coach, PEMF therapy practice…" />
-          </div>
-          <div class="form-field full">
-            <label class="form-label light">Who is your ideal customer?</label>
-            <input class="form-input dark-field" type="text" placeholder="e.g. Women 40–60 with chronic pain, athletes seeking recovery…" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">How do you want to show up in your avatar?</label>
-            <input class="form-input dark-field" type="text" placeholder="e.g. Powerful, warm, bold, professional, radiant…" />
-          </div>
-          <div class="form-field">
-            <label class="form-label light">What platforms are you most active on?</label>
-            <select class="form-select dark-field">
-              <option value="">Select primary platform…</option>
-              <option>Instagram</option>
-              <option>Facebook</option>
-              <option>LinkedIn</option>
-              <option>TikTok</option>
-              <option>YouTube</option>
-              <option>Multiple platforms</option>
-            </select>
-          </div>
-          <div class="form-field full">
-            <label class="form-label light">What offer or message do you want to amplify?</label>
-            <input class="form-input dark-field" type="text" placeholder="e.g. Launching a 6-week program, promoting a client special, building brand awareness…" />
-          </div>
-          <div class="form-field full">
-            <label class="form-label light">Brand colors or logo? (describe, or bring files on your phone)</label>
-            <input class="form-input dark-field" type="text" placeholder="e.g. Deep teal and gold, will bring logo on my phone…" />
-          </div>
-        </div>
-
-        <button class="btn btn-green" style="margin-top:1.4rem;width:100%;justify-content:center;font-size:.9rem;padding:1rem" id="bookingBtn" onclick="submitBooking()">
-          Confirm My Session →
-        </button>
-
-        <div class="booking-success" id="bookingSuccess">
-          <h3>You're Booked! 🎉</h3>
-          <p>We'll send a confirmation to your email and a text reminder the night before your session. Come with your energy — the team handles everything else. Your avatar arrives in 5–7 business days.</p>
-        </div>
+  <!-- ── STEP 1: Package ── -->
+  <div class="step-panel active" id="step-1">
+    <h2 class="step-title">Choose Your Package</h2>
+    <p class="step-subtitle">Conference-exclusive pricing — half the retail rate, available this week only.</p>
+    <div class="pkg-grid">
+      <div class="pkg-card" onclick="selectPkg('Standard','$197','$394',this)">
+        <div class="pkg-card-name">Standard</div>
+        <div class="pkg-card-price">$197</div>
+        <div class="pkg-card-retail">Retail $394</div>
+      </div>
+      <div class="pkg-card selected" onclick="selectPkg('Pro','$297','$594',this)">
+        <div class="pkg-card-name">Pro</div>
+        <div class="pkg-card-price">$297</div>
+        <div class="pkg-card-retail">Retail $594</div>
+        <div class="pkg-popular">Popular</div>
+      </div>
+      <div class="pkg-card" onclick="selectPkg('VIP','$497','$994',this)">
+        <div class="pkg-card-name">VIP</div>
+        <div class="pkg-card-price">$497</div>
+        <div class="pkg-card-retail">Retail $994</div>
       </div>
     </div>
-  </section>
+    <p class="error-msg" id="err-1">Please select a package to continue.</p>
+    <div class="step-nav">
+      <span class="step-count">Step 1 of 4</span>
+      <button class="btn-next" onclick="goNext(1)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 2: Date & Time ── -->
+  <div class="step-panel" id="step-2">
+    <h2 class="step-title">Pick Your Day &amp; Time</h2>
+    <p class="step-subtitle">Sessions run 9 AM – 4 PM. Each slot is 15 minutes.</p>
+    <div class="day-tabs">
+      <div class="day-tab active" onclick="selectDay('wed',this)">
+        <div class="day-tab-day">Wednesday</div>
+        <div class="day-tab-date">June 10, 2026</div>
+        <div class="day-tab-hours">9 AM – 4 PM</div>
+      </div>
+      <div class="day-tab" onclick="selectDay('thu',this)">
+        <div class="day-tab-day">Thursday</div>
+        <div class="day-tab-date">June 11, 2026</div>
+        <div class="day-tab-hours">9 AM – 4 PM</div>
+      </div>
+    </div>
+    <p class="slots-label">Available slots</p>
+    <div class="slots-grid" id="slotsGrid"></div>
+    <div class="selected-slot-badge" id="slotBadge">📅 <span id="slotBadgeText"></span></div>
+    <p class="error-msg" id="err-2">Please select a time slot to continue.</p>
+    <div class="step-nav">
+      <button class="btn-prev show" onclick="goPrev(2)">← Back</button>
+      <span class="step-count">Step 2 of 4</span>
+      <button class="btn-next" onclick="goNext(2)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 3: Contact Info ── -->
+  <div class="step-panel" id="step-3">
+    <h2 class="step-title">Your Information</h2>
+    <p class="step-subtitle">We'll send a confirmation and a reminder the night before your session.</p>
+    <div class="field-grid">
+      <div class="form-field">
+        <label class="form-label">First Name *</label>
+        <input class="form-input" type="text" placeholder="Jane" id="firstName" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Last Name *</label>
+        <input class="form-input" type="text" placeholder="Smith" id="lastName" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email Address *</label>
+        <input class="form-input" type="email" placeholder="jane@example.com" id="email" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Phone / SMS</label>
+        <input class="form-input" type="tel" placeholder="(555) 000-0000" id="phone" />
+      </div>
+    </div>
+    <p class="error-msg" id="err-3">Please enter your first name and email to continue.</p>
+    <div class="step-nav">
+      <button class="btn-prev show" onclick="goPrev(3)">← Back</button>
+      <span class="step-count">Step 3 of 4</span>
+      <button class="btn-next" onclick="goNext(3)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 4: Session Prep ── -->
+  <div class="step-panel" id="step-4">
+    <h2 class="step-title">Session Prep</h2>
+    <p class="step-subtitle">Help us personalize your avatar and social posts before you arrive.</p>
+
+    <div class="field-grid single">
+      <div class="form-field">
+        <label class="form-label">What's your business and what do you do?</label>
+        <input class="form-input" type="text" id="business" placeholder="e.g. MagnaWave practitioner, wellness coach…" />
+      </div>
+    </div>
+    <div class="field-grid single">
+      <div class="form-field">
+        <label class="form-label">Who is your ideal customer?</label>
+        <input class="form-input" type="text" id="icp" placeholder="e.g. Women 40–60 with chronic pain…" />
+      </div>
+    </div>
+    <div class="field-grid">
+      <div class="form-field">
+        <label class="form-label">How do you want to show up in your avatar?</label>
+        <input class="form-input" type="text" id="avatarFeel" placeholder="e.g. Powerful, warm, bold…" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Primary platform</label>
+        <select class="form-select" id="platform">
+          <option value="">Select…</option>
+          <option>Instagram</option>
+          <option>Facebook</option>
+          <option>LinkedIn</option>
+          <option>TikTok</option>
+          <option>YouTube</option>
+          <option>Multiple platforms</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-grid single">
+      <div class="form-field">
+        <label class="form-label">What offer or message do you want to amplify?</label>
+        <input class="form-input" type="text" id="offer" placeholder="e.g. Launching a 6-week program…" />
+      </div>
+    </div>
+    <div class="field-grid single">
+      <div class="form-field">
+        <label class="form-label">Brand colors or logo? (describe or bring files on your phone)</label>
+        <input class="form-input" type="text" id="brand" placeholder="e.g. Deep teal and gold, will bring logo on phone…" />
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <button class="btn-prev show" onclick="goPrev(4)">← Back</button>
+      <span class="step-count">Step 4 of 4</span>
+      <button class="btn-next" onclick="goNext(4)">Review →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 5: Confirm ── -->
+  <div class="step-panel" id="step-5">
+    <h2 class="step-title">Review &amp; Confirm</h2>
+    <p class="step-subtitle">Look good? Hit confirm and you're locked in.</p>
+    <div class="confirm-summary" id="confirmSummary"></div>
+    <div class="step-nav">
+      <button class="btn-prev show" onclick="goPrev(5)">← Back</button>
+      <button class="btn-next green" onclick="submitBooking()">Confirm My Session ✓</button>
+    </div>
+  </div>
+
+  <!-- ── SUCCESS ── -->
+  <div class="success-panel" id="successPanel">
+    <div class="success-icon">🎉</div>
+    <h2>You're Booked!</h2>
+    <p>Confirmation details are on their way to your inbox. We'll send a text reminder the night before. Come with your energy — the team handles the rest. Your avatar arrives in 5–7 business days.</p>
+    <a href="index.html" class="btn btn-primary" style="margin-top:2rem;display:inline-flex">Back to Home</a>
+  </div>
 
 </div>
 
+<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-inner">
       <div>
         <a href="index.html" class="nav-logo">
           <div class="nav-logo-img-crop footer-sz" aria-hidden="true"><img src="Gemini_Generated_Image_bbju21bbju21bbju.png" alt="" /></div>
-          <div class="nav-logo-wrap">
-            <span><span class="thumb">THUMB</span><span class="print">PRINT</span></span>
-            <span class="nav-sub">Curriculum</span>
-          </div>
+          <div class="nav-logo-wrap"><span><span class="thumb">THUMB</span><span class="print">PRINT</span></span><span class="nav-sub">Curriculum</span></div>
         </a>
         <p class="footer-tagline">Strategic curriculum design that shapes futures and leaves a lasting impression.</p>
       </div>
@@ -226,7 +462,7 @@
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 Thumbprint Curriculum. All rights reserved.</span>
       <div class="footer-socials">
-        <a href="#" title="LinkedIn">in</a>
+        <a href="https://www.linkedin.com/company/thumbprint-curriculum/" target="_blank" title="LinkedIn">in</a>
         <a href="#" title="Instagram">ig</a>
         <a href="#" title="X">𝕏</a>
         <a href="#" title="Facebook">fb</a>
@@ -235,80 +471,167 @@
   </div>
 </footer>
 
+<script src="nav.js"></script>
 <script>
-  function makeSlots() {
-    const slots = [];
-    let h = 9, m = 0;
-    while (h < 16) {
-      const h12 = h > 12 ? h - 12 : h;
-      const ampm = h >= 12 ? 'PM' : 'AM';
-      const mm = m === 0 ? '00' : m;
-      slots.push(h12 + ':' + mm + ' ' + ampm);
-      m += 15;
-      if (m >= 60) { m = 0; h++; }
-    }
-    return slots;
-  }
+  // ── State ──────────────────────────────────────────
+  const state = {
+    pkg: 'Pro', pkgPrice: '$297',
+    day: 'wed', slot: null,
+    firstName: '', lastName: '', email: '', phone: '',
+    business: '', icp: '', avatarFeel: '', platform: '', offer: '', brand: ''
+  };
+  let currentStep = 1;
+  const TOTAL = 4;
+  const GOING_BACK = 'going-back';
 
-  const ALL_SLOTS = makeSlots();
+  // ── Slots ──────────────────────────────────────────
   const TAKEN = {
     wed: ['9:15 AM','10:30 AM','11:00 AM','1:00 PM','2:30 PM'],
     thu: ['9:00 AM','10:00 AM','12:15 PM','2:00 PM','3:30 PM']
   };
 
-  let selectedDay = 'wed', selectedTime = null, selectedPkg = 'pro';
+  function makeSlots() {
+    const slots = []; let h = 9, m = 0;
+    while (h < 16) {
+      const h12 = h > 12 ? h - 12 : h;
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      slots.push(h12 + ':' + (m === 0 ? '00' : m) + ' ' + ampm);
+      m += 15; if (m >= 60) { m = 0; h++; }
+    }
+    return slots;
+  }
+  const ALL_SLOTS = makeSlots();
 
   function renderSlots() {
     const grid = document.getElementById('slotsGrid');
     grid.innerHTML = '';
     ALL_SLOTS.forEach(time => {
-      const taken = TAKEN[selectedDay].includes(time);
+      const taken = TAKEN[state.day].includes(time);
       const div = document.createElement('div');
-      div.className = 'slot' + (taken ? ' taken' : '');
+      div.className = 'slot' + (taken ? ' taken' : '') + (time === state.slot ? ' selected' : '');
       div.textContent = time;
       if (!taken) div.onclick = () => pickSlot(time, div);
       grid.appendChild(div);
     });
-    selectedTime = null;
-    document.getElementById('selectedSlotDisplay').classList.add('hidden');
   }
 
   function selectDay(day, el) {
-    selectedDay = day;
+    state.day = day; state.slot = null;
     document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
+    document.getElementById('slotBadge').classList.remove('show');
     renderSlots();
   }
 
   function pickSlot(time, el) {
     document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
     el.classList.add('selected');
-    selectedTime = time;
-    const label = selectedDay === 'wed' ? 'Wednesday, June 10' : 'Thursday, June 11';
-    document.getElementById('selectedSlotText').textContent = label + ' at ' + time;
-    document.getElementById('selectedSlotDisplay').classList.remove('hidden');
+    state.slot = time;
+    const label = state.day === 'wed' ? 'Wednesday, June 10' : 'Thursday, June 11';
+    document.getElementById('slotBadgeText').textContent = label + ' at ' + time;
+    document.getElementById('slotBadge').classList.add('show');
   }
 
-  function selectPkg(pkg, el) {
-    selectedPkg = pkg;
-    document.querySelectorAll('.pkg-option').forEach(o => o.classList.remove('selected'));
+  // ── Package ────────────────────────────────────────
+  function selectPkg(name, price, retail, el) {
+    document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
+    state.pkg = name; state.pkgPrice = price;
   }
 
+  // ── Navigation ─────────────────────────────────────
+  function validate(step) {
+    if (step === 1) {
+      if (!state.pkg) { showErr(1); return false; }
+    }
+    if (step === 2) {
+      if (!state.slot) { showErr(2); return false; }
+    }
+    if (step === 3) {
+      state.firstName = document.getElementById('firstName').value.trim();
+      state.email     = document.getElementById('email').value.trim();
+      state.lastName  = document.getElementById('lastName').value.trim();
+      state.phone     = document.getElementById('phone').value.trim();
+      if (!state.firstName || !state.email) { showErr(3); return false; }
+    }
+    if (step === 4) {
+      state.business   = document.getElementById('business').value.trim();
+      state.icp        = document.getElementById('icp').value.trim();
+      state.avatarFeel = document.getElementById('avatarFeel').value.trim();
+      state.platform   = document.getElementById('platform').value;
+      state.offer      = document.getElementById('offer').value.trim();
+      state.brand      = document.getElementById('brand').value.trim();
+    }
+    return true;
+  }
+
+  function showErr(step) {
+    const el = document.getElementById('err-' + step);
+    if (el) { el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3000); }
+  }
+
+  function goNext(fromStep) {
+    if (!validate(fromStep)) return;
+    if (fromStep === 4) buildConfirm();
+    showStep(fromStep + 1, false);
+  }
+
+  function goPrev(fromStep) {
+    showStep(fromStep - 1, true);
+  }
+
+  function showStep(toStep, goingBack) {
+    const cur = document.getElementById('step-' + currentStep);
+    const next = document.getElementById('step-' + toStep);
+    if (cur) cur.classList.remove('active');
+    if (next) {
+      next.className = 'step-panel active' + (goingBack ? ' ' + GOING_BACK : '');
+      setTimeout(() => next.classList.remove(GOING_BACK), 350);
+    }
+    currentStep = toStep;
+    updateIndicator();
+    window.scrollTo({ top: document.querySelector('.wizard').offsetTop - 80, behavior: 'smooth' });
+  }
+
+  function updateIndicator() {
+    for (let i = 1; i <= 5; i++) {
+      const node = document.getElementById('node-' + i);
+      const line = document.getElementById('line-' + (i - 1));
+      if (!node) continue;
+      node.className = 'step-node' + (i < currentStep ? ' done' : i === currentStep ? ' active' : '');
+      if (line) line.classList.toggle('done', i <= currentStep);
+    }
+  }
+
+  // ── Confirm summary ────────────────────────────────
+  function buildConfirm() {
+    const dayLabel = state.day === 'wed' ? 'Wednesday, June 10' : 'Thursday, June 11';
+    const rows = [
+      ['Package',  state.pkg + ' — ' + state.pkgPrice],
+      ['Date',     dayLabel],
+      ['Time',     state.slot],
+      ['Name',     state.firstName + ' ' + state.lastName],
+      ['Email',    state.email],
+      ['Phone',    state.phone || '—'],
+      ['Business', state.business || '—'],
+      ['Platform', state.platform || '—'],
+    ];
+    document.getElementById('confirmSummary').innerHTML = rows.map(([k, v]) =>
+      `<div class="confirm-row"><span class="confirm-key">${k}</span><span class="confirm-val">${v}</span></div>`
+    ).join('');
+  }
+
+  // ── Submit ─────────────────────────────────────────
   function submitBooking() {
-    const first = document.getElementById('bkFirst').value.trim();
-    const email = document.getElementById('bkEmail').value.trim();
-    if (!first || !email) { alert('Please enter your name and email address.'); return; }
-    if (!selectedTime) { alert('Please select a time slot.'); return; }
-    document.getElementById('bookingBtn').style.display = 'none';
-    const s = document.getElementById('bookingSuccess');
-    s.style.display = 'block';
-    s.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('step-5').classList.remove('active');
+    document.getElementById('stepIndicator').style.display = 'none';
+    document.getElementById('successPanel').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // ── Init ───────────────────────────────────────────
   renderSlots();
+  updateIndicator();
 </script>
-
-<script src="nav.js"></script>
 </body>
 </html>
