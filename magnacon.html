@@ -652,11 +652,15 @@
   }
 
   // ── Submit ─────────────────────────────────────────
+  const STRIPE_LINKS = {
+    Standard: 'https://buy.stripe.com/cNi6oG7e82Yd25q3TDc7u0c',
+    Pro:      'https://buy.stripe.com/fZu4gy9mggP339u3TDc7u0b',
+    VIP:      'https://buy.stripe.com/aFa5kC0PKfKZh0keyhc7u0a'
+  };
+
   function submitBooking() {
-    document.getElementById('step-5').classList.remove('active');
-    document.getElementById('stepIndicator').style.display = 'none';
-    document.getElementById('successPanel').classList.add('show');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const url = STRIPE_LINKS[state.pkg];
+    if (url) window.location.href = url;
   }
 
   // ── Init ───────────────────────────────────────────
