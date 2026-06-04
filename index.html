@@ -8,57 +8,86 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     /* ── LinkedIn native embed carousel ── */
+
+    /* Outer clips the track; mask fades the peeking prev/next */
     .li-carousel-outer {
       overflow: hidden;
       position: relative;
+      mask-image: linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%);
     }
+
     .li-carousel-track {
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
-      transition: transform .55s cubic-bezier(.4,0,.2,1);
+      transition: transform .7s cubic-bezier(.4,0,.2,1);
       will-change: transform;
     }
+
+    /* Each slide — width + peek set by JS */
     .li-slide {
       flex-shrink: 0;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      padding: 1.5rem 0;
+      padding: 1.8rem 0;
+      box-sizing: border-box;
     }
-    /* Scale iframe down on narrow screens */
-    .li-slide iframe {
-      border-radius: 12px;
+
+    /* Branded frame around each iframe */
+    .li-slide-card {
+      border: 1px solid rgba(34,174,228,.22);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #16161e;
+      box-shadow: 0 8px 48px rgba(0,0,0,.55), 0 0 0 1px rgba(34,174,228,.08);
+      width: 100%;
+      max-width: min(600px, 90vw);
+      position: relative;
+    }
+
+    /* Thin brand accent across top of each card */
+    .li-slide-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue-dark), var(--blue-bright));
+      z-index: 1;
+    }
+
+    .li-slide-card iframe {
       display: block;
-      max-width: 100%;
-      transform-origin: top center;
+      width: 100% !important;
+      border: none !important;
     }
+
     /* Nav */
     .li-carousel-nav {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 1rem;
-      padding: .25rem 0 1.8rem;
+      padding: .5rem 0 2rem;
     }
     .li-nav-btn {
-      width: 40px; height: 40px;
+      width: 36px; height: 36px;
       border-radius: 50%;
-      border: 1.5px solid rgba(255,255,255,.2);
-      background: rgba(255,255,255,.05);
-      color: rgba(255,255,255,.6);
-      font-size: 1rem;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.25);
+      font-size: .9rem;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       transition: all .2s;
       font-family: var(--font);
     }
-    .li-nav-btn:hover { border-color: var(--blue-bright); color: var(--blue-bright); background: rgba(34,174,228,.08); }
-    .li-nav-btn:disabled { opacity: .3; cursor: default; }
+    .li-nav-btn:hover { border-color: rgba(255,255,255,.3); color: rgba(255,255,255,.6); }
     .li-dots { display: flex; gap: .5rem; }
     .li-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: rgba(255,255,255,.2); border: none;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,.18); border: none;
       cursor: pointer; padding: 0;
       transition: background .25s, transform .25s;
     }
@@ -149,47 +178,65 @@
 
       <!-- ── Post 1 ── -->
       <div class="li-slide">
-        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7468336662109065219?collapsed=1" height="525" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        <div class="li-slide-card">
+          <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7468336662109065219?collapsed=1" height="525" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        </div>
       </div>
 
       <!-- ── Post 2 ── -->
       <div class="li-slide">
-        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7467650946731319296?collapsed=1" height="525" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        <div class="li-slide-card">
+          <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7467650946731319296?collapsed=1" height="525" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        </div>
       </div>
 
       <!-- ── Post 3 ── -->
       <div class="li-slide">
-        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7465783171855417345?collapsed=1" height="525" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        <div class="li-slide-card">
+          <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7465783171855417345?collapsed=1" height="525" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        </div>
       </div>
 
       <!-- ── Post 4 ── -->
       <div class="li-slide">
-        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7462862985120829440?collapsed=1" height="523" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        <div class="li-slide-card">
+          <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7462862985120829440?collapsed=1" height="523" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        </div>
       </div>
 
       <!-- ── Post 5 ── -->
       <div class="li-slide">
-        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7462523005370556416?collapsed=1" height="523" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        <div class="li-slide-card">
+          <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7462523005370556416?collapsed=1" height="523" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        </div>
       </div>
 
       <!-- ── Post 6 ── -->
       <div class="li-slide">
-        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7457792617599352833?collapsed=1" height="523" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        <div class="li-slide-card">
+          <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7457792617599352833?collapsed=1" height="523" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        </div>
       </div>
 
       <!-- ── Post 7 ── -->
       <div class="li-slide">
-        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7457463665924128768?collapsed=1" height="523" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        <div class="li-slide-card">
+          <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7457463665924128768?collapsed=1" height="523" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        </div>
       </div>
 
       <!-- ── Post 8 ── -->
       <div class="li-slide">
-        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7463306265239220225?collapsed=1" height="500" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        <div class="li-slide-card">
+          <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7463306265239220225?collapsed=1" height="500" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        </div>
       </div>
 
       <!-- ── Post 9 ── -->
       <div class="li-slide">
-        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7463669616393764864?collapsed=1" height="525" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        <div class="li-slide-card">
+          <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7463669616393764864?collapsed=1" height="525" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+        </div>
       </div>
 
       <!-- ── Add more posts below as you get embed codes ── -->
@@ -429,71 +476,83 @@
   var slides  = [];
   var current = 0;
   var track, outer;
+  var PEEK   = 55;   // px visible on each side for prev/next
+  var SPEED  = 6500; // ms between auto-advances
+  var timer;
+
   function init() {
     track  = document.getElementById('liTrack');
     outer  = document.getElementById('liOuter');
-    var dotsEl = document.getElementById('liDots');
+    var dotsEl  = document.getElementById('liDots');
     var prevBtn = document.getElementById('liPrev');
     var nextBtn = document.getElementById('liNext');
-
     if (!track || !outer) return;
+
     slides = Array.from(track.querySelectorAll('.li-slide'));
     var total = slides.length;
 
-    /* Set each slide width = outer width so one fills the view */
+    /* ── Size each slide so prev/next peek in by PEEK px ── */
     function setWidths() {
-      var w = outer.offsetWidth;
+      var ow = outer.offsetWidth;
+      var sw = ow - PEEK * 2;   // slide width = outer minus two peek zones
       slides.forEach(function (s) {
-        s.style.width = w + 'px';
-        s.style.flexShrink = '0';
-        /* Scale iframe down if narrower than 504px */
-        var iframe = s.querySelector('iframe');
-        if (iframe) {
-          var iw = iframe.getAttribute('width') || 504;
-          var scale = Math.min(1, (w - 32) / iw);
-          iframe.style.transform = 'scale(' + scale + ')';
-          iframe.style.transformOrigin = 'top center';
-          s.style.height = Math.round(525 * scale + 40) + 'px';
-        }
+        s.style.width = sw + 'px';
       });
+      applyTransform(false);
     }
-    setWidths();
-    window.addEventListener('resize', function () { setWidths(); goTo(current, false); });
 
-    /* Build dots */
+    /* ── Move track so active slide is centered with peek on each side ── */
+    function applyTransform(animate) {
+      var sw = slides[0].offsetWidth;
+      // offset = PEEK positions slide[0] at left peek zone start;
+      // then subtract current * sw to get to current slide
+      var offset = PEEK - current * sw;
+      track.style.transition = animate === false
+        ? 'none'
+        : 'transform .7s cubic-bezier(.4,0,.2,1)';
+      track.style.transform = 'translateX(' + offset + 'px)';
+    }
+
+    /* ── Dots ── */
     dotsEl.innerHTML = '';
     slides.forEach(function (_, i) {
       var d = document.createElement('button');
       d.className = 'li-dot' + (i === 0 ? ' active' : '');
       d.setAttribute('aria-label', 'Slide ' + (i + 1));
-      d.addEventListener('click', function () { goTo(i); });
+      d.addEventListener('click', function () { goTo(i); resetTimer(); });
       dotsEl.appendChild(d);
     });
 
-    /* Navigate */
-    function goTo(i, animate) {
-      current = ((i % total) + total) % total;
-      var w = outer.offsetWidth;
-      track.style.transition = animate === false ? 'none' : 'transform .5s cubic-bezier(.4,0,.2,1)';
-      track.style.transform  = 'translateX(-' + (current * w) + 'px)';
-      Array.from(dotsEl.children).forEach(function (d, idx) {
-        d.classList.toggle('active', idx === current);
+    function updateDots() {
+      Array.from(dotsEl.children).forEach(function (d, i) {
+        d.classList.toggle('active', i === current);
       });
-      /* disable prev/next at edges if only 1 slide */
-      if (total <= 1) {
-        prevBtn.disabled = nextBtn.disabled = true;
-      }
     }
 
-    prevBtn.addEventListener('click', function () { goTo(current - 1); });
-    nextBtn.addEventListener('click', function () { goTo(current + 1); });
+    /* ── Navigate ── */
+    function goTo(i, animate) {
+      current = ((i % total) + total) % total;
+      applyTransform(animate !== false);
+      updateDots();
+    }
 
-    /* Hide nav if only 1 slide */
+    prevBtn.addEventListener('click', function () { goTo(current - 1); resetTimer(); });
+    nextBtn.addEventListener('click', function () { goTo(current + 1); resetTimer(); });
+
+    /* ── Auto-advance ── */
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(function () { goTo(current + 1); }, SPEED);
+    }
+
+    /* ── Hide nav if only 1 slide ── */
     if (total <= 1) {
       document.getElementById('liNav').style.display = 'none';
     }
 
-    goTo(0, false);
+    setWidths();
+    window.addEventListener('resize', setWidths);
+    resetTimer();
   }
 
   if (document.readyState === 'loading') {
