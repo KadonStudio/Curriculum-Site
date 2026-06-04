@@ -7,128 +7,264 @@
   <link rel="icon" type="image/png" href="Gemini_Generated_Image_bbju21bbju21bbju.png" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── Dark page override ── */
-    body { background: #14141a; }
+    /* ─── Page base ─────────────────────────────── */
+    html, body { background: #111118; }
 
-    .products-header {
-      padding: clamp(3.5rem,7vw,5rem) 0 clamp(2rem,4vw,3rem);
-      background: #14141a;
-      border-bottom: 1px solid rgba(255,255,255,.06);
+    /* ─── Header ────────────────────────────────── */
+    .prod-header {
+      padding: clamp(3rem,7vw,5rem) clamp(1.5rem,5vw,4rem) clamp(2rem,4vw,3rem);
+      border-bottom: 1px solid rgba(255,255,255,.07);
     }
-    .products-header h1 { color: var(--white); }
-    .products-header p { color: rgba(255,255,255,.45); }
-
-    /* ── Full-width accordion ── */
-    .accordion-wrap {
-      max-width: 100%;
-      margin: 0;
-      padding: 0;
-      gap: 0;
-      border-top: 1px solid rgba(255,255,255,.06);
+    .prod-header h1 {
+      font-size: clamp(2rem,4vw,2.8rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -.02em;
+      margin-bottom: .35rem;
+    }
+    .prod-header p {
+      font-size: .95rem;
+      color: rgba(255,255,255,.35);
     }
 
-    .accordion-item {
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      border-radius: 0;
-      box-shadow: none;
-    }
-    .accordion-item.open { box-shadow: none; background: rgba(255,255,255,.025); }
+    /* ─── Product rows ───────────────────────────── */
+    .prod-list { width: 100%; }
 
-    .accordion-trigger {
+    .prod-row {
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      transition: background .15s;
+    }
+
+    /* Trigger ─────────────── */
+    .prod-trigger {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 10px 1fr auto;
+      gap: 1.4rem;
+      align-items: start;
       padding: 2rem clamp(1.5rem,5vw,4rem);
-      align-items: flex-start;
-      gap: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
     }
-    .accordion-trigger:hover { background: rgba(255,255,255,.03); }
+    .prod-trigger:hover { background: rgba(255,255,255,.025); }
 
-    .accordion-dot { margin-top: 6px; }
+    .prod-accent-bar {
+      width: 2px;
+      height: 100%;
+      min-height: 40px;
+      border-radius: 2px;
+      margin-top: 4px;
+      align-self: stretch;
+    }
 
-    .accordion-name { font-size: 1.2rem; color: var(--white); }
-    .accordion-tagline { color: rgba(255,255,255,.35); margin-top: .2rem; }
+    .prod-trigger-body { min-width: 0; }
 
-    /* Product summary — always visible, inside trigger */
-    .accordion-summary {
+    .prod-name {
+      font-size: clamp(1.05rem,2vw,1.25rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -.01em;
+      margin-bottom: .15rem;
+    }
+    .prod-tagline {
+      font-size: .8rem;
+      font-weight: 500;
+      color: rgba(255,255,255,.35);
+      margin-bottom: .6rem;
+      font-style: italic;
+    }
+    .prod-summary {
       font-size: .88rem;
       font-weight: 400;
-      color: rgba(255,255,255,.5);
+      color: rgba(255,255,255,.45);
       line-height: 1.65;
-      margin-top: .6rem;
-      max-width: 680px;
+      max-width: 700px;
     }
 
-    .accordion-chevron { color: rgba(255,255,255,.3); margin-top: 6px; font-size: 1rem; }
-    .accordion-item.open .accordion-chevron { color: var(--white); }
+    .prod-chevron {
+      font-size: .85rem;
+      color: rgba(255,255,255,.3);
+      transition: transform .3s ease;
+      padding-top: 4px;
+      flex-shrink: 0;
+    }
+    .prod-row.open .prod-chevron { transform: rotate(180deg); color: #fff; }
 
-    .accordion-inner {
-      padding: 0 clamp(1.5rem,5vw,4rem) 2.5rem;
+    /* Expandable body ─────── */
+    .prod-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s cubic-bezier(.4,0,.2,1);
+    }
+    .prod-row.open .prod-body { max-height: 900px; }
+
+    .prod-inner {
+      padding: 0 clamp(1.5rem,5vw,4rem) 2.5rem clamp(calc(1.5rem + 10px + 1.4rem),calc(5vw + 24px),calc(4rem + 24px));
       border-top: 1px solid rgba(255,255,255,.05);
     }
 
-    /* ── Dark package chips ── */
-    .pkg-row { gap: 1rem; margin-top: 1.4rem; margin-bottom: 1.4rem; }
-
-    .pkg-chip {
-      flex: 1;
-      min-width: 200px;
-      background: rgba(255,255,255,.04);
-      border-color: rgba(255,255,255,.1);
-      padding: 1.2rem 1.4rem;
+    /* Package chips ─────────── */
+    .pkg-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: .9rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.2rem;
     }
-    .pkg-chip:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.25); }
 
-    .pkg-chip-name { color: rgba(255,255,255,.7); font-size: .8rem; margin-bottom: .3rem; }
-    .pkg-chip-price { color: var(--white); font-size: 1.3rem; }
-    .pkg-chip-period { color: rgba(255,255,255,.4); }
+    .pkg {
+      border: 1.5px solid rgba(255,255,255,.1);
+      border-radius: 10px;
+      padding: 1.2rem 1.3rem;
+      cursor: pointer;
+      background: rgba(255,255,255,.03);
+      transition: border-color .18s, background .18s;
+    }
+    .pkg:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.22); }
+    .pkg.active { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.35); }
 
-    /* Bullet points inside each chip */
+    .pkg-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: .5rem;
+      margin-bottom: .6rem;
+    }
+    .pkg-name {
+      font-size: .8rem;
+      font-weight: 800;
+      color: rgba(255,255,255,.6);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .pkg.active .pkg-name { color: #fff; }
+    .pkg-badge {
+      font-size: .55rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      background: var(--blue-bright);
+      color: #fff;
+      padding: .18rem .5rem;
+      border-radius: 20px;
+    }
+    .pkg-price-wrap {
+      margin-bottom: .9rem;
+    }
+    .pkg-price {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: rgba(255,255,255,.75);
+      letter-spacing: -.02em;
+      line-height: 1;
+    }
+    .pkg.active .pkg-price { color: #fff; }
+    .pkg-period {
+      font-size: .72rem;
+      font-weight: 500;
+      color: rgba(255,255,255,.35);
+    }
+
+    .pkg-divider {
+      height: 1px;
+      background: rgba(255,255,255,.07);
+      margin-bottom: .85rem;
+    }
+
     .pkg-bullets {
       list-style: none;
-      margin-top: .75rem;
-      padding-top: .75rem;
-      border-top: 1px solid rgba(255,255,255,.07);
       display: flex;
       flex-direction: column;
-      gap: .4rem;
-    }
-    .pkg-bullets li {
-      font-size: .76rem;
-      font-weight: 500;
-      color: rgba(255,255,255,.45);
-      line-height: 1.4;
-      display: flex;
-      align-items: flex-start;
       gap: .45rem;
     }
+    .pkg-bullets li {
+      font-size: .78rem;
+      font-weight: 400;
+      color: rgba(255,255,255,.4);
+      line-height: 1.45;
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+    }
+    .pkg.active .pkg-bullets li { color: rgba(255,255,255,.6); }
     .pkg-bullets li::before {
-      content: '–';
-      flex-shrink: 0;
-      font-weight: 700;
+      content: '—';
+      font-size: .65rem;
       color: rgba(255,255,255,.2);
+      flex-shrink: 0;
+      margin-top: 1px;
     }
 
-    /* Selected state — colour varies by product */
-    .pkg-chip.selected { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.35); }
-    .pkg-chip.selected .pkg-chip-name { color: var(--white); }
-    .pkg-chip.selected .pkg-bullets li { color: rgba(255,255,255,.65); }
+    /* Stripe CTA ─────────────── */
+    .prod-stripe {
+      display: none;
+      align-items: center;
+      gap: .9rem;
+      padding: .9rem 1.1rem;
+      background: rgba(99,91,255,.08);
+      border: 1.5px solid rgba(99,91,255,.25);
+      border-radius: 9px;
+      text-decoration: none;
+      transition: background .2s, border-color .2s;
+      margin-top: .3rem;
+    }
+    .prod-stripe.show { display: flex; }
+    .prod-stripe:hover { background: rgba(99,91,255,.14); border-color: rgba(99,91,255,.5); }
 
-    /* Product-specific accent on selected */
-    #acc-sig  .pkg-chip.selected { border-color: var(--blue-bright); }
-    #acc-sig  .pkg-chip.selected .pkg-chip-price { color: var(--blue-bright); }
-    #acc-amp  .pkg-chip.selected { border-color: var(--green); }
-    #acc-amp  .pkg-chip.selected .pkg-chip-price { color: var(--green); }
-    #acc-circ .pkg-chip.selected { border-color: #a78bfa; }
-    #acc-circ .pkg-chip.selected .pkg-chip-price { color: #a78bfa; }
+    .stripe-pill {
+      width: 34px; height: 34px;
+      background: #635bff;
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .stripe-pill svg { width: 15px; height: 15px; }
 
-    /* Renew CTA */
-    .renew-cta-btn { margin-top: 1.2rem; }
+    .stripe-meta { flex: 1; min-width: 0; }
+    .stripe-title {
+      font-size: .88rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .stripe-hint {
+      font-size: .7rem;
+      color: rgba(255,255,255,.3);
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .stripe-arrow { color: #635bff; font-weight: 700; font-size: .95rem; flex-shrink: 0; }
 
-    @media(max-width:700px){
-      .pkg-row { flex-direction: column; }
-      .pkg-chip { min-width: unset; }
-      .accordion-trigger { padding: 1.4rem clamp(1rem,4vw,2rem); }
-      .accordion-inner { padding: 0 clamp(1rem,4vw,2rem) 2rem; }
+    /* Renew ─────────────────── */
+    .renew-mailto {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin-top: 1.4rem;
+      padding: .85rem 1.6rem;
+      background: #f59e0b;
+      color: #111;
+      font-family: var(--font);
+      font-size: .85rem;
+      font-weight: 800;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .renew-mailto:hover { background: #d97706; }
+
+    /* Mobile ────────────────── */
+    @media(max-width: 640px) {
+      .prod-trigger { grid-template-columns: 8px 1fr auto; gap: 1rem; padding: 1.4rem 1rem; }
+      .prod-inner { padding: 0 1rem 2rem 2rem; }
+      .pkg-grid { grid-template-columns: 1fr; }
+      .prod-stripe { flex-wrap: wrap; }
     }
   </style>
 </head>
@@ -154,108 +290,123 @@
 
 <div class="page-body">
 
-  <div class="products-header">
-    <div class="container">
-      <h1>Our Products</h1>
-      <p>Select a product, choose your package, and check out — all in one place.</p>
-    </div>
+  <div class="prod-header">
+    <h1>Our Products</h1>
+    <p>Select a product, choose your package, and check out.</p>
   </div>
 
-  <div class="accordion-wrap">
+  <div class="prod-list">
 
     <!-- ── SIGNATURE ── -->
-    <div class="accordion-item" id="acc-sig">
-      <button class="accordion-trigger" onclick="toggleAccordion('acc-sig')">
-        <span class="accordion-dot" style="background:var(--blue-bright)"></span>
-        <span class="accordion-trigger-text">
-          <span class="accordion-name">Thumbprint Signature</span>
-          <span class="accordion-tagline">Start with your story — AI avatar creation</span>
-          <span class="accordion-summary">A one-time green screen recording session that blends your identity and brand into a professional AI avatar — delivered with 5 ready-to-post social media pieces within 5–7 business days.</span>
+    <div class="prod-row" id="row-sig">
+      <button class="prod-trigger" onclick="toggle('row-sig')">
+        <span class="prod-accent-bar" style="background:var(--blue-bright)"></span>
+        <span class="prod-trigger-body">
+          <span class="prod-name">Thumbprint Signature</span>
+          <span class="prod-tagline">Start with your story — one-time AI avatar creation</span>
+          <span class="prod-summary">A one-time green screen session that blends your identity and brand into a professional AI avatar — delivered with 5 ready-to-post social media pieces within 5–7 business days.</span>
         </span>
-        <span class="accordion-chevron">▾</span>
+        <span class="prod-chevron">▾</span>
       </button>
-      <div class="accordion-body">
-        <div class="accordion-inner">
-          <div class="pkg-row" id="sig-pkgs">
+      <div class="prod-body">
+        <div class="prod-inner">
+          <div class="pkg-grid" id="pkgs-sig">
 
-            <div class="pkg-chip selected" onclick="selectPkg('sig','Standard','$394','',this)">
-              <div class="pkg-chip-name">Standard</div>
-              <div class="pkg-chip-price">$394<span class="pkg-chip-period"> one-time</span></div>
+            <div class="pkg active" onclick="pick('sig','Standard','$394','',this)">
+              <div class="pkg-top">
+                <span class="pkg-name">Standard</span>
+              </div>
+              <div class="pkg-price-wrap">
+                <span class="pkg-price">$394</span><span class="pkg-period"> one-time</span>
+              </div>
+              <div class="pkg-divider"></div>
               <ul class="pkg-bullets">
                 <li>AI avatar tailored to your brand identity</li>
                 <li>5 platform-ready social posts included</li>
               </ul>
             </div>
 
-            <div class="pkg-chip" onclick="selectPkg('sig','Pro','$594','',this)">
-              <div class="pkg-chip-name">Pro <span class="popular-pip">Popular</span></div>
-              <div class="pkg-chip-price">$594<span class="pkg-chip-period"> one-time</span></div>
+            <div class="pkg" onclick="pick('sig','Pro','$594','',this)">
+              <div class="pkg-top">
+                <span class="pkg-name">Pro</span>
+                <span class="pkg-badge">Popular</span>
+              </div>
+              <div class="pkg-price-wrap">
+                <span class="pkg-price">$594</span><span class="pkg-period"> one-time</span>
+              </div>
+              <div class="pkg-divider"></div>
               <ul class="pkg-bullets">
                 <li>Priority production queue + enhanced customization</li>
-                <li>Extended teleprompter session for richer content capture</li>
+                <li>Extended teleprompter session for richer content</li>
               </ul>
             </div>
 
-            <div class="pkg-chip" onclick="selectPkg('sig','VIP','$994','',this)">
-              <div class="pkg-chip-name">VIP</div>
-              <div class="pkg-chip-price">$994<span class="pkg-chip-period"> one-time</span></div>
+            <div class="pkg" onclick="pick('sig','VIP','$994','',this)">
+              <div class="pkg-top">
+                <span class="pkg-name">VIP</span>
+              </div>
+              <div class="pkg-price-wrap">
+                <span class="pkg-price">$994</span><span class="pkg-period"> one-time</span>
+              </div>
+              <div class="pkg-divider"></div>
               <ul class="pkg-bullets">
-                <li>Multiple avatar variations for different platforms &amp; contexts</li>
-                <li>White-glove onboarding to Thumbprint Amplify included</li>
+                <li>Multiple avatar variations for different platforms</li>
+                <li>White-glove onboarding to Thumbprint Amplify</li>
               </ul>
             </div>
 
           </div>
-          <a class="accordion-stripe visible" id="sig-stripe" href="https://buy.stripe.com/REPLACE_SIGNATURE_STANDARD" target="_blank">
-            <div class="stripe-icon">
-              <svg viewBox="0 0 16 16" fill="none"><path d="M14 2H2a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V3a1 1 0 00-1-1z" stroke="white" stroke-width="1.3"/><path d="M1 6h14" stroke="white" stroke-width="1.3"/></svg>
-            </div>
-            <span class="accordion-stripe-text">
-              <span class="accordion-stripe-label" id="sig-stripe-label">Standard — $394 · Continue to Checkout</span>
-              <span class="accordion-stripe-url" id="sig-stripe-url">buy.stripe.com/REPLACE_SIGNATURE_STANDARD</span>
+          <a class="prod-stripe show" id="stripe-sig" href="https://buy.stripe.com/REPLACE_SIGNATURE_STANDARD" target="_blank">
+            <div class="stripe-pill"><svg viewBox="0 0 16 16" fill="none"><path d="M13 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V3a1 1 0 00-1-1z" stroke="white" stroke-width="1.3"/><path d="M2 6h12" stroke="white" stroke-width="1.3"/></svg></div>
+            <span class="stripe-meta">
+              <span class="stripe-title" id="stripe-title-sig">Standard — $394 · Continue to Checkout</span>
+              <span class="stripe-hint" id="stripe-hint-sig">buy.stripe.com / REPLACE_SIGNATURE_STANDARD</span>
             </span>
-            <span class="accordion-stripe-arrow">→</span>
+            <span class="stripe-arrow">→</span>
           </a>
         </div>
       </div>
     </div>
 
     <!-- ── AMPLIFY ── -->
-    <div class="accordion-item" id="acc-amp">
-      <button class="accordion-trigger" onclick="toggleAccordion('acc-amp')">
-        <span class="accordion-dot" style="background:var(--green)"></span>
-        <span class="accordion-trigger-text">
-          <span class="accordion-name">Thumbprint Amplify</span>
-          <span class="accordion-tagline">Show up everywhere, every month — done-for-you content</span>
-          <span class="accordion-summary">A monthly done-for-you content subscription that keeps your brand showing up consistently across every platform — without you creating anything. Built directly off your Signature package.</span>
+    <div class="prod-row" id="row-amp">
+      <button class="prod-trigger" onclick="toggle('row-amp')">
+        <span class="prod-accent-bar" style="background:var(--green)"></span>
+        <span class="prod-trigger-body">
+          <span class="prod-name">Thumbprint Amplify</span>
+          <span class="prod-tagline">Show up everywhere, every month — done-for-you content</span>
+          <span class="prod-summary">A monthly done-for-you content subscription that keeps your brand showing up consistently across every platform — without you creating anything. Built off your Signature package.</span>
         </span>
-        <span class="accordion-chevron">▾</span>
+        <span class="prod-chevron">▾</span>
       </button>
-      <div class="accordion-body">
-        <div class="accordion-inner">
-          <div class="pkg-row" id="amp-pkgs">
+      <div class="prod-body">
+        <div class="prod-inner">
+          <div class="pkg-grid" id="pkgs-amp">
 
-            <div class="pkg-chip selected" onclick="selectPkg('amp','Standard','$219','/mo',this)">
-              <div class="pkg-chip-name">Standard</div>
-              <div class="pkg-chip-price">$219<span class="pkg-chip-period">/mo</span></div>
+            <div class="pkg active" onclick="pick('amp','Standard','$219','/mo',this)">
+              <div class="pkg-top"><span class="pkg-name">Standard</span></div>
+              <div class="pkg-price-wrap"><span class="pkg-price">$219</span><span class="pkg-period">/mo</span></div>
+              <div class="pkg-divider"></div>
               <ul class="pkg-bullets">
                 <li>8 branded posts per month, built to your ICP</li>
                 <li>1 custom content asset per month</li>
               </ul>
             </div>
 
-            <div class="pkg-chip" onclick="selectPkg('amp','Growth','$349','/mo',this)">
-              <div class="pkg-chip-name">Growth <span class="popular-pip">Popular</span></div>
-              <div class="pkg-chip-price">$349<span class="pkg-chip-period">/mo</span></div>
+            <div class="pkg" onclick="pick('amp','Growth','$349','/mo',this)">
+              <div class="pkg-top"><span class="pkg-name">Growth</span><span class="pkg-badge">Popular</span></div>
+              <div class="pkg-price-wrap"><span class="pkg-price">$349</span><span class="pkg-period">/mo</span></div>
+              <div class="pkg-divider"></div>
               <ul class="pkg-bullets">
                 <li>16 posts per month — double the Standard output</li>
                 <li>2 content assets across expanded platform coverage</li>
               </ul>
             </div>
 
-            <div class="pkg-chip" onclick="selectPkg('amp','Premium','$499','/mo',this)">
-              <div class="pkg-chip-name">Premium</div>
-              <div class="pkg-chip-price">$499<span class="pkg-chip-period">/mo</span></div>
+            <div class="pkg" onclick="pick('amp','Premium','$499','/mo',this)">
+              <div class="pkg-top"><span class="pkg-name">Premium</span></div>
+              <div class="pkg-price-wrap"><span class="pkg-price">$499</span><span class="pkg-period">/mo</span></div>
+              <div class="pkg-divider"></div>
               <ul class="pkg-bullets">
                 <li>Custom video production included every month</li>
                 <li>Full brand content suite with priority delivery</li>
@@ -263,47 +414,47 @@
             </div>
 
           </div>
-          <a class="accordion-stripe visible" id="amp-stripe" href="https://buy.stripe.com/REPLACE_AMPLIFY_STANDARD" target="_blank">
-            <div class="stripe-icon">
-              <svg viewBox="0 0 16 16" fill="none"><path d="M14 2H2a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V3a1 1 0 00-1-1z" stroke="white" stroke-width="1.3"/><path d="M1 6h14" stroke="white" stroke-width="1.3"/></svg>
-            </div>
-            <span class="accordion-stripe-text">
-              <span class="accordion-stripe-label" id="amp-stripe-label">Standard — $219/mo · Continue to Checkout</span>
-              <span class="accordion-stripe-url" id="amp-stripe-url">buy.stripe.com/REPLACE_AMPLIFY_STANDARD</span>
+          <a class="prod-stripe show" id="stripe-amp" href="https://buy.stripe.com/REPLACE_AMPLIFY_STANDARD" target="_blank">
+            <div class="stripe-pill"><svg viewBox="0 0 16 16" fill="none"><path d="M13 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V3a1 1 0 00-1-1z" stroke="white" stroke-width="1.3"/><path d="M2 6h12" stroke="white" stroke-width="1.3"/></svg></div>
+            <span class="stripe-meta">
+              <span class="stripe-title" id="stripe-title-amp">Standard — $219/mo · Continue to Checkout</span>
+              <span class="stripe-hint" id="stripe-hint-amp">buy.stripe.com / REPLACE_AMPLIFY_STANDARD</span>
             </span>
-            <span class="accordion-stripe-arrow">→</span>
+            <span class="stripe-arrow">→</span>
           </a>
         </div>
       </div>
     </div>
 
     <!-- ── CIRCLE ── -->
-    <div class="accordion-item" id="acc-circ">
-      <button class="accordion-trigger" onclick="toggleAccordion('acc-circ')">
-        <span class="accordion-dot" style="background:#8b5cf6"></span>
-        <span class="accordion-trigger-text">
-          <span class="accordion-name">Thumbprint Circle</span>
-          <span class="accordion-tagline">Connect with your people — AI learning community</span>
-          <span class="accordion-summary">A weekly AI learning community for wellness entrepreneurs — live sessions, a growing async curriculum library, and a network of peers who understand your business. Cancel anytime.</span>
+    <div class="prod-row" id="row-circ">
+      <button class="prod-trigger" onclick="toggle('row-circ')">
+        <span class="prod-accent-bar" style="background:#8b5cf6"></span>
+        <span class="prod-trigger-body">
+          <span class="prod-name">Thumbprint Circle</span>
+          <span class="prod-tagline">Connect with your people — AI learning community</span>
+          <span class="prod-summary">A weekly AI learning community for wellness entrepreneurs — live sessions, a growing async curriculum library, and a network of peers who understand your business. Cancel anytime.</span>
         </span>
-        <span class="accordion-chevron">▾</span>
+        <span class="prod-chevron">▾</span>
       </button>
-      <div class="accordion-body">
-        <div class="accordion-inner">
-          <div class="pkg-row" id="circ-pkgs">
+      <div class="prod-body">
+        <div class="prod-inner">
+          <div class="pkg-grid" id="pkgs-circ">
 
-            <div class="pkg-chip selected" onclick="selectPkg('circ','Monthly','$97','/mo',this)">
-              <div class="pkg-chip-name">Monthly</div>
-              <div class="pkg-chip-price">$97<span class="pkg-chip-period">/mo</span></div>
+            <div class="pkg active" onclick="pick('circ','Monthly','$97','/mo',this)">
+              <div class="pkg-top"><span class="pkg-name">Monthly</span></div>
+              <div class="pkg-price-wrap"><span class="pkg-price">$97</span><span class="pkg-period">/mo</span></div>
+              <div class="pkg-divider"></div>
               <ul class="pkg-bullets">
                 <li>Weekly 1-hour live sessions + full async library</li>
                 <li>AI-powered peer community access</li>
               </ul>
             </div>
 
-            <div class="pkg-chip" onclick="selectPkg('circ','Annual','$970','/yr',this)">
-              <div class="pkg-chip-name">Annual <span class="popular-pip" style="background:#8b5cf6">Save $194</span></div>
-              <div class="pkg-chip-price">$970<span class="pkg-chip-period">/yr</span></div>
+            <div class="pkg" onclick="pick('circ','Annual','$970','/yr',this)">
+              <div class="pkg-top"><span class="pkg-name">Annual</span><span class="pkg-badge" style="background:#8b5cf6">Save $194</span></div>
+              <div class="pkg-price-wrap"><span class="pkg-price">$970</span><span class="pkg-period">/yr</span></div>
+              <div class="pkg-divider"></div>
               <ul class="pkg-bullets">
                 <li>2 months free — $194 in annual savings</li>
                 <li>Priority hot seat access in every weekly session</li>
@@ -311,40 +462,38 @@
             </div>
 
           </div>
-          <a class="accordion-stripe visible" id="circ-stripe" href="https://buy.stripe.com/REPLACE_CIRCLE_MONTHLY" target="_blank">
-            <div class="stripe-icon">
-              <svg viewBox="0 0 16 16" fill="none"><path d="M14 2H2a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V3a1 1 0 00-1-1z" stroke="white" stroke-width="1.3"/><path d="M1 6h14" stroke="white" stroke-width="1.3"/></svg>
-            </div>
-            <span class="accordion-stripe-text">
-              <span class="accordion-stripe-label" id="circ-stripe-label">Monthly — $97/mo · Continue to Checkout</span>
-              <span class="accordion-stripe-url" id="circ-stripe-url">buy.stripe.com/REPLACE_CIRCLE_MONTHLY</span>
+          <a class="prod-stripe show" id="stripe-circ" href="https://buy.stripe.com/REPLACE_CIRCLE_MONTHLY" target="_blank">
+            <div class="stripe-pill"><svg viewBox="0 0 16 16" fill="none"><path d="M13 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V3a1 1 0 00-1-1z" stroke="white" stroke-width="1.3"/><path d="M2 6h12" stroke="white" stroke-width="1.3"/></svg></div>
+            <span class="stripe-meta">
+              <span class="stripe-title" id="stripe-title-circ">Monthly — $97/mo · Continue to Checkout</span>
+              <span class="stripe-hint" id="stripe-hint-circ">buy.stripe.com / REPLACE_CIRCLE_MONTHLY</span>
             </span>
-            <span class="accordion-stripe-arrow">→</span>
+            <span class="stripe-arrow">→</span>
           </a>
         </div>
       </div>
     </div>
 
     <!-- ── RENEW ── -->
-    <div class="accordion-item" id="acc-renew">
-      <button class="accordion-trigger" onclick="toggleAccordion('acc-renew')">
-        <span class="accordion-dot" style="background:#f59e0b"></span>
-        <span class="accordion-trigger-text">
-          <span class="accordion-name">Thumbprint Renew</span>
-          <span class="accordion-tagline">Your best content, reborn — content modernization &amp; CLO</span>
-          <span class="accordion-summary">A content modernization service that takes your existing training programs, curricula, or onboarding materials and rebuilds them for how people actually learn today — with multi-modal design, LMS hosting, and fractional CLO services available.</span>
+    <div class="prod-row" id="row-renew">
+      <button class="prod-trigger" onclick="toggle('row-renew')">
+        <span class="prod-accent-bar" style="background:#f59e0b"></span>
+        <span class="prod-trigger-body">
+          <span class="prod-name">Thumbprint Renew</span>
+          <span class="prod-tagline">Your best content, reborn — content modernization &amp; CLO</span>
+          <span class="prod-summary">We take your existing training programs, curricula, or onboarding materials and rebuild them for how people actually learn today — multi-modal design, LMS hosting, and fractional CLO services available.</span>
         </span>
-        <span class="accordion-chevron">▾</span>
+        <span class="prod-chevron">▾</span>
       </button>
-      <div class="accordion-body">
-        <div class="accordion-inner">
-          <p style="color:rgba(255,255,255,.45);font-size:.88rem;margin-top:1.2rem;margin-bottom:1.2rem;line-height:1.7">Pricing is custom-scoped after a discovery call based on the size and complexity of your existing content.</p>
-          <a href="mailto:kadon@thumbprint.consulting?subject=Thumbprint%20Renew%20%E2%80%94%20Discovery%20Call%20Request" class="renew-cta-btn">Request a Discovery Call →</a>
+      <div class="prod-body">
+        <div class="prod-inner">
+          <p style="font-size:.88rem;color:rgba(255,255,255,.4);margin-top:1.2rem;line-height:1.7">Pricing is custom-scoped after a discovery call based on the size and complexity of your existing content.</p>
+          <a href="mailto:kadon@thumbprint.consulting?subject=Thumbprint%20Renew%20%E2%80%94%20Discovery%20Call%20Request" class="renew-mailto">Request a Discovery Call →</a>
         </div>
       </div>
     </div>
 
-  </div><!-- /accordion-wrap -->
+  </div>
 
 </div>
 
@@ -355,10 +504,7 @@
       <div>
         <a href="index.html" class="nav-logo">
           <div class="nav-logo-img-crop footer-sz" aria-hidden="true"><img src="Gemini_Generated_Image_bbju21bbju21bbju.png" alt="" /></div>
-          <div class="nav-logo-wrap">
-            <span><span class="thumb">THUMB</span><span class="print">PRINT</span></span>
-            <span class="nav-sub">Curriculum</span>
-          </div>
+          <div class="nav-logo-wrap"><span><span class="thumb">THUMB</span><span class="print">PRINT</span></span><span class="nav-sub">Curriculum</span></div>
         </a>
         <p class="footer-tagline">Strategic curriculum design that shapes futures and leaves a lasting impression.</p>
       </div>
@@ -391,10 +537,7 @@
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 Thumbprint Curriculum. All rights reserved.</span>
       <div class="footer-socials">
-        <a href="#" title="LinkedIn">in</a>
-        <a href="#" title="Instagram">ig</a>
-        <a href="#" title="X">𝕏</a>
-        <a href="#" title="Facebook">fb</a>
+        <a href="#">in</a><a href="#">ig</a><a href="#">𝕏</a><a href="#">fb</a>
       </div>
     </div>
   </div>
@@ -407,21 +550,25 @@
     circ: { Monthly:'https://buy.stripe.com/REPLACE_CIRCLE_MONTHLY', Annual:'https://buy.stripe.com/REPLACE_CIRCLE_ANNUAL' }
   };
 
-  function toggleAccordion(id) {
+  function toggle(id) {
     document.getElementById(id).classList.toggle('open');
   }
 
-  function selectPkg(product, name, price, period, el) {
-    document.querySelectorAll('#' + product + '-pkgs .pkg-chip').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    const url     = STRIPE[product][name];
-    const stripe  = document.getElementById(product + '-stripe');
-    const label   = document.getElementById(product + '-stripe-label');
-    const urlText = document.getElementById(product + '-stripe-url');
-    stripe.href        = url;
-    label.textContent  = name + ' — ' + price + period + ' · Continue to Checkout';
-    urlText.textContent = url.replace('https://', '');
-    stripe.classList.add('visible');
+  function pick(product, name, price, period, el) {
+    document.querySelectorAll('#pkgs-' + product + ' .pkg').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+
+    const url   = STRIPE[product] ? STRIPE[product][name] : '#';
+    const sEl   = document.getElementById('stripe-' + product);
+    const title = document.getElementById('stripe-title-' + product);
+    const hint  = document.getElementById('stripe-hint-' + product);
+
+    if (sEl) {
+      sEl.href = url;
+      title.textContent = name + ' — ' + price + period + ' · Continue to Checkout';
+      hint.textContent  = url.replace('https://', '');
+      sEl.classList.add('show');
+    }
   }
 </script>
 
