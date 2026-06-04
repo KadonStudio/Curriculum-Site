@@ -26,8 +26,35 @@ nav {
   height: var(--nav-h); background: var(--dark);
   display: flex; align-items: center;
   padding: 0 clamp(1.5rem,5vw,4rem);
-  border-bottom: 2px solid rgba(34,174,228,.18);
+  border-bottom: 1px solid rgba(34,174,228,.12);
+  overflow: hidden;
 }
+/* LED laser scan along nav bottom edge */
+nav::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -45%;
+  width: 45%;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(34,174,228,.2) 20%,
+    rgba(34,174,228,.9) 45%,
+    #22AEE4 50%,
+    rgba(34,174,228,.9) 55%,
+    rgba(34,174,228,.2) 80%,
+    transparent 100%
+  );
+  filter: drop-shadow(0 0 4px #22AEE4) drop-shadow(0 0 10px rgba(34,174,228,.7));
+  animation: navLaser 5s linear infinite;
+  pointer-events: none;
+}
+@keyframes navLaser {
+  0%   { left: -45%; }
+  100% { left: 105%; }
+}
+
 .nav-inner { width:100%; max-width:var(--max-w); margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
 .nav-logo { font-size:clamp(1.1rem,2vw,1.35rem); font-weight:800; letter-spacing:.12em; text-transform:uppercase; line-height:1; text-decoration:none; display:flex; align-items:center; gap:.7rem; }
 .nav-logo .thumb { color:var(--blue-bright); }

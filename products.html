@@ -84,31 +84,21 @@
     }
 
     .prod-chevron {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(255,255,255,.15);
-      background: rgba(255,255,255,.05);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
-      color: rgba(255,255,255,.5);
-      transition: transform .3s ease, border-color .2s, background .2s, color .2s;
       flex-shrink: 0;
-      margin-top: 3px;
+      margin-top: 5px;
+      color: rgba(255,255,255,.3);
+      transition: color .2s;
     }
-    .prod-trigger:hover .prod-chevron {
-      border-color: rgba(255,255,255,.3);
-      background: rgba(255,255,255,.09);
-      color: #fff;
+    .prod-chevron svg {
+      width: 22px;
+      height: 22px;
+      display: block;
     }
-    .prod-row.open .prod-chevron {
-      transform: rotate(180deg);
-      border-color: rgba(255,255,255,.4);
-      background: rgba(255,255,255,.1);
-      color: #fff;
-    }
+    .prod-trigger:hover .prod-chevron { color: rgba(255,255,255,.7); }
+    .prod-row.open .prod-chevron { color: #fff; transform: scaleY(-1); }
 
     /* Expandable body ─────── */
     .prod-body {
@@ -324,7 +314,7 @@
           <span class="prod-tagline">Start with your story — one-time AI avatar creation</span>
           <span class="prod-summary">A one-time green screen session that blends your identity and brand into a professional AI avatar — delivered with 5 ready-to-post social media pieces within 5–7 business days.</span>
         </span>
-        <span class="prod-chevron">▾</span>
+        <span class="prod-chevron"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 10 11 19 1"/></svg></span>
       </button>
       <div class="prod-body">
         <div class="prod-inner">
@@ -395,7 +385,7 @@
           <span class="prod-tagline">Show up everywhere, every month — done-for-you content</span>
           <span class="prod-summary">A monthly done-for-you content subscription that keeps your brand showing up consistently across every platform — without you creating anything. Built off your Signature package.</span>
         </span>
-        <span class="prod-chevron">▾</span>
+        <span class="prod-chevron"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 10 11 19 1"/></svg></span>
       </button>
       <div class="prod-body">
         <div class="prod-inner">
@@ -453,7 +443,7 @@
           <span class="prod-tagline">Connect with your people — AI learning community</span>
           <span class="prod-summary">A weekly AI learning community for wellness entrepreneurs — live sessions, a growing async curriculum library, and a network of peers who understand your business. Cancel anytime.</span>
         </span>
-        <span class="prod-chevron">▾</span>
+        <span class="prod-chevron"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 10 11 19 1"/></svg></span>
       </button>
       <div class="prod-body">
         <div class="prod-inner">
@@ -501,7 +491,7 @@
           <span class="prod-tagline">Your best content, reborn — content modernization &amp; CLO</span>
           <span class="prod-summary">We take your existing training programs, curricula, or onboarding materials and rebuild them for how people actually learn today — multi-modal design, LMS hosting, and fractional CLO services available.</span>
         </span>
-        <span class="prod-chevron">▾</span>
+        <span class="prod-chevron"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 10 11 19 1"/></svg></span>
       </button>
       <div class="prod-body">
         <div class="prod-inner">
