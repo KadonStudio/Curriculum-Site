@@ -7,32 +7,69 @@
   <link rel="icon" type="image/png" href="Gemini_Generated_Image_bbju21bbju21bbju.png" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── Juicer feed dark-theme overrides ── */
-    .juicer-wrap { padding: 0 clamp(1rem,3vw,2rem) 1rem; }
+    /* ── Juicer feed — horizontal scroll carousel ── */
 
+    /* Outer wrapper: clip + fade edges */
+    .juicer-wrap {
+      overflow: hidden;
+      position: relative;
+      padding: 0;
+      mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+    }
+
+    /* Kill Juicer's default grid and make it a horizontal row */
     .juicer-feed { background: transparent !important; }
     .juicer-feed h1.referral { display: none !important; }
+    .juicer-feed ul.j-column-item-list,
+    .juicer-feed .j-column-item-list {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      overflow-y: visible !important;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+      gap: 1.4rem !important;
+      padding: 1.2rem 2rem !important;
+      background: transparent !important;
+      column-count: unset !important;
+      columns: unset !important;
+      width: max-content !important;
+      max-width: none !important;
+    }
+    .juicer-feed ul.j-column-item-list::-webkit-scrollbar { display: none !important; }
 
-    /* Grid of posts */
-    .juicer-feed ul.j-column-item-list { background: transparent !important; }
-    .juicer-feed li.feed-item { background: rgba(255,255,255,.05) !important; border: 1px solid rgba(255,255,255,.09) !important; border-radius: 10px !important; overflow: hidden; transition: transform .2s, box-shadow .2s; }
-    .juicer-feed li.feed-item:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.4) !important; }
+    /* Each post card — fixed width */
+    .juicer-feed li.feed-item {
+      flex-shrink: 0 !important;
+      width: min(300px, 80vw) !important;
+      background: rgba(255,255,255,.05) !important;
+      border: 1px solid rgba(255,255,255,.09) !important;
+      border-radius: 12px !important;
+      overflow: hidden !important;
+      transition: transform .25s, box-shadow .25s !important;
+      float: none !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    .juicer-feed li.feed-item:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,.45) !important;
+    }
 
     /* Post text */
-    .juicer-feed .j-text p, .juicer-feed .j-text span, .juicer-feed p.j-text { color: rgba(255,255,255,.75) !important; font-family: 'Montserrat', sans-serif !important; font-size: .85rem !important; line-height: 1.65 !important; }
-
-    /* Meta / author */
-    .juicer-feed .j-meta a, .juicer-feed .j-meta span { color: rgba(255,255,255,.4) !important; font-family: 'Montserrat', sans-serif !important; font-size: .72rem !important; }
-    .juicer-feed .j-poster { color: rgba(255,255,255,.55) !important; }
-    .juicer-feed .j-poster a { color: var(--blue-bright) !important; font-weight: 700 !important; }
-    .juicer-feed time { color: rgba(255,255,255,.3) !important; }
-
-    /* Buttons */
-    .juicer-feed .j-paginate, .juicer-feed .j-read-more { background: rgba(34,174,228,.15) !important; color: var(--blue-bright) !important; border: 1px solid rgba(34,174,228,.3) !important; border-radius: 6px !important; font-family: 'Montserrat', sans-serif !important; font-weight: 700 !important; font-size: .78rem !important; letter-spacing: .08em !important; }
-    .juicer-feed .j-paginate:hover { background: rgba(34,174,228,.25) !important; }
-
-    /* Loading state */
-    .juicer-feed .j-loading { color: var(--blue-bright) !important; }
+    .juicer-feed .j-text, .juicer-feed .j-text p, .juicer-feed .j-text span {
+      color: rgba(255,255,255,.75) !important;
+      font-family: 'Montserrat', sans-serif !important;
+      font-size: .83rem !important;
+      line-height: 1.65 !important;
+    }
+    /* Author / meta */
+    .juicer-feed .j-poster, .juicer-feed .j-poster a { color: var(--blue-bright) !important; font-weight: 700 !important; font-size: .78rem !important; }
+    .juicer-feed .j-meta, .juicer-feed .j-meta a, .juicer-feed time { color: rgba(255,255,255,.3) !important; font-size: .7rem !important; }
+    /* Load more */
+    .juicer-feed .j-paginate { background: rgba(34,174,228,.12) !important; color: var(--blue-bright) !important; border: 1px solid rgba(34,174,228,.3) !important; border-radius: 6px !important; font-family: 'Montserrat', sans-serif !important; font-weight: 700 !important; }
   </style>
 </head>
 <body>
@@ -338,5 +375,54 @@
 </footer>
 
 <script src="nav.js"></script>
+<script>
+// Auto-scroll the Juicer feed horizontally once posts have loaded
+(function () {
+  var paused = false;
+  var raf;
+
+  function getList() {
+    return document.querySelector(
+      '.juicer-feed ul.j-column-item-list, .juicer-feed .j-column-item-list'
+    );
+  }
+
+  function startScroll(list) {
+    paused = false;
+
+    list.addEventListener('mouseenter', function () { paused = true; });
+    list.addEventListener('mouseleave', function () { paused = false; });
+    list.addEventListener('touchstart', function () { paused = true; }, { passive: true });
+    list.addEventListener('touchend',   function () {
+      setTimeout(function () { paused = false; }, 2500);
+    }, { passive: true });
+
+    function tick() {
+      if (!paused && list) {
+        list.scrollLeft += 0.45;
+        // Seamless loop: when near the right edge, jump to start
+        if (list.scrollLeft >= list.scrollWidth - list.clientWidth - 2) {
+          list.scrollLeft = 0;
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  function waitForPosts() {
+    var list = getList();
+    if (list && list.children.length > 1) {
+      // Give Juicer a moment to finish rendering images/heights
+      setTimeout(function () { startScroll(list); }, 400);
+    } else {
+      setTimeout(waitForPosts, 700);
+    }
+  }
+
+  // Start polling after a short delay to let Juicer initialise
+  setTimeout(waitForPosts, 1200);
+})();
+</script>
 </body>
 </html>
