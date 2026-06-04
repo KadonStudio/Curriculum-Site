@@ -1024,7 +1024,8 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.07); }
   .magnacon-title { font-size:.85rem; }
   .magnacon-cta { width:100%; text-align:center; }
 
-  /* Hero */
+  /* Hero — remove forced full-screen height on mobile */
+  .hero { min-height: unset; padding: 3.5rem 0 3rem; }
   .hero-h1 { font-size:2rem; }
   .hero-sub { font-size:.9rem; }
   .hero-actions { flex-direction:column; }
