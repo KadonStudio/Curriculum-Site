@@ -47,7 +47,7 @@ nav::after {
     transparent 100%
   );
   filter: drop-shadow(0 0 4px #22AEE4) drop-shadow(0 0 10px rgba(34,174,228,.7));
-  animation: navLaser 5s linear infinite;
+  animation: navLaser 12s linear infinite;
   pointer-events: none;
 }
 @keyframes navLaser {
