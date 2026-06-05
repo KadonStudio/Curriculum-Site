@@ -440,8 +440,8 @@
   });
 
   /* ── Submit session prep ── */
-  // ── Paste your Formspree endpoint here ──────────────────────────
-  var FORMSPREE_URL = 'https://formspree.io/f/REPLACE_WITH_YOUR_ID';
+  // ── Paste your Web3Forms access key here ────────────────────────
+  var W3F_KEY = 'REPLACE_WITH_YOUR_WEB3FORMS_KEY';
   // ─────────────────────────────────────────────────────────────────
 
   async function submitBooking() {
@@ -450,24 +450,27 @@
     btn.textContent = 'Sending…';
 
     var payload = {
-      _subject:       'MagnaCon Session Prep — ' + state.pkg + ' Package',
+      access_key:     W3F_KEY,
+      subject:        'MagnaCon Session Prep — ' + state.pkg + ' Package',
+      from_name:      'Thumbprint MagnaCon',
       package:        state.pkg + ' (' + state.pkgPrice + ')',
-      business:       document.getElementById('business').value.trim() || '—',
-      ideal_customer: document.getElementById('icp').value.trim()        || '—',
-      avatar_feel:    document.getElementById('avatarFeel').value.trim() || '—',
-      platform:       document.getElementById('platform').value          || '—',
-      offer:          document.getElementById('offer').value.trim()      || '—',
-      brand_notes:    document.getElementById('brand').value.trim()      || '—'
+      business:       document.getElementById('business').value.trim()   || '—',
+      ideal_customer: document.getElementById('icp').value.trim()         || '—',
+      avatar_feel:    document.getElementById('avatarFeel').value.trim()  || '—',
+      platform:       document.getElementById('platform').value           || '—',
+      offer:          document.getElementById('offer').value.trim()       || '—',
+      brand_notes:    document.getElementById('brand').value.trim()       || '—'
     };
 
     try {
-      var res = await fetch(FORMSPREE_URL, {
+      var res = await fetch('https://api.web3forms.com/submit', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body:    JSON.stringify(payload)
       });
+      var data = await res.json();
 
-      if (res.ok) {
+      if (data.success) {
         document.getElementById('step-3').classList.remove('active');
         document.getElementById('stepIndicator').style.display = 'none';
         document.getElementById('successPanel').classList.add('show');
