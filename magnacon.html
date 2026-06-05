@@ -63,18 +63,16 @@
     .pkg-card.selected .pkg-includes li { color:rgba(255,255,255,.65); }
     .pkg-card.selected .pkg-includes li::before { color:var(--blue-bright); }
 
-    /* ── Calendly embed ── */
-    .calendly-wrap {
-      border: 1px solid rgba(34,174,228,.2);
-      border-radius: 14px;
-      overflow: hidden;
-      background: #fff;
-      margin-bottom: 1rem;
+    /* ── Calendly popup button ── */
+    #openCalendlyBtn {
+      background: var(--blue-bright);
+      color: #fff;
+      font-family: var(--font);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: background .2s, transform .15s;
     }
-    .calendly-inline-widget {
-      min-width: 320px;
-      height: 700px;
-    }
+    #openCalendlyBtn:hover { background: var(--blue-dark); transform: translateY(-2px); }
 
     /* Booked confirmation badge */
     .booked-badge {
@@ -239,12 +237,17 @@
       </div>
     </div>
 
-    <!-- Calendly inline embed -->
-    <div class="calendly-wrap">
-      <div class="calendly-inline-widget"
-           data-url="https://calendly.com/aitools-thumbprint/in-person-avatar-shoot?hide_gdpr_banner=1&background_color=111118&text_color=ffffff&primary_color=22AEE4"
-           data-processed="false">
-      </div>
+    <!-- Calendly popup trigger -->
+    <div style="text-align:center;padding:2.5rem 1rem 1.5rem">
+      <p style="font-size:.85rem;color:rgba(255,255,255,.35);margin-bottom:1.5rem">
+        Your session takes place at MagnaCon 2026 · Louisville, KY · June 10–11
+      </p>
+      <button id="openCalendlyBtn" onclick="openCalendly()" class="btn-next" style="font-size:1rem;padding:1.1rem 2.5rem;border-radius:8px;border:none;cursor:pointer">
+        📅 &nbsp;Choose My Time Slot
+      </button>
+      <p style="font-size:.75rem;color:rgba(255,255,255,.25);margin-top:1rem">
+        Calendly will open — pick your slot, enter your details, and return here to continue.
+      </p>
     </div>
 
     <div class="step-nav">
@@ -423,18 +426,28 @@
     if (el) { el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3000); }
   }
 
+  /* ── Open Calendly popup ── */
+  function openCalendly() {
+    if (window.Calendly) {
+      Calendly.showPopupWidget('https://calendly.com/aitools-thumbprint/in-person-avatar-shoot');
+    } else {
+      // Fallback: open in new tab if Calendly script hasn't loaded
+      window.open('https://calendly.com/aitools-thumbprint/in-person-avatar-shoot', '_blank');
+    }
+  }
+
   /* ── Listen for Calendly booking completion ── */
   window.addEventListener('message', function (e) {
     if (e.data && e.data.event === 'calendly.event_scheduled') {
       state.calendlyBooked = true;
-      // Show booked badge
+      // Hide the "choose slot" button, show booked badge
+      document.getElementById('openCalendlyBtn').style.display = 'none';
       document.getElementById('bookedBadge').classList.add('show');
       // Enable + highlight the Next button
       var btn = document.getElementById('nextFromCalendly');
       btn.disabled = false;
       btn.classList.add('green');
       btn.textContent = 'Continue to Session Prep →';
-      // Scroll to the Next button
       btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   });
