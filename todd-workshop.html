@@ -63,34 +63,35 @@
     .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.2rem; margin-top: 2rem; }
     .resource-card {
       background: rgba(255,255,255,.03); border: 1.5px solid rgba(255,255,255,.08);
-      border-radius: 14px; padding: 1.4rem; display: flex; gap: 1.2rem; align-items: flex-start;
+      border-radius: 14px; padding: 1.6rem; display: flex; flex-direction: column; gap: 0;
       transition: border-color .2s;
     }
     .resource-card:hover { border-color: rgba(255,255,255,.18); }
+    .resource-card-top { display: flex; align-items: flex-start; gap: 1.1rem; margin-bottom: 1rem; }
     .resource-thumb {
-      width: 60px; flex-shrink: 0; border-radius: 8px; overflow: hidden;
+      width: 56px; flex-shrink: 0; border-radius: 8px; overflow: hidden;
       background: linear-gradient(160deg,rgba(34,174,228,.25),rgba(0,200,150,.15));
       aspect-ratio: 3/4; display: flex; flex-direction: column; align-items: center;
       justify-content: center; gap: .3rem;
     }
     .resource-thumb-label {
-      font-size: .46rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+      font-size: .44rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
       color: var(--blue-bright); text-align: center; padding: 0 .25rem; line-height: 1.3;
     }
     .resource-thumb-icon { font-size: 1.2rem; }
-    .resource-info { flex: 1; }
+    .resource-info { flex: 1; display: flex; flex-direction: column; }
     .resource-badge {
       font-size: .58rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
-      color: rgba(255,255,255,.35); margin-bottom: .4rem; display: block;
+      color: rgba(255,255,255,.35); margin-bottom: .35rem; display: block;
     }
-    .resource-title { font-size: 1rem; font-weight: 800; color: var(--white); margin-bottom: .35rem; }
-    .resource-desc { font-size: .82rem; color: rgba(255,255,255,.4); line-height: 1.55; margin-bottom: .9rem; }
+    .resource-title { font-size: 1rem; font-weight: 800; color: var(--white); margin-bottom: 0; }
+    .resource-desc { font-size: .83rem; color: rgba(255,255,255,.4); line-height: 1.6; flex: 1; margin-bottom: 1.2rem; }
     .resource-dl {
-      display: flex; align-items: center; justify-content: center; gap: .4rem;
+      display: flex; align-items: center; justify-content: center; gap: .45rem;
       font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
       color: var(--blue-bright); background: rgba(34,174,228,.1); border: 1px solid rgba(34,174,228,.25);
-      border-radius: 6px; padding: .6rem .9rem; text-decoration: none;
-      transition: background .2s, border-color .2s; cursor: pointer; width: 100%;
+      border-radius: 8px; padding: .75rem 1rem; text-decoration: none;
+      transition: background .2s, border-color .2s; cursor: pointer; width: 100%; box-sizing: border-box;
     }
     .resource-dl:hover { background: rgba(34,174,228,.2); border-color: rgba(34,174,228,.45); }
     .resource-note { font-size: .72rem; color: rgba(255,255,255,.25); margin-top: 1rem; font-style: italic; }
@@ -200,35 +201,39 @@
       <div class="resource-grid">
 
         <div class="resource-card">
-          <div class="resource-thumb">
-            <div class="resource-thumb-icon">📋</div>
-            <div class="resource-thumb-label">One-page PDF</div>
+          <div class="resource-card-top">
+            <div class="resource-thumb">
+              <div class="resource-thumb-icon">📋</div>
+              <div class="resource-thumb-label">One-page PDF</div>
+            </div>
+            <div class="resource-info">
+              <span class="resource-badge">One-page PDF</span>
+              <div class="resource-title">10 Favorite AI Tools List</div>
+            </div>
           </div>
-          <div class="resource-info">
-            <span class="resource-badge">One-page PDF</span>
-            <div class="resource-title">10 Favorite AI Tools List</div>
-            <div class="resource-desc">Not just a list — exactly when and how to use each tool, with a pro tip for every one.</div>
-            <button onclick="openDlModal('10 Favorite AI Tools List','10-favorite-ai-tools.pdf')" class="resource-dl">
-              <svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/><rect x="2" y="13" width="12" height="1.5" rx=".75"/></svg>
-              Download Free
-            </button>
-          </div>
+          <div class="resource-desc">Not just a list — exactly when and how to use each tool, with a pro tip for every one.</div>
+          <button onclick="openDlModal('10 Favorite AI Tools List','10-favorite-ai-tools.pdf')" class="resource-dl">
+            <svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/><rect x="2" y="13" width="12" height="1.5" rx=".75"/></svg>
+            Download Free
+          </button>
         </div>
 
         <div class="resource-card">
-          <div class="resource-thumb">
-            <div class="resource-thumb-icon">📖</div>
-            <div class="resource-thumb-label">8–12 page PDF</div>
+          <div class="resource-card-top">
+            <div class="resource-thumb">
+              <div class="resource-thumb-icon">📖</div>
+              <div class="resource-thumb-label">8–12 page PDF</div>
+            </div>
+            <div class="resource-info">
+              <span class="resource-badge">8–12 page PDF</span>
+              <div class="resource-title">The Prompt Book</div>
+            </div>
           </div>
-          <div class="resource-info">
-            <span class="resource-badge">8–12 page PDF</span>
-            <div class="resource-title">The Prompt Book</div>
-            <div class="resource-desc">Copy-paste prompts organized by use case — social media, customer education, team training, and follow-up.</div>
-            <button onclick="openDlModal('The Prompt Book','the-prompt-book.pdf')" class="resource-dl">
-              <svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/><rect x="2" y="13" width="12" height="1.5" rx=".75"/></svg>
-              Download Free
-            </button>
-          </div>
+          <div class="resource-desc">Copy-paste prompts organized by use case — social media, customer education, team training, and follow-up.</div>
+          <button onclick="openDlModal('The Prompt Book','the-prompt-book.pdf')" class="resource-dl">
+            <svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/><rect x="2" y="13" width="12" height="1.5" rx=".75"/></svg>
+            Download Free
+          </button>
         </div>
 
       </div>
