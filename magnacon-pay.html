@@ -23,9 +23,39 @@
       display: grid; grid-template-columns: 1fr 420px; gap: 2.5rem; align-items: start;
     }
 
-    /* ── Package label ── */
+    /* ── Package label & selector ── */
     .pkg-label { font-size:.65rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1rem;display:block; }
+    .pkg-list { display:flex;flex-direction:column;gap:.75rem; }
+    .pkg-row {
+      border:1.5px solid rgba(255,255,255,.1); border-radius:10px; padding:1.1rem 1.2rem;
+      cursor:pointer; background:rgba(255,255,255,.03); transition:all .18s;
+      display:flex; align-items:center; gap:1rem;
+    }
+    .pkg-row:hover { border-color:rgba(255,255,255,.25); background:rgba(255,255,255,.05); }
+    .pkg-row.selected { border-color:var(--blue-bright); background:rgba(34,174,228,.07); }
+    .pkg-radio {
+      width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.2);
+      flex-shrink:0;transition:all .18s;display:flex;align-items:center;justify-content:center;
+    }
+    .pkg-row.selected .pkg-radio { border-color:var(--blue-bright); }
+    .pkg-radio::after {
+      content:'';width:8px;height:8px;border-radius:50%;background:var(--blue-bright);
+      opacity:0;transition:opacity .18s;
+    }
+    .pkg-row.selected .pkg-radio::after { opacity:1; }
+    .pkg-info { flex:1; }
+    .pkg-name { font-size:.88rem;font-weight:800;color:var(--white);margin-bottom:.15rem; }
+    .pkg-row.selected .pkg-name { color:var(--blue-bright); }
+    .pkg-desc { font-size:.75rem;color:rgba(255,255,255,.38);line-height:1.4; }
+    .pkg-pricing { text-align:right;flex-shrink:0; }
+    .pkg-conf-price { font-size:1.2rem;font-weight:800;color:var(--white); }
+    .pkg-row.selected .pkg-conf-price { color:var(--blue-bright); }
     .pkg-retail { font-size:.65rem;color:rgba(255,255,255,.28);text-decoration:line-through; }
+    .pkg-popular-tag {
+      font-size:.55rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+      background:var(--blue-bright);color:#fff;padding:.18rem .5rem;border-radius:20px;
+      display:inline-block;margin-top:.2rem;
+    }
 
     /* ── Confirmed package card ── */
     .pkg-confirmed-card {
@@ -128,7 +158,7 @@
   <div class="pay-hero">
     <p class="pay-hero-eyebrow">MagnaCon 2026 · Louisville, KY</p>
     <h1>Complete Your Booking</h1>
-    <p>Your time slot is confirmed — complete your payment below to lock in your session.</p>
+    <p id="heroSub">Conference-exclusive pricing — half the retail rate, available June 10–11 only.</p>
   </div>
 
   <div class="pay-layout">
@@ -137,21 +167,69 @@
     <div>
       <a href="magnacon.html" class="back-link">← Back to MagnaCon</a>
 
-      <span class="pkg-label">Your Package</span>
-      <div class="pkg-confirmed-card">
-        <div class="pkg-confirmed-header">
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="var(--green)" stroke-width="1.3"/><path d="M4 6.5l1.8 1.8L9 4.5" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Slot Booked · Package Locked In
+      <!-- Shown after Calendly is booked (?booked=1) -->
+      <div id="lockedView" style="display:none">
+        <span class="pkg-label">Your Package</span>
+        <div class="pkg-confirmed-card">
+          <div class="pkg-confirmed-header">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="var(--green)" stroke-width="1.3"/><path d="M4 6.5l1.8 1.8L9 4.5" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Slot Booked · Package Locked In
+          </div>
+          <div class="pkg-confirmed-body">
+            <div>
+              <div class="pkg-confirmed-name" id="confirmedName"></div>
+              <div class="pkg-confirmed-desc" id="confirmedDesc"></div>
+            </div>
+            <div class="pkg-confirmed-pricing">
+              <div class="pkg-confirmed-price" id="confirmedPrice"></div>
+              <div class="pkg-retail" id="confirmedRetail"></div>
+            </div>
+          </div>
         </div>
-        <div class="pkg-confirmed-body">
-          <div>
-            <div class="pkg-confirmed-name" id="confirmedName"></div>
-            <div class="pkg-confirmed-desc" id="confirmedDesc"></div>
+      </div>
+
+      <!-- Shown on direct access (no ?booked=1) -->
+      <div id="selectView">
+        <span class="pkg-label">Choose Your Package</span>
+        <div class="pkg-list">
+
+          <div class="pkg-row" onclick="selectPkg(this,'Standard','$197','$394')">
+            <div class="pkg-radio"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">Standard</div>
+              <div class="pkg-desc">Avatar tailored to your brand + 5 platform-ready social posts</div>
+            </div>
+            <div class="pkg-pricing">
+              <div class="pkg-conf-price">$197</div>
+              <div class="pkg-retail">Retail $394</div>
+            </div>
           </div>
-          <div class="pkg-confirmed-pricing">
-            <div class="pkg-confirmed-price" id="confirmedPrice"></div>
-            <div class="pkg-retail" id="confirmedRetail"></div>
+
+          <div class="pkg-row selected" onclick="selectPkg(this,'Pro','$297','$594')">
+            <div class="pkg-radio"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">Pro</div>
+              <div class="pkg-desc">Enhanced customization, priority queue + extended teleprompter session</div>
+            </div>
+            <div class="pkg-pricing">
+              <div class="pkg-conf-price">$297</div>
+              <div class="pkg-retail">Retail $594</div>
+              <div class="pkg-popular-tag">Popular</div>
+            </div>
           </div>
+
+          <div class="pkg-row" onclick="selectPkg(this,'VIP','$497','$994')">
+            <div class="pkg-radio"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">VIP</div>
+              <div class="pkg-desc">Multiple avatar variations + white-glove onboarding to Amplify</div>
+            </div>
+            <div class="pkg-pricing">
+              <div class="pkg-conf-price">$497</div>
+              <div class="pkg-retail">Retail $994</div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -277,40 +355,58 @@
     VIP:      'Multiple avatar variations + white-glove onboarding to Amplify'
   };
 
-  function applyPkg(name) {
+  function updateOrderSummary(name) {
     var d = PKG_DATA[name];
-
-    // Confirmed card
-    document.getElementById('confirmedName').textContent = name;
-    document.getElementById('confirmedDesc').textContent = PKG_DESCS[name];
-    document.getElementById('confirmedPrice').textContent = d.confPrice;
-    document.getElementById('confirmedRetail').textContent = 'Retail ' + d.retailPrice;
-
-    // Order summary
     document.getElementById('orderLabel').textContent = 'Avatar Session — ' + name;
     document.getElementById('orderAmt').textContent = d.confPrice;
     document.getElementById('orderTotal').textContent = d.confPrice;
     document.getElementById('orderSavings').textContent = SAVINGS[name];
-
-    // Stripe
     var url = STRIPE_LINKS[name];
     document.getElementById('stripeBtn').href = url;
     document.getElementById('stripeUrlText').href = url;
     document.getElementById('stripeUrlText').textContent = url.replace('https://', '');
-
-    // Includes list
     var proItems = [document.getElementById('inc-pro'), document.getElementById('inc-pro2')];
     var vipItems = [document.getElementById('inc-vip'), document.getElementById('inc-vip2')];
     proItems.forEach(function(el) { el.style.display = (name === 'Pro' || name === 'VIP') ? '' : 'none'; });
     vipItems.forEach(function(el) { el.style.display = name === 'VIP' ? '' : 'none'; });
   }
 
-  // Init — read package from ?pkg= URL param (set by magnacon.html after Calendly booking)
+  // Used by the selector (direct-access mode)
+  function selectPkg(el, name, confPrice, retailPrice) {
+    document.querySelectorAll('.pkg-row').forEach(function(r) { r.classList.remove('selected'); });
+    el.classList.add('selected');
+    updateOrderSummary(name);
+  }
+
+  // Init — ?booked=1 means arriving from Calendly; show locked card. Otherwise show selector.
   (function () {
-    var urlPkg = new URLSearchParams(window.location.search).get('pkg');
+    var params   = new URLSearchParams(window.location.search);
+    var urlPkg   = params.get('pkg');
+    var booked   = params.get('booked') === '1';
     var validPkgs = ['Standard', 'Pro', 'VIP'];
-    var chosen = validPkgs.includes(urlPkg) ? urlPkg : 'Pro';
-    applyPkg(chosen);
+    var chosen   = validPkgs.includes(urlPkg) ? urlPkg : 'Pro';
+
+    if (booked) {
+      // Locked view: hide selector, show confirmed card
+      document.getElementById('selectView').style.display = 'none';
+      document.getElementById('lockedView').style.display = 'block';
+      var d = PKG_DATA[chosen];
+      document.getElementById('confirmedName').textContent  = chosen;
+      document.getElementById('confirmedDesc').textContent  = PKG_DESCS[chosen];
+      document.getElementById('confirmedPrice').textContent = d.confPrice;
+      document.getElementById('confirmedRetail').textContent = 'Retail ' + d.retailPrice;
+      document.getElementById('heroSub').textContent = 'Your time slot is confirmed — complete your payment below to lock in your session.';
+    } else {
+      // Selector view: pre-select matching row (or default Pro)
+      var rows = document.querySelectorAll('.pkg-row');
+      rows.forEach(function(row) {
+        var onclick = row.getAttribute('onclick') || '';
+        if (onclick.indexOf("'" + chosen + "'") !== -1) { row.classList.add('selected'); }
+        else { row.classList.remove('selected'); }
+      });
+    }
+
+    updateOrderSummary(chosen);
   })();
 </script>
 
