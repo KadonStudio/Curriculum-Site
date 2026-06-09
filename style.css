@@ -62,11 +62,13 @@ nav::after {
 .nav-sub { display:block; font-size:.55em; font-weight:700; letter-spacing:.28em; color:var(--blue-light); margin-top:.25em; }
 .nav-logo-wrap { display:flex; flex-direction:column; }
 
-/* Thumbprint logo */
+/* Thumbprint logo — circular crop hides Gemini star in corners */
 .nav-logo-img-crop {
   width: 40px;
   height: 40px;
   flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,7 +76,7 @@ nav::after {
 .nav-logo-img-crop img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
 }
 .nav-logo-img-crop.footer-sz {
