@@ -195,7 +195,7 @@
     <div class="tw-section">
       <p class="tw-label">Session Giveaways</p>
       <h2 class="tw-h2">Download your workshop resources</h2>
-      <p class="tw-body">Two free, opinionated guides you'll actually keep. Enter your email at the conference booth and we'll send them straight to your inbox.</p>
+      <p class="tw-body">Two free, opinionated guides from the session. Enter your name and email to unlock your download instantly.</p>
 
       <div class="resource-grid">
 
@@ -208,10 +208,10 @@
             <span class="resource-badge">One-page PDF</span>
             <div class="resource-title">10 Favorite AI Tools List</div>
             <div class="resource-desc">Not just a list — exactly when and how to use each tool, with a pro tip for every one.</div>
-            <a href="contact.html" class="resource-dl">
+            <button onclick="openDlModal('10 Favorite AI Tools List','10-favorite-ai-tools.pdf')" class="resource-dl">
               <svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/><rect x="2" y="13" width="12" height="1.5" rx=".75"/></svg>
-              Request at the Booth
-            </a>
+              Download Free
+            </button>
           </div>
         </div>
 
@@ -224,15 +224,14 @@
             <span class="resource-badge">8–12 page PDF</span>
             <div class="resource-title">The Prompt Book</div>
             <div class="resource-desc">Copy-paste prompts organized by use case — social media, customer education, team training, and follow-up.</div>
-            <a href="contact.html" class="resource-dl">
+            <button onclick="openDlModal('The Prompt Book','the-prompt-book.pdf')" class="resource-dl">
               <svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/><rect x="2" y="13" width="12" height="1.5" rx=".75"/></svg>
-              Request at the Booth
-            </a>
+              Download Free
+            </button>
           </div>
         </div>
 
       </div>
-      <p class="resource-note">Find us at the Thumbprint booth on June 10–11 to grab both guides, or reach out via the contact page and we'll email them to you.</p>
     </div>
   </div>
 
@@ -558,7 +557,105 @@
   </div>
 </footer>
 
+<!-- DOWNLOAD MODAL -->
+<div id="dlModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:2000;align-items:center;justify-content:center;padding:1rem">
+  <div style="background:#fff;border-radius:14px;padding:2rem;max-width:460px;width:100%;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.4)">
+    <button onclick="closeDlModal()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#999;line-height:1;padding:0" aria-label="Close">×</button>
+
+    <div id="dlFormWrap">
+      <h3 id="dlTitle" style="font-size:1.25rem;font-weight:800;color:#111827;margin-bottom:.3rem"></h3>
+      <p style="font-size:.85rem;color:#6b7280;margin-bottom:1.5rem">Enter your details and we'll unlock your download instantly.</p>
+
+      <label style="display:block;font-size:.8rem;font-weight:600;color:#111827;margin-bottom:.35rem">Name</label>
+      <input id="dlName" type="text" placeholder="Your full name" style="width:100%;padding:.8rem 1rem;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.9rem;outline:none;box-sizing:border-box;margin-bottom:1rem;font-family:inherit" />
+
+      <label style="display:block;font-size:.8rem;font-weight:600;color:#111827;margin-bottom:.35rem">Email</label>
+      <input id="dlEmail" type="email" placeholder="you@example.com" style="width:100%;padding:.8rem 1rem;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.9rem;outline:none;box-sizing:border-box;margin-bottom:1.2rem;font-family:inherit" />
+
+      <button id="dlBtn" onclick="submitDlForm()" style="width:100%;background:#e05a2b;color:#fff;border:none;border-radius:8px;padding:1rem;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s">Unlock Download</button>
+      <p style="text-align:center;font-size:.75rem;color:#9ca3af;margin-top:.7rem">We respect your inbox. No spam, ever.</p>
+    </div>
+
+    <div id="dlSuccess" style="display:none;text-align:center;padding:.5rem 0">
+      <div style="font-size:2.8rem;margin-bottom:.75rem">✅</div>
+      <h4 style="font-size:1.1rem;font-weight:800;color:#111827;margin-bottom:.4rem">Your download is ready!</h4>
+      <p style="font-size:.85rem;color:#6b7280;margin-bottom:1.3rem">Click below if your download didn't start automatically.</p>
+      <a id="dlLink" href="#" download style="display:inline-block;background:#e05a2b;color:#fff;text-decoration:none;border-radius:8px;padding:.85rem 2rem;font-size:.9rem;font-weight:700;font-family:inherit">⬇ Download Now</a>
+    </div>
+  </div>
+</div>
+
 <script src="nav.js"></script>
+<script>
+  var dlFile = '';
+
+  function openDlModal(title, file) {
+    dlFile = file;
+    document.getElementById('dlTitle').textContent = title;
+    document.getElementById('dlFormWrap').style.display = 'block';
+    document.getElementById('dlSuccess').style.display = 'none';
+    document.getElementById('dlName').value = '';
+    document.getElementById('dlEmail').value = '';
+    document.getElementById('dlBtn').textContent = 'Unlock Download';
+    document.getElementById('dlBtn').disabled = false;
+    var modal = document.getElementById('dlModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDlModal() {
+    document.getElementById('dlModal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('dlModal').addEventListener('click', function(e) {
+    if (e.target === this) closeDlModal();
+  });
+
+  async function submitDlForm() {
+    var name  = document.getElementById('dlName').value.trim();
+    var email = document.getElementById('dlEmail').value.trim();
+    if (!name || !email) {
+      if (!name) document.getElementById('dlName').style.borderColor = '#ef4444';
+      if (!email) document.getElementById('dlEmail').style.borderColor = '#ef4444';
+      return;
+    }
+    var btn = document.getElementById('dlBtn');
+    btn.textContent = 'Unlocking…';
+    btn.disabled = true;
+
+    try {
+      var res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: '8c53abda-9930-4595-97ad-25a2514794df',
+          to:         'ahmad@thumbprint.consulting',
+          subject:    'Todd Workshop Download — ' + document.getElementById('dlTitle').textContent,
+          from_name:  'Todd Workshop Site',
+          name:       name,
+          email:      email,
+          resource:   document.getElementById('dlTitle').textContent
+        })
+      });
+      var data = await res.json();
+      if (data.success) {
+        document.getElementById('dlLink').href = dlFile;
+        document.getElementById('dlFormWrap').style.display = 'none';
+        document.getElementById('dlSuccess').style.display = 'block';
+        var a = document.createElement('a');
+        a.href = dlFile; a.download = ''; a.style.display = 'none';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      } else {
+        btn.textContent = 'Unlock Download'; btn.disabled = false;
+        alert('Something went wrong — please try again.');
+      }
+    } catch(e) {
+      btn.textContent = 'Unlock Download'; btn.disabled = false;
+      alert('Network error — please try again.');
+    }
+  }
+</script>
 </body>
 </html>
 
