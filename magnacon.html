@@ -123,6 +123,15 @@
     .error-msg { font-size:.78rem;color:#f87171;font-weight:600;margin-top:.5rem;display:none; }
     .error-msg.show { display:block; }
 
+    /* ── Prep form ── */
+    .prep-section-label { font-size:.65rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.3);margin:1.8rem 0 1rem;display:block; }
+    .form-hint { font-size:.75rem;color:rgba(255,255,255,.3);margin:.15rem 0 .4rem;line-height:1.4;display:block; }
+    .form-hint-inline { font-size:.7rem;color:rgba(255,255,255,.3);font-weight:400;letter-spacing:0;text-transform:none;margin-left:.4rem; }
+    .chip-group { display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem;margin-bottom:1.2rem; }
+    .chip { font-family:var(--font);font-size:.8rem;font-weight:600;color:rgba(255,255,255,.5);background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:100px;padding:.45rem .95rem;cursor:pointer;transition:all .18s;letter-spacing:.02em; }
+    .chip:hover { border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.8); }
+    .chip.selected { background:rgba(34,174,228,.12);border-color:var(--blue-bright);color:var(--blue-bright); }
+
     @media(max-width:600px) {
       .pkg-grid { grid-template-columns:1fr; }
       .field-grid { grid-template-columns:1fr; }
@@ -153,7 +162,7 @@
 <div class="mc-hero">
   <p class="mc-hero-eyebrow">MagnaCon 2026 · Louisville, KY</p>
   <h1>Avatar Creation Experience</h1>
-  <p>June 10–12, 2026 · 15-minute sessions · AI avatar + 5 social posts</p>
+  <p>June 10–11, 2026 · 15-minute sessions · AI avatar + 5 social posts</p>
 </div>
 
 <div class="wizard">
@@ -226,7 +235,7 @@
   <!-- ── STEP 2: Schedule via Calendly ── -->
   <div class="step-panel" id="step-2">
     <h2 class="step-title">Book Your Session</h2>
-    <p class="step-subtitle">Pick a 15-minute slot on June 10, 11, or 12. You'll get an automatic confirmation and reminder from Calendly.</p>
+    <p class="step-subtitle">Pick a 15-minute slot on June 10 or 11. You'll get an automatic confirmation and reminder from Calendly.</p>
 
     <!-- Booked confirmation — appears after Calendly fires event_scheduled -->
     <div class="booked-badge" id="bookedBadge">
@@ -262,48 +271,102 @@
   <!-- ── STEP 3: Session Prep ── -->
   <div class="step-panel" id="step-3">
     <h2 class="step-title">Session Prep</h2>
-    <p class="step-subtitle">Help us personalise your avatar and social posts before you arrive. The more detail you give us the better.</p>
+    <p class="step-subtitle">Takes about 5 minutes. The more detail you give us, the better the final content.</p>
+
+    <!-- ABOUT YOUR PRACTICE -->
+    <span class="prep-section-label">About Your Practice</span>
 
     <div class="field-grid single">
       <div class="form-field">
-        <label class="form-label">What's your business and what do you do?</label>
-        <input class="form-input" type="text" id="business" placeholder="e.g. MagnaWave practitioner, wellness coach…" />
+        <label class="form-label">Practice or business name</label>
+        <input class="form-input" type="text" id="biz_name" placeholder="e.g. Dr. Sarah Lane — Equine Performance Studio" />
+      </div>
+    </div>
+    <div class="field-grid single">
+      <div class="form-field">
+        <label class="form-label">What do you do and who do you help?</label>
+        <span class="form-hint">Not your job title — what problem do you solve and for whom?</span>
+        <textarea class="form-textarea" id="biz_statement" placeholder="e.g. I help barrel racers recover faster from soft tissue injuries using PEMF therapy, usually 1–2 sessions per week over 4–6 weeks."></textarea>
       </div>
     </div>
     <div class="field-grid single">
       <div class="form-field">
         <label class="form-label">Who is your ideal customer?</label>
-        <input class="form-input" type="text" id="icp" placeholder="e.g. Women 40–60 with chronic pain, athletes seeking recovery…" />
+        <span class="form-hint">Who are they, what do they want, and what holds them back?</span>
+        <textarea class="form-textarea" id="icp" placeholder="e.g. Horse owners aged 35–55 who compete regionally, spend heavily on their animals, but are skeptical of anything that isn't vet-approved."></textarea>
       </div>
     </div>
-    <div class="field-grid">
+
+    <!-- YOUR CONTENT GOALS -->
+    <span class="prep-section-label">Your Content Goals</span>
+
+    <div class="field-grid single">
       <div class="form-field">
-        <label class="form-label">How do you want to show up in your avatar?</label>
-        <input class="form-input" type="text" id="avatarFeel" placeholder="e.g. Powerful, warm, bold, radiant…" />
+        <label class="form-label">Key message or call to action</label>
+        <span class="form-hint">A specific call to action, promotion, or key belief you want to plant.</span>
+        <textarea class="form-textarea" id="cta" placeholder="e.g. Book a free 20-minute consult at my booth, or follow me to see real horse recovery videos."></textarea>
       </div>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Content type <span class="form-hint-inline">Pick all that apply</span></label>
+      <div class="chip-group" id="chips-content">
+        <button type="button" class="chip" onclick="toggleChip(this)">Short video (15–60 sec)</button>
+        <button type="button" class="chip" onclick="toggleChip(this)">Talking head / explainer</button>
+        <button type="button" class="chip" onclick="toggleChip(this)">Testimonial-style</button>
+        <button type="button" class="chip" onclick="toggleChip(this)">Not sure — you decide</button>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Primary platforms <span class="form-hint-inline">Pick all that apply</span></label>
+      <div class="chip-group" id="chips-platform">
+        <button type="button" class="chip" onclick="toggleChip(this)">Instagram</button>
+        <button type="button" class="chip" onclick="toggleChip(this)">Facebook</button>
+        <button type="button" class="chip" onclick="toggleChip(this)">LinkedIn</button>
+        <button type="button" class="chip" onclick="toggleChip(this)">TikTok</button>
+        <button type="button" class="chip" onclick="toggleChip(this)">YouTube</button>
+      </div>
+    </div>
+
+    <!-- TONE & DELIVERY -->
+    <span class="prep-section-label">Tone &amp; Delivery</span>
+
+    <div class="form-field">
+      <label class="form-label">Pick the vibe that fits your brand</label>
+      <div class="chip-group" id="chips-tone">
+        <button type="button" class="chip" onclick="toggleChip(this)">Professional &amp; credible</button>
+        <button type="button" class="chip" onclick="toggleChip(this)">Warm &amp; personal</button>
+        <button type="button" class="chip" onclick="toggleChip(this)">Educational &amp; informative</button>
+        <button type="button" class="chip" onclick="toggleChip(this)">Energetic &amp; bold</button>
+        <button type="button" class="chip" onclick="toggleChip(this)">Calm &amp; reassuring</button>
+        <button type="button" class="chip" onclick="toggleChip(this)">Funny / relatable</button>
+      </div>
+    </div>
+
+    <div class="field-grid single">
       <div class="form-field">
-        <label class="form-label">Primary platform</label>
-        <select class="form-select" id="platform">
-          <option value="">Select…</option>
-          <option>Instagram</option>
-          <option>Facebook</option>
-          <option>LinkedIn</option>
-          <option>TikTok</option>
-          <option>YouTube</option>
-          <option>Multiple platforms</option>
-        </select>
+        <label class="form-label">Hard limits</label>
+        <span class="form-hint">Hard limits help us avoid missing the mark completely.</span>
+        <input class="form-input" type="text" id="hard_limits" placeholder="e.g. Salesy, pseudoscientific, too corporate, too casual…" />
+      </div>
+    </div>
+
+    <!-- AVATAR SPECIFICS -->
+    <span class="prep-section-label">Avatar Specifics</span>
+
+    <div class="field-grid single">
+      <div class="form-field">
+        <label class="form-label">Brand colors</label>
+        <span class="form-hint">Describe or bring files. Include hex codes if you have them.</span>
+        <input class="form-input" type="text" id="brand" placeholder="e.g. Navy blue and gold, minimalist. Logo is a horse silhouette." />
       </div>
     </div>
     <div class="field-grid single">
       <div class="form-field">
-        <label class="form-label">What offer or message do you want to amplify?</label>
-        <input class="form-input" type="text" id="offer" placeholder="e.g. Launching a 6-week program, promoting a client special…" />
-      </div>
-    </div>
-    <div class="field-grid single">
-      <div class="form-field">
-        <label class="form-label">Brand colors or logo? (describe, or bring files on your phone)</label>
-        <input class="form-input" type="text" id="brand" placeholder="e.g. Deep teal and gold, will bring logo on phone…" />
+        <label class="form-label">Additional notes <span class="form-hint-inline">Optional but helpful</span></label>
+        <span class="form-hint">Competitors to avoid, pronouns, industry jargon you want used or avoided, etc.</span>
+        <textarea class="form-textarea" id="extra_notes" placeholder="Optional but helpful."></textarea>
       </div>
     </div>
 
@@ -407,7 +470,7 @@
         <p class="footer-col-title">MagnaCon 2026</p>
         <ul class="footer-links">
           <li><a href="magnacon.html">Book Avatar Session</a></li>
-          <li><a href="magnacon.html">June 10–12 · Louisville</a></li>
+          <li><a href="magnacon.html">June 10–11 · Louisville</a></li>
           <li><a href="contact.html">Questions?</a></li>
         </ul>
       </div>
@@ -474,6 +537,13 @@
     if (el) { el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3000); }
   }
 
+  function toggleChip(el) { el.classList.toggle('selected'); }
+
+  function getChips(id) {
+    return Array.from(document.querySelectorAll('#' + id + ' .chip.selected'))
+      .map(function(c) { return c.textContent.trim(); }).join(', ') || '—';
+  }
+
   /* ── Open Calendly popup ── */
   function openCalendly() {
     if (window.Calendly) {
@@ -517,12 +587,16 @@
       subject:        'MagnaCon Session Prep — ' + state.pkg + ' Package',
       from_name:      'Thumbprint MagnaCon',
       package:        state.pkg + ' (' + state.pkgPrice + ')',
-      business:       document.getElementById('business').value.trim()   || '—',
-      ideal_customer: document.getElementById('icp').value.trim()         || '—',
-      avatar_feel:    document.getElementById('avatarFeel').value.trim()  || '—',
-      platform:       document.getElementById('platform').value           || '—',
-      offer:          document.getElementById('offer').value.trim()       || '—',
-      brand_notes:    document.getElementById('brand').value.trim()       || '—'
+      business_name:  document.getElementById('biz_name').value.trim()      || '—',
+      what_you_do:    document.getElementById('biz_statement').value.trim()  || '—',
+      ideal_customer: document.getElementById('icp').value.trim()            || '—',
+      key_cta:        document.getElementById('cta').value.trim()            || '—',
+      content_types:  getChips('chips-content'),
+      platforms:      getChips('chips-platform'),
+      tone:           getChips('chips-tone'),
+      hard_limits:    document.getElementById('hard_limits').value.trim()    || '—',
+      brand_colors:   document.getElementById('brand').value.trim()          || '—',
+      extra_notes:    document.getElementById('extra_notes').value.trim()    || '—'
     };
 
     try {
