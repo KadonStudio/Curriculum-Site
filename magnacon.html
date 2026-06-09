@@ -102,16 +102,17 @@
     .form-textarea { resize:vertical;min-height:80px; }
 
     /* ── Nav buttons ── */
-    .step-nav { display:flex;align-items:center;gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07);position:relative; }
-    .btn-prev { font-family:var(--font);font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);background:none;border:1.5px solid rgba(255,255,255,.12);border-radius:6px;padding:.8rem 1.5rem;cursor:pointer;transition:all .2s;display:none; }
+    .step-nav { display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07); }
+    .btn-prev { font-family:var(--font);font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);background:none;border:1.5px solid rgba(255,255,255,.12);border-radius:6px;padding:.8rem 1.5rem;cursor:pointer;transition:all .2s; }
     .btn-prev:hover { border-color:rgba(255,255,255,.3);color:#fff; }
-    .btn-prev.show { display:block; }
-    .btn-next { font-family:var(--font);font-size:.88rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--blue-bright);color:#fff;border:none;border-radius:6px;padding:.9rem 2rem;cursor:pointer;transition:all .2s;margin-left:auto; }
+    .btn-next { font-family:var(--font);font-size:.88rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--blue-bright);color:#fff;border:none;border-radius:6px;padding:.9rem 2rem;cursor:pointer;transition:all .2s; }
     .btn-next:hover { background:var(--blue-dark);transform:translateY(-1px); }
     .btn-next.green { background:var(--green); }
     .btn-next.green:hover { background:#00a87e; }
     .btn-next:disabled { opacity:.4;cursor:not-allowed;transform:none; }
-    .step-count { font-size:.75rem;color:rgba(255,255,255,.3);font-weight:600;position:absolute;left:50%;transform:translateX(-50%);pointer-events:none; }
+    .step-count { font-size:.75rem;color:rgba(255,255,255,.3);font-weight:600;text-align:center;margin-top:.65rem; }
+    .field-error { border-color:#f87171 !important; }
+    .chip-group.chip-error { outline:1.5px solid #f87171;border-radius:8px;padding:.4rem; }
 
     /* ── Success ── */
     .success-panel { display:none;text-align:center;padding:3rem 1rem; }
@@ -235,9 +236,9 @@
     </div>
     <p class="error-msg" id="err-1">Please select a package to continue.</p>
     <div class="step-nav">
-      <span class="step-count">Step 1 of 3</span>
       <button class="btn-next" onclick="goNext(1)">Next →</button>
     </div>
+    <p class="step-count">Step 1 of 3</p>
   </div>
 
   <!-- ── STEP 2: Session Prep ── -->
@@ -343,10 +344,10 @@
     </div>
 
     <div class="step-nav">
-      <button class="btn-prev show" onclick="goPrev(2)">← Back</button>
-      <span class="step-count">Step 2 of 3</span>
+      <button class="btn-prev" onclick="goPrev(2)">← Back</button>
       <button class="btn-next green" id="submitBtn" onclick="submitBooking()">Next — Book My Slot →</button>
     </div>
+    <p class="step-count">Step 2 of 3</p>
   </div>
 
   <!-- ── STEP 3: Schedule via Calendly ── -->
@@ -376,9 +377,9 @@
     </div>
 
     <div class="step-nav">
-      <button class="btn-prev show" onclick="goPrev(3)">← Back</button>
-      <span class="step-count">Step 3 of 3</span>
+      <button class="btn-prev" onclick="goPrev(3)">← Back</button>
     </div>
+    <p class="step-count">Step 3 of 3</p>
   </div>
 
   <!-- ── SUCCESS ── -->
@@ -528,6 +529,31 @@
   // ═══════════════════════════════════════════════════════════════
 
   async function submitBooking() {
+    // Clear previous errors
+    ['biz_name','biz_statement','icp','cta'].forEach(function(id) {
+      document.getElementById(id).classList.remove('field-error');
+    });
+    ['chips-content','chips-platform','chips-tone'].forEach(function(id) {
+      document.getElementById(id).classList.remove('chip-error');
+    });
+
+    var firstError = null;
+    function markErr(el) { el.classList.add('field-error'); if (!firstError) firstError = el; }
+
+    ['biz_name','biz_statement','icp','cta'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el.value.trim()) markErr(el);
+    });
+    ['chips-content','chips-platform','chips-tone'].forEach(function(id) {
+      var grp = document.getElementById(id);
+      if (!grp.querySelector('.chip.selected')) { grp.classList.add('chip-error'); if (!firstError) firstError = grp; }
+    });
+
+    if (firstError) {
+      firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
     var btn = document.getElementById('submitBtn');
     btn.disabled = true;
     btn.textContent = 'Sending…';
@@ -562,7 +588,7 @@
         showStep(3, false);
       } else {
         btn.disabled = false;
-        btn.textContent = 'Submit Prep Info ✓';
+        btn.textContent = 'Next — Book My Slot →';
         alert('Something went wrong. Please try again.');
       }
     } catch (err) {
