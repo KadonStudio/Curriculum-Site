@@ -566,7 +566,7 @@
       document.getElementById('bookedBadge').classList.add('show');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(function () {
-        window.location.href = 'magnacon-pay.html';
+        window.location.href = 'magnacon-pay.html?pkg=' + encodeURIComponent(state.pkg);
       }, 2000);
     }
   });
@@ -585,6 +585,7 @@
 
     var payload = {
       access_key:     W3F_KEY,
+      to:             'ahmad@thumbprint.consulting',
       subject:        'MagnaCon Session Prep — ' + state.pkg + ' Package',
       from_name:      'Thumbprint MagnaCon',
       package:        state.pkg + ' (' + state.pkgPrice + ')',

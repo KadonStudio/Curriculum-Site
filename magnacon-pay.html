@@ -291,11 +291,16 @@
 </footer>
 
 <script>
-  // ── Add your MagnaCon Stripe payment links here ──
   var STRIPE_LINKS = {
-    Standard: 'https://buy.stripe.com/REPLACE_STANDARD',
-    Pro:      'https://buy.stripe.com/REPLACE_PRO',
-    VIP:      'https://buy.stripe.com/REPLACE_VIP'
+    Standard: 'https://buy.stripe.com/cNi6oG7e82Yd25q3TDc7u0c',
+    Pro:      'https://buy.stripe.com/fZu4gy9mggP339u3TDc7u0b',
+    VIP:      'https://buy.stripe.com/aFa5kC0PKfKZh0keyhc7u0a'
+  };
+
+  var PKG_DATA = {
+    Standard: { confPrice: '$197', retailPrice: '$394' },
+    Pro:      { confPrice: '$297', retailPrice: '$594' },
+    VIP:      { confPrice: '$497', retailPrice: '$994' }
   };
 
   var SAVINGS = { Standard: '$197', Pro: '$297', VIP: '$497' };
@@ -314,7 +319,6 @@
     document.getElementById('stripeUrlText').href = url;
     document.getElementById('stripeUrlText').textContent = url.replace('https://', '');
 
-    // Toggle includes based on package
     var proItems = [document.getElementById('inc-pro'), document.getElementById('inc-pro2')];
     var vipItems = [document.getElementById('inc-vip'), document.getElementById('inc-vip2')];
 
@@ -322,8 +326,24 @@
     vipItems.forEach(function(el) { el.style.display = name === 'VIP' ? '' : 'none'; });
   }
 
-  // Init
-  selectPkg(document.querySelector('.pkg-row.selected'), 'Pro', '$297', '$594');
+  // Init — pre-select package passed via ?pkg= from magnacon.html, fallback to Pro
+  (function () {
+    var urlPkg = new URLSearchParams(window.location.search).get('pkg');
+    var validPkgs = ['Standard', 'Pro', 'VIP'];
+    var chosen = validPkgs.includes(urlPkg) ? urlPkg : 'Pro';
+    var d = PKG_DATA[chosen];
+    var rows = document.querySelectorAll('.pkg-row');
+    var targetRow;
+    rows.forEach(function(row) {
+      var onclick = row.getAttribute('onclick') || '';
+      if (onclick.indexOf("'" + chosen + "'") !== -1) { targetRow = row; }
+    });
+    if (targetRow) {
+      selectPkg(targetRow, chosen, d.confPrice, d.retailPrice);
+    } else {
+      selectPkg(document.querySelector('.pkg-row.selected'), 'Pro', '$297', '$594');
+    }
+  })();
 </script>
 
 <script src="nav.js"></script>
