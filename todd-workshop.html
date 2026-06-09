@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todd's MagnaCon 2026 Workshop — Thumbprint Curriculum</title>
+  <meta name="description" content="Key insights, AI tools, and resources from Todd's MagnaCon 2026 session on building your digital presence as a MagnaWave practitioner." />
+  <link rel="icon" type="image/png" href="fingerprint-logo.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background: #111118; }
+
+    /* ── Hero ── */
+    .tw-hero {
+      padding: calc(var(--nav-h) + 3rem) clamp(1.5rem,5vw,4rem) 4rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .tw-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 80% 50%, rgba(34,174,228,.06) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 50% at 10% 80%, rgba(0,200,150,.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .tw-hero-inner { max-width: 800px; position: relative; z-index: 1; }
+    .tw-eyebrow {
+      font-size: .68rem; font-weight: 800; letter-spacing: .28em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 1rem; display: flex; align-items: center; gap: .6rem;
+    }
+    .tw-eyebrow::before {
+      content: ''; width: 24px; height: 2px; background: var(--green); border-radius: 2px;
+    }
+    .tw-hero h1 {
+      font-size: clamp(2rem,4.5vw,3.2rem); font-weight: 800; color: var(--white);
+      letter-spacing: -.025em; line-height: 1.1; margin-bottom: 1rem;
+    }
+    .tw-hero h1 em { font-style: normal; color: var(--blue-bright); }
+    .tw-hero-sub {
+      font-size: 1rem; color: rgba(255,255,255,.5); line-height: 1.7;
+      max-width: 600px; margin-bottom: 2rem;
+    }
+    .tw-meta {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .tw-meta-item {
+      font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.3); display: flex; align-items: center; gap: .4rem;
+    }
+    .tw-meta-item span { color: rgba(255,255,255,.6); }
+
+    /* ── Section wrapper ── */
+    .tw-section { max-width: 900px; margin: 0 auto; padding: 4rem clamp(1.5rem,4vw,2rem); }
+    .tw-section + .tw-section { border-top: 1px solid rgba(255,255,255,.05); }
+
+    /* ── Section labels ── */
+    .tw-label {
+      font-size: .65rem; font-weight: 800; letter-spacing: .28em; text-transform: uppercase;
+      color: var(--blue-bright); margin-bottom: .9rem; display: flex; align-items: center; gap: .5rem;
+    }
+    .tw-label::before { content: ''; width: 16px; height: 2px; background: var(--blue-bright); border-radius: 2px; }
+    .tw-h2 { font-size: clamp(1.4rem,2.5vw,1.9rem); font-weight: 800; color: var(--white); letter-spacing: -.015em; margin-bottom: .6rem; }
+    .tw-body { font-size: .95rem; color: rgba(255,255,255,.5); line-height: 1.75; }
+
+    /* ── Takeaway cards ── */
+    .takeaway-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1.2rem; margin-top: 2rem; }
+    .takeaway-card {
+      background: rgba(255,255,255,.03); border: 1.5px solid rgba(255,255,255,.07);
+      border-radius: 12px; padding: 1.4rem 1.4rem 1.4rem 1.2rem;
+      transition: border-color .2s, background .2s;
+    }
+    .takeaway-card:hover { border-color: rgba(255,255,255,.15); background: rgba(255,255,255,.05); }
+    .takeaway-num {
+      font-size: .65rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--blue-bright); margin-bottom: .65rem;
+    }
+    .takeaway-title { font-size: 1rem; font-weight: 800; color: var(--white); margin-bottom: .4rem; }
+    .takeaway-body { font-size: .85rem; color: rgba(255,255,255,.45); line-height: 1.65; }
+
+    /* ── AI Tools directory ── */
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 1rem; margin-top: 2rem; }
+    .tool-card {
+      background: rgba(255,255,255,.03); border: 1.5px solid rgba(255,255,255,.07);
+      border-radius: 10px; padding: 1.2rem;
+      display: flex; flex-direction: column; gap: .4rem;
+      transition: border-color .2s, background .2s;
+    }
+    .tool-card:hover { border-color: rgba(255,255,255,.14); background: rgba(255,255,255,.05); }
+    .tool-badge {
+      font-size: .58rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+      padding: .2rem .55rem; border-radius: 100px; display: inline-block; width: fit-content;
+    }
+    .badge-write   { background: rgba(34,174,228,.15);  color: var(--blue-bright); }
+    .badge-visual  { background: rgba(0,200,150,.15);   color: var(--green); }
+    .badge-video   { background: rgba(160,80,220,.15);  color: #c080ff; }
+    .badge-sched   { background: rgba(255,160,40,.15);  color: #ffaa33; }
+    .badge-voice   { background: rgba(255,80,120,.15);  color: #ff6090; }
+    .badge-edit    { background: rgba(80,160,255,.15);  color: #60aaff; }
+    .tool-name { font-size: .95rem; font-weight: 800; color: var(--white); }
+    .tool-desc { font-size: .8rem; color: rgba(255,255,255,.4); line-height: 1.55; }
+    .tool-link {
+      font-size: .72rem; font-weight: 700; color: var(--blue-bright);
+      text-decoration: none; margin-top: auto; padding-top: .5rem;
+      display: inline-flex; align-items: center; gap: .3rem;
+    }
+    .tool-link:hover { text-decoration: underline; }
+    .tool-link::after { content: '↗'; font-size: .8em; }
+
+    /* ── Checklist / resources ── */
+    .resource-box {
+      background: rgba(34,174,228,.06); border: 1.5px solid rgba(34,174,228,.2);
+      border-radius: 14px; padding: 2rem;
+      display: flex; gap: 1.8rem; align-items: flex-start; flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .resource-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: rgba(34,174,228,.15); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .resource-icon svg { width: 26px; height: 26px; }
+    .resource-content { flex: 1; min-width: 220px; }
+    .resource-title { font-size: 1.05rem; font-weight: 800; color: var(--white); margin-bottom: .35rem; }
+    .resource-desc { font-size: .85rem; color: rgba(255,255,255,.5); line-height: 1.6; margin-bottom: 1rem; }
+
+    /* ── Checklist ── */
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: .6rem; margin: 1.5rem 0 0; }
+    .checklist li {
+      display: flex; gap: .7rem; align-items: flex-start;
+      font-size: .88rem; color: rgba(255,255,255,.55); line-height: 1.5;
+    }
+    .checklist li::before {
+      content: '';
+      width: 16px; height: 16px; flex-shrink: 0; margin-top: .05rem;
+      border-radius: 4px; border: 2px solid rgba(0,200,150,.4);
+      background: rgba(0,200,150,.08);
+    }
+    .checklist li strong { color: rgba(255,255,255,.8); }
+
+    /* ── Quote ── */
+    .tw-quote {
+      border-left: 3px solid var(--blue-bright); padding: 1rem 1.5rem;
+      margin: 2rem 0; background: rgba(34,174,228,.04); border-radius: 0 8px 8px 0;
+    }
+    .tw-quote p { font-size: 1.05rem; font-style: italic; color: rgba(255,255,255,.7); line-height: 1.6; }
+    .tw-quote cite { display: block; margin-top: .5rem; font-size: .75rem; font-style: normal; font-weight: 700; color: rgba(255,255,255,.3); letter-spacing: .08em; text-transform: uppercase; }
+
+    /* ── CTA strip ── */
+    .tw-cta-strip {
+      background: rgba(255,255,255,.02); border-top: 1px solid rgba(255,255,255,.06);
+      padding: 3.5rem clamp(1.5rem,4vw,2rem); text-align: center;
+    }
+    .tw-cta-strip h2 { font-size: clamp(1.3rem,2.5vw,1.75rem); font-weight: 800; color: var(--white); margin-bottom: .5rem; }
+    .tw-cta-strip p { font-size: .9rem; color: rgba(255,255,255,.45); margin-bottom: 1.8rem; }
+    .tw-btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    @media (max-width: 640px) {
+      .tw-section { padding: 3rem 1.2rem; }
+      .tools-grid { grid-template-columns: 1fr; }
+      .takeaway-grid { grid-template-columns: 1fr; }
+      .resource-box { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-img-crop" aria-hidden="true"><img src="fingerprint-logo.png" alt="" /></div>
+      <div class="nav-logo-wrap">
+        <span><span class="thumb">THUMB</span><span class="print">PRINT</span></span>
+        <span class="nav-sub">Curriculum</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li class="hide-sm"><a href="products.html">Products</a></li>
+      <li class="hide-sm"><a href="about.html">About</a></li>
+      <li class="hide-sm"><a href="contact.html">Contact</a></li>
+      <li><a href="magnacon.html" class="nav-cta">MagnaCon Booking</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-body">
+
+  <!-- HERO -->
+  <div class="tw-hero">
+    <div class="tw-hero-inner">
+      <p class="tw-eyebrow">MagnaCon 2026 — Workshop Session</p>
+      <h1>Build the <em>Brand</em> Behind<br>Your Practice</h1>
+      <p class="tw-hero-sub">
+        Todd's MagnaCon session broke down why most MagnaWave practitioners stay invisible online — and what to do about it. Here are the key insights, AI tools he referenced, and a starter checklist to take action this week.
+      </p>
+      <div class="tw-meta">
+        <div class="tw-meta-item">June 10–11 <span>MagnaCon 2026</span></div>
+        <div class="tw-meta-item">Presenter <span>Todd Schaeffer</span></div>
+        <div class="tw-meta-item">Topic <span>Digital Presence &amp; AI Content</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY TAKEAWAYS -->
+  <div style="background:#111118; border-bottom:1px solid rgba(255,255,255,.05)">
+    <div class="tw-section">
+      <p class="tw-label">Session Highlights</p>
+      <h2 class="tw-h2">The Core Ideas from Todd's Talk</h2>
+      <p class="tw-body">If you've been relying on word-of-mouth alone, you're leaving real growth on the table. Todd walked through the gap most practitioners never close — and how AI tools make it possible to show up consistently without adding 10 hours to your week.</p>
+
+      <div class="takeaway-grid">
+
+        <div class="takeaway-card">
+          <div class="takeaway-num">01</div>
+          <div class="takeaway-title">Your Story Is the Strategy</div>
+          <div class="takeaway-body">The most effective MagnaWave content isn't about the machine — it's about transformation. Real client stories, your own journey, and the "why" behind your practice are what stop the scroll.</div>
+        </div>
+
+        <div class="takeaway-card">
+          <div class="takeaway-num">02</div>
+          <div class="takeaway-title">Consistency Beats Perfection</div>
+          <div class="takeaway-body">You don't need a production crew. A system that produces even two strong posts a week — every week — will outperform a perfectly produced video that goes up twice a year.</div>
+        </div>
+
+        <div class="takeaway-card">
+          <div class="takeaway-num">03</div>
+          <div class="takeaway-title">One Ideal Client, One Message</div>
+          <div class="takeaway-body">Practitioners who try to reach everyone reach no one. Defining your ideal client — athletic recovery, chronic pain, equine — and speaking only to them is what turns followers into bookings.</div>
+        </div>
+
+        <div class="takeaway-card">
+          <div class="takeaway-num">04</div>
+          <div class="takeaway-title">AI Is a Leverage Tool, Not a Replacement</div>
+          <div class="takeaway-body">The practitioners growing fastest aren't writing more — they're writing smarter. AI tools handle first drafts, captions, and repurposing so your energy goes into relationships and sessions.</div>
+        </div>
+
+        <div class="takeaway-card">
+          <div class="takeaway-num">05</div>
+          <div class="takeaway-title">Pick One Platform and Own It</div>
+          <div class="takeaway-body">Spreading across five platforms dilutes everything. Pick the one where your client actually lives — Instagram, Facebook, YouTube, or TikTok — and build there first before expanding.</div>
+        </div>
+
+        <div class="takeaway-card">
+          <div class="takeaway-num">06</div>
+          <div class="takeaway-title">Every Post Needs a Next Step</div>
+          <div class="takeaway-body">Engagement without direction is wasted attention. Every piece of content — whether educational or personal — should guide the reader toward one clear action: book, learn more, DM you.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div style="background:#111118; border-bottom:1px solid rgba(255,255,255,.05)">
+    <div class="tw-section" style="padding-bottom: 2rem;">
+      <div class="tw-quote">
+        <p>"MagnaWave works. You've seen it. Your clients feel it. The only thing standing between where you are and a full schedule is whether the right people can find you — and whether they trust you before they ever meet you."</p>
+        <cite>Todd Schaeffer — MagnaCon 2026</cite>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI TOOLS DIRECTORY -->
+  <div style="background:#111118; border-bottom:1px solid rgba(255,255,255,.05)">
+    <div class="tw-section">
+      <p class="tw-label">AI Tools Directory</p>
+      <h2 class="tw-h2">Tools Todd Recommends for Practitioners</h2>
+      <p class="tw-body">These are the AI tools referenced in the session — organized by what they're best for. Most have a free tier. Start with one, not all six.</p>
+
+      <div class="tools-grid">
+
+        <div class="tool-card">
+          <span class="tool-badge badge-write">Writing</span>
+          <div class="tool-name">ChatGPT</div>
+          <div class="tool-desc">Draft captions, email newsletters, blog posts, and client education content. Feed it your voice and it learns your style.</div>
+          <a href="https://chat.openai.com" target="_blank" rel="noopener" class="tool-link">chat.openai.com</a>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-badge badge-write">Writing</span>
+          <div class="tool-name">Claude (Anthropic)</div>
+          <div class="tool-desc">Excellent for longer-form content — brand messaging, FAQs, and repurposing a single idea into multiple post formats.</div>
+          <a href="https://claude.ai" target="_blank" rel="noopener" class="tool-link">claude.ai</a>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-badge badge-visual">Visual</span>
+          <div class="tool-name">Canva AI</div>
+          <div class="tool-desc">Design polished graphics, reels covers, and story templates without a designer. The AI Magic Design feature generates layouts from a prompt.</div>
+          <a href="https://www.canva.com" target="_blank" rel="noopener" class="tool-link">canva.com</a>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-badge badge-visual">Visual</span>
+          <div class="tool-name">Adobe Firefly</div>
+          <div class="tool-desc">Generate high-quality images for posts — without stock photo watermarks. Great for before/after style graphics and educational visuals.</div>
+          <a href="https://firefly.adobe.com" target="_blank" rel="noopener" class="tool-link">firefly.adobe.com</a>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-badge badge-video">Video</span>
+          <div class="tool-name">CapCut</div>
+          <div class="tool-desc">Auto-captions, AI editing, and trending templates in one place. Best free tool for short-form video that Instagram and TikTok favor.</div>
+          <a href="https://www.capcut.com" target="_blank" rel="noopener" class="tool-link">capcut.com</a>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-badge badge-video">Video</span>
+          <div class="tool-name">Descript</div>
+          <div class="tool-desc">Edit video by editing the transcript. Remove filler words, add captions, and repurpose long videos into short clips automatically.</div>
+          <a href="https://www.descript.com" target="_blank" rel="noopener" class="tool-link">descript.com</a>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-badge badge-sched">Scheduling</span>
+          <div class="tool-name">Buffer</div>
+          <div class="tool-desc">Schedule posts across Instagram, Facebook, and LinkedIn from one dashboard. AI assist helps rewrite captions per platform in one click.</div>
+          <a href="https://buffer.com" target="_blank" rel="noopener" class="tool-link">buffer.com</a>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-badge badge-sched">Scheduling</span>
+          <div class="tool-name">Later</div>
+          <div class="tool-desc">Visual social calendar built for image-heavy accounts. Drag-and-drop feed planning and a link-in-bio tool built in.</div>
+          <a href="https://later.com" target="_blank" rel="noopener" class="tool-link">later.com</a>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-badge badge-voice">Voice / Podcast</span>
+          <div class="tool-name">Riverside.fm</div>
+          <div class="tool-desc">Record studio-quality audio and video remotely. Automatically generates clip highlights and transcripts for repurposing.</div>
+          <a href="https://riverside.fm" target="_blank" rel="noopener" class="tool-link">riverside.fm</a>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-badge badge-edit">Repurposing</span>
+          <div class="tool-name">Opus Clip</div>
+          <div class="tool-desc">Upload any long video and it extracts the best 60-second clips automatically, with captions and highlights. One session video becomes 10 posts.</div>
+          <a href="https://www.opus.pro" target="_blank" rel="noopener" class="tool-link">opus.pro</a>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-badge badge-write">Research</span>
+          <div class="tool-name">Perplexity AI</div>
+          <div class="tool-desc">Find current research on PEMF, recovery, and equine therapy — cited and sourced. Builds credibility into your educational content.</div>
+          <a href="https://www.perplexity.ai" target="_blank" rel="noopener" class="tool-link">perplexity.ai</a>
+        </div>
+
+        <div class="tool-card">
+          <span class="tool-badge badge-edit">Repurposing</span>
+          <div class="tool-name">Repurpose.io</div>
+          <div class="tool-desc">Auto-distributes your content from one platform to all others. Post once to YouTube; it clips and schedules short versions across every channel.</div>
+          <a href="https://repurpose.io" target="_blank" rel="noopener" class="tool-link">repurpose.io</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- STARTER CHECKLIST -->
+  <div style="background:#111118; border-bottom:1px solid rgba(255,255,255,.05)">
+    <div class="tw-section">
+      <p class="tw-label">Action Plan</p>
+      <h2 class="tw-h2">Your First-Week Checklist</h2>
+      <p class="tw-body">Todd's closing challenge: don't leave MagnaCon and do nothing. Pick five items from this list and complete them before next Monday.</p>
+
+      <div class="resource-box">
+        <div class="resource-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-bright)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12l2 2 4-4"/><rect x="3" y="4" width="18" height="16" rx="2"/>
+          </svg>
+        </div>
+        <div class="resource-content">
+          <div class="resource-title">Week-One Action Checklist</div>
+          <div class="resource-desc">Complete these before your next session day. Each item takes 30 minutes or less.</div>
+          <ul class="checklist">
+            <li><strong>Write one sentence</strong> that describes who you help and how — your positioning statement.</li>
+            <li><strong>Pick your primary platform</strong> (Instagram, Facebook, YouTube, or TikTok) and commit to it for 90 days.</li>
+            <li><strong>Draft three content ideas</strong> using ChatGPT: one educational, one story-based, one client result.</li>
+            <li><strong>Record a 60-second video</strong> answering "What is MagnaWave and who is it for?" — no editing required.</li>
+            <li><strong>Set up a free scheduling tool</strong> (Buffer or Later) and schedule your first three posts.</li>
+            <li><strong>Audit your bio</strong> on every platform — does it say who you help and what to do next?</li>
+            <li><strong>Add one clear CTA</strong> to your existing posts or profile (link to booking, DM to inquire, etc.).</li>
+            <li><strong>Identify your ideal client</strong> in one sentence — niche beats broad, every time.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT IDEAS SECTION -->
+  <div style="background:#111118; border-bottom:1px solid rgba(255,255,255,.05)">
+    <div class="tw-section">
+      <p class="tw-label">Content Ideas</p>
+      <h2 class="tw-h2">30 Days of MagnaWave Content Starters</h2>
+      <p class="tw-body">Never stare at a blank caption again. Run each of these through ChatGPT or Claude with your voice and client focus — you'll have a month of content in an afternoon.</p>
+
+      <div class="takeaway-grid" style="margin-top:1.5rem">
+
+        <div class="takeaway-card">
+          <div class="takeaway-num">Educational</div>
+          <div class="takeaway-title">Myth vs. Fact Posts</div>
+          <div class="takeaway-body">"3 things people get wrong about PEMF therapy." Correcting misconceptions builds trust faster than any promotion.</div>
+        </div>
+
+        <div class="takeaway-card">
+          <div class="takeaway-num">Story</div>
+          <div class="takeaway-title">Behind the Session</div>
+          <div class="takeaway-body">What does a typical MagnaWave appointment actually look like? Walk your audience through it — the setup, the machine, the results.</div>
+        </div>
+
+        <div class="takeaway-card">
+          <div class="takeaway-num">Results</div>
+          <div class="takeaway-title">Before & After Moments</div>
+          <div class="takeaway-body">Client testimonials, movement improvements, animal behavior changes. Show the work — with permission. Results convert.</div>
+        </div>
+
+        <div class="takeaway-card">
+          <div class="takeaway-num">FAQ</div>
+          <div class="takeaway-title">Answer Real Questions</div>
+          <div class="takeaway-body">"Is it safe for my horse?" "How many sessions does it take?" Use actual questions you get in consultations as content prompts.</div>
+        </div>
+
+        <div class="takeaway-card">
+          <div class="takeaway-num">Personal</div>
+          <div class="takeaway-title">Why You Started</div>
+          <div class="takeaway-body">Your origin story is your most powerful differentiator. Practitioners who share their "why" consistently outperform those who don't.</div>
+        </div>
+
+        <div class="takeaway-card">
+          <div class="takeaway-num">Community</div>
+          <div class="takeaway-title">Share What You're Learning</div>
+          <div class="takeaway-body">Attending MagnaCon? Sharing a tip from Todd's session? Posts like this build authority and show you're invested in your practice.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="tw-cta-strip">
+    <h2>Ready to Put This Into Practice?</h2>
+    <p>If you're at MagnaCon and want help building your digital brand system — Thumbprint's team is here. Book an avatar creation session and leave with a complete content foundation.</p>
+    <div class="tw-btn-row">
+      <a href="magnacon.html" class="btn btn-primary">Book Your MagnaCon Session</a>
+      <a href="contact.html" class="btn btn-dark">Ask Us a Question</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-img-crop footer-sz" aria-hidden="true"><img src="fingerprint-logo.png" alt="" /></div>
+          <div class="nav-logo-wrap">
+            <span><span class="thumb">THUMB</span><span class="print">PRINT</span></span>
+            <span class="nav-sub">Curriculum</span>
+          </div>
+        </a>
+        <p class="footer-tagline">Strategic curriculum design that shapes futures and leaves a lasting impression.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Products</p>
+        <ul class="footer-links">
+          <li><a href="products.html">Avatar Creation</a></li>
+          <li><a href="products.html">Curriculum Production</a></li>
+          <li><a href="products.html">Training Videos</a></li>
+          <li><a href="products.html">Social Media Production</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Company</p>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="get-started.html">Get Started</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Conference</p>
+        <ul class="footer-links">
+          <li><a href="magnacon.html">Book Avatar Session</a></li>
+          <li><a href="magnacon.html">June 10 — Wednesday</a></li>
+          <li><a href="magnacon.html">June 11 — Thursday</a></li>
+          <li><a href="todd-workshop.html" class="active">Todd's Workshop</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Thumbprint Curriculum. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/thumbprint-curriculum/" target="_blank" title="LinkedIn">in</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>
