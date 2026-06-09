@@ -62,7 +62,7 @@ nav::after {
 .nav-sub { display:block; font-size:.55em; font-weight:700; letter-spacing:.28em; color:var(--blue-light); margin-top:.25em; }
 .nav-logo-wrap { display:flex; flex-direction:column; }
 
-/* Thumbprint logo — transparent PNG, no clipping needed */
+/* Thumbprint logo — white circle background */
 .nav-logo-img-crop {
   width: 40px;
   height: 40px;
@@ -70,6 +70,9 @@ nav::after {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 5px;
 }
 .nav-logo-img-crop img {
   width: 100%;
