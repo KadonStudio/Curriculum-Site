@@ -62,12 +62,11 @@ nav::after {
 .nav-sub { display:block; font-size:.55em; font-weight:700; letter-spacing:.28em; color:var(--blue-light); margin-top:.25em; }
 .nav-logo-wrap { display:flex; flex-direction:column; }
 
-/* Thumbprint logo — clip-path cuts only the bottom-right corner (Gemini star) */
+/* Thumbprint logo — dark bg of image blends with nav/footer dark background */
 .nav-logo-img-crop {
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   flex-shrink: 0;
-  clip-path: polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,8 +78,8 @@ nav::after {
   display: block;
 }
 .nav-logo-img-crop.footer-sz {
-  width: 48px;
-  height: 48px;
+  width: 54px;
+  height: 54px;
 }
 .nav-links { display:flex; gap:2rem; list-style:none; align-items:center; }
 .nav-links a { color:rgba(255,255,255,.75); text-decoration:none; font-size:.82rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; transition:color .2s; position:relative; }
