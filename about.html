@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,6 +6,36 @@
   <title>About — Thumbprint Curriculum</title>
   <link rel="icon" type="image/png" href="fingerprint-logo.png" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Dark theme override ── */
+    html, body { background: #111118; }
+
+    /* Page hero already dark — fine */
+
+    /* About section */
+    .about-section { background: #111118 !important; }
+    .about-text .section-h2 { color: var(--white) !important; }
+    .about-text .section-sub { color: rgba(255,255,255,.5) !important; }
+    .about-list li { color: rgba(255,255,255,.5) !important; }
+    .about-list li::before { background: var(--blue-bright) !important; }
+    .about-badge { background: var(--blue-bright) !important; }
+
+    /* Team section */
+    section[style*="off-white"] { background: #16161e !important; }
+    .team-card { background: rgba(255,255,255,.05) !important; border-color: rgba(255,255,255,.08) !important; }
+    .team-card:hover { box-shadow: 0 16px 40px rgba(0,0,0,.5) !important; }
+    .team-name { color: var(--white) !important; }
+    .team-role { color: var(--blue-bright) !important; }
+    .team-bio { color: rgba(255,255,255,.45) !important; }
+    .team-photo-placeholder { background: linear-gradient(160deg, #1a1a22 0%, #111118 100%) !important; }
+
+    /* CTA strip */
+    section[style*="var(--dark)"] h2 { color: var(--white) !important; }
+
+    /* Section labels on dark */
+    .section-label { color: var(--blue-bright) !important; }
+    .section-label::before { background: var(--blue-bright) !important; }
+  </style>
 </head>
 <body>
 
@@ -245,12 +275,12 @@
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 Thumbprint Curriculum. All rights reserved.</span>
       <div class="footer-socials">
-        <a href="#" title="LinkedIn">in</a>
-        <a href="#" title="X">𝕏</a>
-        </div>
+        <a href="https://www.linkedin.com/company/thumbprint-curriculum/" target="_blank" title="LinkedIn">in</a>
+      </div>
     </div>
   </div>
 </footer>
 
+<script src="nav.js"></script>
 </body>
 </html>

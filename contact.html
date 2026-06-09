@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,6 +6,39 @@
   <title>Contact — Thumbprint Curriculum</title>
   <link rel="icon" type="image/png" href="fingerprint-logo.png" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Dark theme override ── */
+    html, body { background: #111118; }
+
+    /* Form section */
+    .section-pad { background: #111118 !important; }
+
+    /* Form card */
+    .section-pad > .container > div[style*="white"] {
+      background: rgba(255,255,255,.04) !important;
+      border-color: rgba(255,255,255,.08) !important;
+    }
+
+    /* Headings + text inside form card */
+    .section-h2 { color: var(--white) !important; }
+    .section-pad p { color: rgba(255,255,255,.45) !important; }
+    .section-pad a { color: var(--blue-bright) !important; }
+
+    /* Form labels */
+    .form-label { color: rgba(255,255,255,.45) !important; }
+
+    /* Inputs */
+    .form-input, .form-select, .form-textarea {
+      background: rgba(255,255,255,.05) !important;
+      border-color: rgba(255,255,255,.12) !important;
+      color: var(--white) !important;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,.22) !important; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--blue-bright) !important; }
+    .form-select option { background: #2E2E36; }
+
+    /* Social section already dark — fine */
+  </style>
 </head>
 <body>
 
@@ -157,9 +190,8 @@
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 Thumbprint Curriculum. All rights reserved.</span>
       <div class="footer-socials">
-        <a href="#" title="LinkedIn">in</a>
-        <a href="#" title="X">𝕏</a>
-        </div>
+        <a href="https://www.linkedin.com/company/thumbprint-curriculum/" target="_blank" title="LinkedIn">in</a>
+      </div>
     </div>
   </div>
 </footer>
@@ -175,5 +207,6 @@ function handleSubmit(btn) {
 }
 </script>
 
+<script src="nav.js"></script>
 </body>
 </html>
