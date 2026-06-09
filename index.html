@@ -118,28 +118,10 @@
 <section class="magnacon-highlight">
   <div class="container">
     <div class="magnacon-inner">
-      <div class="mc-slides-wrap">
-
-        <div class="mc-slide active">
-          <p class="magnacon-title">MagnaCon 2026 — Avatar Creation Sessions</p>
-          <p class="magnacon-sub">Get your AI avatar built live on a green screen. 15-minute slots · June 10–11 · Louisville, KY</p>
-        </div>
-
-        <div class="mc-slide">
-          <p class="magnacon-title">Todd's Workshop: AI Secrets for Small Business</p>
-          <p class="magnacon-sub">Thursday morning general session — practical AI tools to grow your practice and reach more clients.</p>
-        </div>
-
-        <div class="mc-slide">
-          <p class="magnacon-title">Conference-Exclusive Pricing — Half Off Retail</p>
-          <p class="magnacon-sub">Standard $197 · Pro $297 · VIP $497. Book your session at the Thumbprint booth.</p>
-        </div>
-
-        <div class="mc-dots">
-          <button class="mc-dot active" aria-label="Slide 1"></button>
-          <button class="mc-dot" aria-label="Slide 2"></button>
-          <button class="mc-dot" aria-label="Slide 3"></button>
-        </div>
+      <div class="magnacon-content">
+        <p class="magnacon-title">MagnaCon 2026 — Avatar Creation Sessions</p>
+        <p class="magnacon-sub">Get your AI avatar built live on a green screen. 15-minute slots available June 10–11 · Louisville, KY</p>
+        <a href="todd-workshop.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.5rem;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:.1rem" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.8)'" onmouseout="this.style.color='rgba(255,255,255,.7)';this.style.borderColor='rgba(255,255,255,.35)'">Also: Todd's AI Workshop Resources →</a>
       </div>
       <a href="magnacon.html" class="magnacon-cta">Book Your Slot →</a>
     </div>
@@ -164,18 +146,18 @@
     <div class="hero-visual">
       <div class="hero-bold-stats">
         <div class="hero-bold-stat">
-          <span class="hero-bold-num">200<span class="hero-bold-sup">+</span></span>
-          <span class="hero-bold-label">Programs Designed</span>
+          <span class="hero-bold-num">1000<span class="hero-bold-sup">+</span></span>
+          <span class="hero-bold-label">Original Training Content Created</span>
         </div>
         <div class="hero-bold-divider"></div>
         <div class="hero-bold-stat">
-          <span class="hero-bold-num">50<span class="hero-bold-sup">K+</span></span>
-          <span class="hero-bold-label">Learners Reached</span>
+          <span class="hero-bold-num">4<span class="hero-bold-sup">+</span></span>
+          <span class="hero-bold-label">Industry Sectors Served</span>
         </div>
         <div class="hero-bold-divider"></div>
         <div class="hero-bold-stat">
-          <span class="hero-bold-num">15<span class="hero-bold-sup">+</span></span>
-          <span class="hero-bold-label">Years of Experience</span>
+          <span class="hero-bold-num">350<span class="hero-bold-sup">+</span></span>
+          <span class="hero-bold-label">Students Served</span>
         </div>
       </div>
     </div>
@@ -486,34 +468,6 @@
 </footer>
 
 <script src="nav.js"></script>
-<script>
-/* ── MagnaCon banner carousel ── */
-(function () {
-  var slides = document.querySelectorAll('.mc-slide');
-  var dots   = document.querySelectorAll('.mc-dot');
-  var cur    = 0;
-  var timer;
-
-  function go(to) {
-    slides[cur].classList.remove('active');
-    dots[cur].classList.remove('active');
-    cur = (to + slides.length) % slides.length;
-    slides[cur].classList.add('active');
-    dots[cur].classList.add('active');
-  }
-
-  function reset() {
-    clearInterval(timer);
-    timer = setInterval(function () { go(cur + 1); }, 4500);
-  }
-
-  dots.forEach(function (d, i) {
-    d.addEventListener('click', function () { go(i); reset(); });
-  });
-
-  reset();
-})();
-</script>
 <script>
 /* ── LinkedIn native embed carousel ── */
 (function () {
