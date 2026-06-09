@@ -62,11 +62,12 @@ nav::after {
 .nav-sub { display:block; font-size:.55em; font-weight:700; letter-spacing:.28em; color:var(--blue-light); margin-top:.25em; }
 .nav-logo-wrap { display:flex; flex-direction:column; }
 
-/* Thumbprint logo — dark bg of image blends with nav/footer dark background */
+/* Thumbprint logo — scale up to crop dark padding, show fingerprint prominently */
 .nav-logo-img-crop {
-  width: 46px;
-  height: 46px;
+  width: 52px;
+  height: 52px;
   flex-shrink: 0;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,11 +76,12 @@ nav::after {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  transform: scale(1.7);
   display: block;
 }
 .nav-logo-img-crop.footer-sz {
-  width: 54px;
-  height: 54px;
+  width: 60px;
+  height: 60px;
 }
 .nav-links { display:flex; gap:2rem; list-style:none; align-items:center; }
 .nav-links a { color:rgba(255,255,255,.75); text-decoration:none; font-size:.82rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; transition:color .2s; position:relative; }
