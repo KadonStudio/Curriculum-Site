@@ -508,28 +508,11 @@
     }
   }
 
-  /* ── Listen for Calendly booking completion → redirect to payment ── */
-  window.addEventListener('message', function (e) {
-    if (e.data && e.data.event === 'calendly.event_scheduled') {
-      state.calendlyBooked = true;
-      document.getElementById('openCalendlyBtn').style.display = 'none';
-      document.getElementById('bookedBadge').classList.add('show');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(function () {
-        window.location.href = 'magnacon-pay.html?pkg=' + encodeURIComponent(state.pkg);
-      }, 2000);
-    }
-  });
-
-  /* ── Submit session prep ── */
-  // ═══════════════════════════════════════════════════════════════
-  // EMAIL CONFIG — only change this line to update where emails go
-  // Get your free key at: https://web3forms.com (enter your email)
+  /* ── Submit session prep — validate & save, then show Calendly ── */
   var W3F_KEY = '8c53abda-9930-4595-97ad-25a2514794df';
-  // ═══════════════════════════════════════════════════════════════
+  var prepPayload = null;
 
-  async function submitBooking() {
-    // Clear previous errors
+  function submitBooking() {
     ['biz_name','biz_statement','icp','cta'].forEach(function(id) {
       document.getElementById(id).classList.remove('field-error');
     });
@@ -554,11 +537,8 @@
       return;
     }
 
-    var btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-
-    var payload = {
+    // Save form data — email is sent only after Calendly booking completes
+    prepPayload = {
       access_key:     W3F_KEY,
       to:             'ahmad@thumbprint.consulting',
       subject:        'MagnaCon Session Prep — ' + state.pkg + ' Package',
@@ -576,27 +556,31 @@
       extra_notes:    document.getElementById('extra_notes').value.trim()    || '—'
     };
 
-    try {
-      var res = await fetch('https://api.web3forms.com/submit', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body:    JSON.stringify(payload)
-      });
-      var data = await res.json();
-
-      if (data.success) {
-        showStep(3, false);
-      } else {
-        btn.disabled = false;
-        btn.textContent = 'Next — Book My Slot →';
-        alert('Something went wrong. Please try again.');
-      }
-    } catch (err) {
-      btn.disabled = false;
-      btn.textContent = 'Submit Prep Info ✓';
-      alert('Network error — please check your connection and try again.');
-    }
+    showStep(3, false);
   }
+
+  /* ── Listen for Calendly booking completion → send email → redirect ── */
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.event === 'calendly.event_scheduled') {
+      state.calendlyBooked = true;
+      document.getElementById('openCalendlyBtn').style.display = 'none';
+      document.getElementById('bookedBadge').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Send session prep email now that the slot is confirmed
+      if (prepPayload) {
+        fetch('https://api.web3forms.com/submit', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body:    JSON.stringify(prepPayload)
+        }).catch(function() {}); // fire-and-forget — don't block the redirect
+      }
+
+      setTimeout(function () {
+        window.location.href = 'magnacon-pay.html?pkg=' + encodeURIComponent(state.pkg);
+      }, 2000);
+    }
+  });
 </script>
 </body>
 </html>
