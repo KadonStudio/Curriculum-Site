@@ -558,29 +558,35 @@
 </footer>
 
 <!-- DOWNLOAD MODAL -->
-<div id="dlModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:2000;align-items:center;justify-content:center;padding:1rem">
-  <div style="background:#fff;border-radius:14px;padding:2rem;max-width:460px;width:100%;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.4)">
-    <button onclick="closeDlModal()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#999;line-height:1;padding:0" aria-label="Close">×</button>
+<div id="dlModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:2000;align-items:center;justify-content:center;padding:1rem">
+  <div style="background:#16161f;border:1.5px solid rgba(255,255,255,.1);border-radius:16px;padding:2rem 2.2rem;max-width:440px;width:100%;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.6)">
+    <button onclick="closeDlModal()" style="position:absolute;top:1rem;right:1.1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:rgba(255,255,255,.3);line-height:1;padding:0;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.3)'" aria-label="Close">×</button>
 
     <div id="dlFormWrap">
-      <h3 id="dlTitle" style="font-size:1.25rem;font-weight:800;color:#111827;margin-bottom:.3rem"></h3>
-      <p style="font-size:.85rem;color:#6b7280;margin-bottom:1.5rem">Enter your details and we'll unlock your download instantly.</p>
+      <p style="font-size:.62rem;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--blue-bright);margin-bottom:.75rem;display:flex;align-items:center;gap:.45rem"><span style="display:inline-block;width:16px;height:2px;background:var(--blue-bright);border-radius:2px"></span>Free Resource</p>
+      <h3 id="dlTitle" style="font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1.2;margin-bottom:.5rem"></h3>
+      <p style="font-size:.85rem;color:rgba(255,255,255,.45);line-height:1.6;margin-bottom:1.75rem">Straight from the session — yours to keep. Drop your details and the download starts automatically.</p>
 
-      <label style="display:block;font-size:.8rem;font-weight:600;color:#111827;margin-bottom:.35rem">Name</label>
-      <input id="dlName" type="text" placeholder="Your full name" style="width:100%;padding:.8rem 1rem;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.9rem;outline:none;box-sizing:border-box;margin-bottom:1rem;font-family:inherit" />
+      <label style="display:block;font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.4rem">Your Name</label>
+      <input id="dlName" type="text" placeholder="First and last name" style="width:100%;padding:.8rem 1rem;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:8px;font-size:.9rem;color:#fff;outline:none;box-sizing:border-box;margin-bottom:1rem;font-family:inherit;transition:border-color .2s" onfocus="this.style.borderColor='var(--blue-bright)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'" />
 
-      <label style="display:block;font-size:.8rem;font-weight:600;color:#111827;margin-bottom:.35rem">Email</label>
-      <input id="dlEmail" type="email" placeholder="you@example.com" style="width:100%;padding:.8rem 1rem;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.9rem;outline:none;box-sizing:border-box;margin-bottom:1.2rem;font-family:inherit" />
+      <label style="display:block;font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.4rem">Email Address</label>
+      <input id="dlEmail" type="email" placeholder="you@yourbusiness.com" style="width:100%;padding:.8rem 1rem;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:8px;font-size:.9rem;color:#fff;outline:none;box-sizing:border-box;margin-bottom:1.4rem;font-family:inherit;transition:border-color .2s" onfocus="this.style.borderColor='var(--blue-bright)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'" />
 
-      <button id="dlBtn" onclick="submitDlForm()" style="width:100%;background:#e05a2b;color:#fff;border:none;border-radius:8px;padding:1rem;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s">Unlock Download</button>
-      <p style="text-align:center;font-size:.75rem;color:#9ca3af;margin-top:.7rem">We respect your inbox. No spam, ever.</p>
+      <button id="dlBtn" onclick="submitDlForm()" style="width:100%;background:var(--blue-bright);color:#fff;border:none;border-radius:8px;padding:1rem;font-size:.85rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:opacity .2s">Get My Free Copy →</button>
+      <p style="text-align:center;font-size:.7rem;color:rgba(255,255,255,.2);margin-top:.75rem;letter-spacing:.04em">No fluff. No spam. Just the good stuff.</p>
     </div>
 
-    <div id="dlSuccess" style="display:none;text-align:center;padding:.5rem 0">
-      <div style="font-size:2.8rem;margin-bottom:.75rem">✅</div>
-      <h4 style="font-size:1.1rem;font-weight:800;color:#111827;margin-bottom:.4rem">Your download is ready!</h4>
-      <p style="font-size:.85rem;color:#6b7280;margin-bottom:1.3rem">Click below if your download didn't start automatically.</p>
-      <a id="dlLink" href="#" download style="display:inline-block;background:#e05a2b;color:#fff;text-decoration:none;border-radius:8px;padding:.85rem 2rem;font-size:.9rem;font-weight:700;font-family:inherit">⬇ Download Now</a>
+    <div id="dlSuccess" style="display:none;text-align:center;padding:1rem 0">
+      <div style="width:52px;height:52px;border-radius:50%;background:rgba(34,174,228,.15);border:1.5px solid rgba(34,174,228,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h4 style="font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:-.015em;margin-bottom:.4rem">You're good to go.</h4>
+      <p style="font-size:.83rem;color:rgba(255,255,255,.4);line-height:1.6;margin-bottom:1.4rem">Your download should have started. If not, grab it below.</p>
+      <a id="dlLink" href="#" download style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(34,174,228,.12);color:var(--blue-bright);text-decoration:none;border:1px solid rgba(34,174,228,.3);border-radius:8px;padding:.8rem 1.8rem;font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-family:inherit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Now
+      </a>
     </div>
   </div>
 </div>
