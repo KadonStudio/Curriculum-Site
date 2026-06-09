@@ -548,7 +548,7 @@ section { width:100%; }
 .day-tab-date { font-size:1.1rem; font-weight:800; color:var(--white); }
 .day-tab-label { font-size:.72rem; color:rgba(255,255,255,.4); margin-top:.2rem; }
 .day-tab.active .day-tab-label { color:rgba(0,200,150,.7); }
-.slots-label { font-size:.72rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:.8rem; }
+.slots-label { font-size:.72rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:.8rem; text-align:center; }
 .slots-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:.6rem; margin-bottom:1.5rem; }
 .slot { background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.1); border-radius:8px; padding:.55rem .5rem; text-align:center; cursor:pointer; font-size:.8rem; font-weight:700; color:rgba(255,255,255,.6); transition:all .2s; }
 .slot:hover { border-color:var(--blue-bright); color:var(--white); background:rgba(34,174,228,.08); }

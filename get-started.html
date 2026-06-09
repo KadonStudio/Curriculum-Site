@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Get Started — Thumbprint Curriculum</title>
-  <link rel="icon" type="image/png" href="Gemini_Generated_Image_bbju21bbju21bbju.png" />
+  <link rel="icon" type="image/png" href="fingerprint-logo.png" />
   <link rel="stylesheet" href="style.css" />
   <style>
     .pkg-selector { display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-bottom:1.8rem; }
@@ -22,7 +22,7 @@
 <nav>
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <div class="nav-logo-img-crop" aria-hidden="true"><img src="Gemini_Generated_Image_bbju21bbju21bbju.png" alt="" /></div>
+      <div class="nav-logo-img-crop" aria-hidden="true"><img src="fingerprint-logo.png" alt="" /></div>
       <div class="nav-logo-wrap">
         <span><span class="thumb">THUMB</span><span class="print">PRINT</span></span>
         <span class="nav-sub">Curriculum</span>
@@ -43,7 +43,7 @@
     <div class="container">
       <p class="page-hero-eyebrow">MagnaCon 2026 · Louisville, KY</p>
       <h1>Get Started</h1>
-      <p>Book your Thumbprint Signature recording slot for Wednesday, June 10 or Thursday, June 11 — or send us a message about any of our products.</p>
+      <p>Book your Thumbprint Signature recording slot for Wednesday June 10, Thursday June 11, or Friday June 12 — or send us a message about any of our products.</p>
     </div>
   </div>
 
@@ -65,7 +65,7 @@
           <div class="conf-booking-title-wrap">
             <p class="conf-booking-tag">🎬 Thumbprint Signature — MagnaCon Conference Special</p>
             <h2 class="conf-booking-title">Book Your 15-Minute Green Screen Session</h2>
-            <p class="conf-booking-sub">June 10–11, 2026 · MagnaCon · Louisville, KY &nbsp;·&nbsp; 9 AM – 4 PM daily<br>AI avatar + 5 social posts delivered in 5–7 business days — at half the retail price.</p>
+            <p class="conf-booking-sub">June 10–12, 2026 · MagnaCon · Louisville, KY &nbsp;·&nbsp; 9 AM – 4 PM daily<br>AI avatar + social posts delivered in 5–7 business days — at half the retail price.</p>
           </div>
         </div>
 
@@ -76,41 +76,42 @@
             <div class="pkg-name">Standard</div>
             <div class="pkg-price">$197</div>
             <div class="pkg-retail">Retail $394</div>
+            <div style="font-size:.7rem;color:rgba(255,255,255,.45);margin-top:.4rem;line-height:1.5">1 outfit · 5 posts<br>Standard brand</div>
           </div>
           <div class="pkg-option selected" onclick="selectPkg('pro',this)">
             <div class="pkg-name" style="color:var(--blue-bright)">Pro ✦ Popular</div>
             <div class="pkg-price">$297</div>
             <div class="pkg-retail">Retail $594</div>
+            <div style="font-size:.7rem;color:rgba(255,255,255,.45);margin-top:.4rem;line-height:1.5">2 outfits · 8 posts<br>Premium brand · Priority queue</div>
           </div>
           <div class="pkg-option" onclick="selectPkg('vip',this)">
-            <div class="pkg-name">VIP</div>
+            <div class="pkg-name">VIP ✦ Best Value</div>
             <div class="pkg-price">$497</div>
             <div class="pkg-retail">Retail $994</div>
+            <div style="font-size:.7rem;color:rgba(255,255,255,.45);margin-top:.4rem;line-height:1.5">3 outfits · 12 posts<br>Full identity · Custom scene · Same-day priority</div>
+          </div>
+        </div>
+        <p style="font-size:.72rem;color:rgba(255,255,255,.3);margin-bottom:1.4rem">All packages delivered within 5–7 business days via HeyGen / Synthesia.</p>
+        <div style="margin-bottom:1.8rem;padding:1rem 1.2rem;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(255,255,255,.03)">
+          <p style="font-size:.7rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.8rem">Add-Ons — Available with Any Package</p>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem">
+            <div style="text-align:center;padding:.6rem;background:rgba(255,255,255,.04);border-radius:8px">
+              <div style="font-size:1.1rem;font-weight:800;color:var(--blue-bright)">$200</div>
+              <div style="font-size:.65rem;color:rgba(255,255,255,.4)">Extra avatar outfit</div>
+            </div>
+            <div style="text-align:center;padding:.6rem;background:rgba(255,255,255,.04);border-radius:8px">
+              <div style="font-size:1.1rem;font-weight:800;color:var(--blue-bright)">$50</div>
+              <div style="font-size:.65rem;color:rgba(255,255,255,.4)">Additional social clip</div>
+            </div>
+            <div style="text-align:center;padding:.6rem;background:rgba(255,255,255,.04);border-radius:8px">
+              <div style="font-size:1.1rem;font-weight:800;color:var(--blue-bright)">$200</div>
+              <div style="font-size:.65rem;color:rgba(255,255,255,.4)">Additional 3-min video</div>
+            </div>
           </div>
         </div>
 
-        <!-- Step 2: Day + Time Slot -->
-        <p class="slots-label">Step 2 — Choose Your Day &amp; Time</p>
-        <div class="day-tabs">
-          <div class="day-tab active" onclick="selectDay('wed', this)">
-            <div class="day-tab-day">Wednesday</div>
-            <div class="day-tab-date">June 10, 2026</div>
-            <div class="day-tab-label">9 AM – 4 PM</div>
-          </div>
-          <div class="day-tab" onclick="selectDay('thu', this)">
-            <div class="day-tab-day">Thursday</div>
-            <div class="day-tab-date">June 11, 2026</div>
-            <div class="day-tab-label">9 AM – 4 PM</div>
-          </div>
-        </div>
-
-        <div class="slots-grid" id="slotsGrid"></div>
-        <div class="selected-slot-display hidden" id="selectedSlotDisplay">
-          📅 Selected: <span id="selectedSlotText"></span>
-        </div>
-
-        <!-- Step 3: Your Info -->
-        <p class="slots-label" style="margin-top:1.6rem">Step 3 — Your Information</p>
+        <!-- Step 2: Your Information -->
+        <p class="slots-label" style="margin-top:0">Step 2 — Your Information</p>
         <div class="booking-form-grid" style="margin-bottom:1.5rem">
           <div class="form-field">
             <label class="form-label light">First Name *</label>
@@ -130,10 +131,9 @@
           </div>
         </div>
 
-        <!-- Step 4: Intake Questions -->
-        <p class="slots-label">Step 4 — Session Prep</p>
-        <p style="font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:1.2rem;line-height:1.6">These answers help us personalize your avatar and social posts before your session.</p>
-
+        <!-- Step 3: Session Prep -->
+        <p class="slots-label" style="margin-top:1.6rem">Step 3 — Session Prep</p>
+        <p style="font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:1.2rem;line-height:1.6;text-align:center">These answers help us personalize your avatar and social posts before your session.</p>
         <div class="booking-form-grid">
           <div class="form-field full">
             <label class="form-label light">What's your business and what do you do?</label>
@@ -169,13 +169,67 @@
           </div>
         </div>
 
-        <button class="btn btn-green" style="margin-top:1.4rem;width:100%;justify-content:center;font-size:.9rem;padding:1rem" id="bookingBtn" onclick="submitBooking()">
-          Confirm My Session →
-        </button>
+        <!-- Step 4: Calendly Booking -->
+        <p class="slots-label" style="margin-top:1.8rem">Step 4 — Book Your Recording Slot</p>
+        <p style="font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:1.4rem;line-height:1.6;text-align:center">Select your 15-minute session on the calendar below — June 10–12, 2026 · 9 AM – 4 PM daily.</p>
+        <div class="calendly-inline-widget" data-url="https://calendly.com/aitools-thumbprint/in-person-avatar-shoot" style="min-width:320px;height:650px;border-radius:10px;overflow:hidden;"></div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+      </div>
 
-        <div class="booking-success" id="bookingSuccess">
-          <h3>You're Booked! 🎉</h3>
-          <p>We'll send a confirmation to your email and a text reminder the night before your session. Come with your energy — the team handles everything else. Your avatar arrives in 5–7 business days.</p>
+      <!-- ── DIVIDER ── -->
+      <hr class="section-divider" />
+
+      <!-- ── MAGNACON CONFERENCE DEALS ── -->
+      <div style="margin-bottom:3rem">
+        <p class="section-label" style="color:var(--green);justify-content:center">MagnaCon 2026 — Conference Exclusives</p>
+        <h2 class="section-h2" style="color:var(--white);text-align:center;margin-bottom:.5rem">More Deals Available This Week Only</h2>
+        <p style="color:rgba(255,255,255,.4);font-size:.88rem;text-align:center;margin-bottom:2rem">Founding rates expire end of MagnaCon — June 12. After that, standard pricing applies.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+
+          <!-- Amplify -->
+          <div style="background:rgba(0,200,150,.07);border:1px solid rgba(0,200,150,.25);border-radius:14px;padding:1.8rem;position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),#00a87e)"></div>
+            <p style="font-size:.65rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:.4rem">Thumbprint Amplify</p>
+            <h3 style="font-size:1.1rem;font-weight:800;color:var(--white);margin-bottom:.3rem">Done-For-You Monthly Content</h3>
+            <p style="font-size:.78rem;color:rgba(255,255,255,.45);margin-bottom:1.2rem;line-height:1.6">Founding Member rates — locked for life. $60/mo less than retail, never increases.</p>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:1.2rem">
+              <div style="text-align:center;padding:.7rem .4rem;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid rgba(255,255,255,.08)">
+                <div style="font-size:.6rem;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem">Standard</div>
+                <div style="font-size:1.2rem;font-weight:800;color:var(--green)">$159</div>
+                <div style="font-size:.6rem;color:rgba(255,255,255,.25);text-decoration:line-through">$219/mo</div>
+              </div>
+              <div style="text-align:center;padding:.7rem .4rem;background:rgba(0,200,150,.1);border-radius:8px;border:1px solid rgba(0,200,150,.3)">
+                <div style="font-size:.6rem;font-weight:700;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem">Pro ✦</div>
+                <div style="font-size:1.2rem;font-weight:800;color:var(--green)">$289</div>
+                <div style="font-size:.6rem;color:rgba(255,255,255,.25);text-decoration:line-through">$349/mo</div>
+              </div>
+              <div style="text-align:center;padding:.7rem .4rem;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid rgba(255,255,255,.08)">
+                <div style="font-size:.6rem;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem">VIP</div>
+                <div style="font-size:1.2rem;font-weight:800;color:var(--green)">$439</div>
+                <div style="font-size:.6rem;color:rgba(255,255,255,.25);text-decoration:line-through">$499/mo</div>
+              </div>
+            </div>
+            <a href="amplify.html" class="btn btn-green" style="width:100%;justify-content:center;font-size:.8rem;padding:.8rem">Lock In My Rate →</a>
+          </div>
+
+          <!-- Circle -->
+          <div style="background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.25);border-radius:14px;padding:1.8rem;position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#8b5cf6,#6d28d9)"></div>
+            <p style="font-size:.65rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#a78bfa;margin-bottom:.4rem">Thumbprint Circle</p>
+            <h3 style="font-size:1.1rem;font-weight:800;color:var(--white);margin-bottom:.3rem">AI Learning Community</h3>
+            <p style="font-size:.78rem;color:rgba(255,255,255,.45);margin-bottom:1.2rem;line-height:1.6">Founding Member rate locked for life — doubles to $97/mo after June 12.</p>
+            <div style="text-align:center;padding:1.2rem;background:rgba(139,92,246,.12);border-radius:10px;border:1px solid rgba(139,92,246,.3);margin-bottom:1.2rem">
+              <div style="font-size:.65rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#a78bfa;margin-bottom:.4rem">Founding Member — Conference Only</div>
+              <div style="display:flex;align-items:baseline;justify-content:center;gap:.5rem">
+                <span style="font-size:2.4rem;font-weight:800;color:#a78bfa">$47</span>
+                <span style="font-size:.85rem;color:rgba(255,255,255,.4)">/mo</span>
+                <span style="font-size:.8rem;color:rgba(255,255,255,.25);text-decoration:line-through">$97</span>
+              </div>
+              <div style="font-size:.7rem;color:rgba(255,255,255,.35);margin-top:.3rem">Rate locked for life · Never increases</div>
+            </div>
+            <a href="circle.html" class="btn" style="width:100%;justify-content:center;font-size:.8rem;padding:.8rem;background:#8b5cf6;border-color:#8b5cf6;color:white">Join at $47/mo →</a>
+          </div>
+
         </div>
       </div>
 
@@ -243,7 +297,7 @@
     <div class="footer-inner">
       <div>
         <a href="index.html" class="nav-logo">
-          <div class="nav-logo-img-crop footer-sz" aria-hidden="true"><img src="Gemini_Generated_Image_bbju21bbju21bbju.png" alt="" /></div>
+          <div class="nav-logo-img-crop footer-sz" aria-hidden="true"><img src="fingerprint-logo.png" alt="" /></div>
           <div class="nav-logo-wrap">
             <span><span class="thumb">THUMB</span><span class="print">PRINT</span></span>
             <span class="nav-sub">Curriculum</span>
@@ -272,7 +326,7 @@
         <p class="footer-col-title">MagnaCon 2026</p>
         <ul class="footer-links">
           <li><a href="get-started.html">Book Avatar Session</a></li>
-          <li><a href="get-started.html">Wed June 10 &amp; Thu June 11</a></li>
+          <li><a href="get-started.html">June 10, 11 &amp; 12</a></li>
           <li><a href="get-started.html">Louisville, KY</a></li>
           <li><a href="contact.html">Questions?</a></li>
         </ul>
@@ -282,88 +336,15 @@
       <span class="footer-copy">© 2026 Thumbprint Curriculum. All rights reserved.</span>
       <div class="footer-socials">
         <a href="#" title="LinkedIn">in</a>
-        <a href="#" title="Instagram">ig</a>
-        <a href="#" title="X">𝕏</a>
-        <a href="#" title="Facebook">fb</a>
       </div>
     </div>
   </div>
 </footer>
 
 <script>
-  // Generate 9 AM – 4 PM slots at 15-min intervals = 28 slots
-  function makeSlots() {
-    const slots = [];
-    let h = 9, m = 0;
-    while (h < 16) {
-      const h12  = h > 12 ? h - 12 : h;
-      const ampm = h >= 12 ? 'PM' : 'AM';
-      const mm   = m === 0 ? '00' : m;
-      slots.push(h12 + ':' + mm + ' ' + ampm);
-      m += 15;
-      if (m >= 60) { m = 0; h++; }
-    }
-    return slots; // 28 slots: 9:00 AM → 3:45 PM
-  }
-
-  const ALL_SLOTS = makeSlots();
-
-  const TAKEN = {
-    wed: ['9:15 AM', '10:30 AM', '11:00 AM', '1:00 PM', '2:30 PM'],
-    thu: ['9:00 AM', '10:00 AM', '12:15 PM', '2:00 PM', '3:30 PM']
-  };
-
-  let selectedDay  = 'wed';
-  let selectedTime = null;
-  let selectedPkg  = 'pro';
-
-  function renderSlots() {
-    const grid = document.getElementById('slotsGrid');
-    grid.innerHTML = '';
-    ALL_SLOTS.forEach(time => {
-      const taken = TAKEN[selectedDay].includes(time);
-      const div   = document.createElement('div');
-      div.className = 'slot' + (taken ? ' taken' : '');
-      div.textContent = time;
-      if (!taken) div.onclick = () => pickSlot(time, div);
-      grid.appendChild(div);
-    });
-    // Clear selection when switching days
-    selectedTime = null;
-    document.getElementById('selectedSlotDisplay').classList.add('hidden');
-  }
-
-  function selectDay(day, el) {
-    selectedDay = day;
-    document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    renderSlots();
-  }
-
-  function pickSlot(time, el) {
-    document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedTime = time;
-    const label = selectedDay === 'wed' ? 'Wednesday, June 10' : 'Thursday, June 11';
-    document.getElementById('selectedSlotText').textContent = label + ' at ' + time;
-    document.getElementById('selectedSlotDisplay').classList.remove('hidden');
-  }
-
   function selectPkg(pkg, el) {
-    selectedPkg = pkg;
     document.querySelectorAll('.pkg-option').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
-  }
-
-  function submitBooking() {
-    const first = document.getElementById('bkFirst').value.trim();
-    const email = document.getElementById('bkEmail').value.trim();
-    if (!first || !email) { alert('Please enter your name and email address.'); return; }
-    if (!selectedTime)    { alert('Please select a time slot.');                return; }
-    document.getElementById('bookingBtn').style.display = 'none';
-    const s = document.getElementById('bookingSuccess');
-    s.style.display = 'block';
-    s.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   function submitGeneral() {
@@ -373,9 +354,6 @@
     document.getElementById('gsBtn').style.display = 'none';
     document.getElementById('gsSuccess').style.display = 'block';
   }
-
-  // Init
-  renderSlots();
 </script>
 
 </body>
