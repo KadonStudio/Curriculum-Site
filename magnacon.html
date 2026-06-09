@@ -351,15 +351,15 @@
 
   <!-- ── STEP 3: Schedule via Calendly ── -->
   <div class="step-panel" id="step-3">
-    <h2 class="step-title">Book Your Session</h2>
-    <p class="step-subtitle">Pick a 15-minute slot on June 10 or 11. You'll get an automatic confirmation from Calendly.</p>
+    <h2 class="step-title">Book &amp; Pay</h2>
+    <p class="step-subtitle">Pick your 15-minute slot on June 10 or 11. After booking, you'll be taken directly to payment — your spot isn't confirmed until checkout is complete.</p>
 
     <!-- Booked confirmation — appears after Calendly fires event_scheduled -->
     <div class="booked-badge" id="bookedBadge">
       <div class="booked-badge-icon">✅</div>
       <div>
-        <div class="booked-badge-text">Session booked! Check your email for the calendar invite.</div>
-        <div class="booked-badge-sub">You're all set — we'll see you at MagnaCon!</div>
+        <div class="booked-badge-text">Slot reserved! Taking you to payment now…</div>
+        <div class="booked-badge-sub">Your spot is held for 10 minutes — complete checkout to confirm.</div>
       </div>
     </div>
 
@@ -371,7 +371,7 @@
         📅 &nbsp;Choose My Time Slot
       </button>
       <p style="font-size:.75rem;color:rgba(255,255,255,.25);margin-top:1rem">
-        Calendly will open — pick your slot, enter your details, and you're done.
+        Payment is required to hold your slot. Conference rate: Standard $197 · Pro $297 · VIP $497.
       </p>
     </div>
 
@@ -558,18 +558,16 @@
     }
   }
 
-  /* ── Listen for Calendly booking completion ── */
+  /* ── Listen for Calendly booking completion → redirect to payment ── */
   window.addEventListener('message', function (e) {
     if (e.data && e.data.event === 'calendly.event_scheduled') {
       state.calendlyBooked = true;
       document.getElementById('openCalendlyBtn').style.display = 'none';
       document.getElementById('bookedBadge').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(function () {
-        document.getElementById('step-3').classList.remove('active');
-        document.getElementById('stepIndicator').style.display = 'none';
-        document.getElementById('successPanel').classList.add('show');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 1800);
+        window.location.href = 'magnacon-pay.html';
+      }, 2000);
     }
   });
 
