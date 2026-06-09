@@ -508,9 +508,6 @@
 
 <script src="nav.js"></script>
 <script>
-  // ── Replace with your discovery call Calendly link ──
-  var DISCOVERY_CALL_URL = 'https://calendly.com/aitools-thumbprint/discovery-call';
-
   function showResult(id) {
     document.getElementById('quizPanel').style.display = 'none';
     document.querySelectorAll('.result-card').forEach(c => c.classList.remove('show'));
@@ -525,11 +522,7 @@
   }
 
   function openCall() {
-    if (window.Calendly) {
-      Calendly.showPopupWidget(DISCOVERY_CALL_URL);
-    } else {
-      window.open(DISCOVERY_CALL_URL, '_blank');
-    }
+    window.location.href = 'mailto:kadon@thumbprint.consulting?subject=Discovery%20Call%20Request%20%E2%80%94%20Thumbprint%20Curriculum&body=Hi%20Thumbprint%2C%0A%0AI%27m%20interested%20in%20booking%20a%20discovery%20call.%0A%0AName%3A%20%0AOrganization%3A%20%0AProduct%20of%20interest%3A%20%0AMessage%3A%20';
   }
 </script>
 </body>

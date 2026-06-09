@@ -179,12 +179,50 @@
 </footer>
 
 <script>
-  function submitInquiry() {
+  async function submitInquiry() {
     const name  = document.getElementById('rFirst').value.trim();
     const email = document.getElementById('rEmail').value.trim();
     if (!name || !email) { alert('Please enter your name and email.'); return; }
-    document.getElementById('inquiryForm').style.display  = 'none';
-    document.getElementById('inquirySuccess').style.display = 'block';
+
+    const btn = document.querySelector('[onclick="submitInquiry()"]');
+    const origText = btn.textContent;
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    const selects = document.querySelectorAll('.pay-select');
+    const track   = selects[0] ? selects[0].value : '—';
+    const learners = selects[1] ? selects[1].value : '—';
+    const notes   = document.getElementById('rNotes').value.trim() || '—';
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key:   '1553792e-b02d-4a0f-92bb-4d7d1e929cd7',
+          subject:      'Renew Discovery Call Request — ' + name,
+          from_name:    'Thumbprint Renew',
+          name:         name,
+          email:        email,
+          track:        track,
+          learner_base: learners,
+          notes:        notes
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('inquiryForm').style.display  = 'none';
+        document.getElementById('inquirySuccess').style.display = 'block';
+      } else {
+        btn.textContent = origText;
+        btn.disabled = false;
+        alert('Something went wrong — please email kadon@thumbprint.consulting directly.');
+      }
+    } catch (e) {
+      btn.textContent = origText;
+      btn.disabled = false;
+      alert('Something went wrong — please email kadon@thumbprint.consulting directly.');
+    }
   }
 </script>
 <script src="nav.js"></script>
