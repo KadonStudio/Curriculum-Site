@@ -111,7 +111,7 @@
     .btn-next.green { background:var(--green); }
     .btn-next.green:hover { background:#00a87e; }
     .btn-next:disabled { opacity:.4;cursor:not-allowed;transform:none; }
-    .step-count { font-size:.75rem;color:rgba(255,255,255,.3);font-weight:600;margin-left:auto; }
+    .step-count { font-size:.75rem;color:rgba(255,255,255,.3);font-weight:600;flex:1;text-align:center; }
 
     /* ── Success ── */
     .success-panel { display:none;text-align:center;padding:3rem 1rem; }
@@ -176,12 +176,12 @@
     <div class="step-line" id="line-1"><div class="step-line-fill"></div></div>
     <div class="step-node" id="node-2">
       <div class="step-circle">2</div>
-      <span class="step-label">Schedule</span>
+      <span class="step-label">Session Prep</span>
     </div>
     <div class="step-line" id="line-2"><div class="step-line-fill"></div></div>
     <div class="step-node" id="node-3">
-      <div class="step-circle">✓</div>
-      <span class="step-label">Session Prep</span>
+      <div class="step-circle">3</div>
+      <span class="step-label">Schedule</span>
     </div>
   </div>
 
@@ -232,44 +232,8 @@
     </div>
   </div>
 
-  <!-- ── STEP 2: Schedule via Calendly ── -->
+  <!-- ── STEP 2: Session Prep ── -->
   <div class="step-panel" id="step-2">
-    <h2 class="step-title">Book Your Session</h2>
-    <p class="step-subtitle">Pick a 15-minute slot on June 10 or 11. You'll get an automatic confirmation and reminder from Calendly.</p>
-
-    <!-- Booked confirmation — appears after Calendly fires event_scheduled -->
-    <div class="booked-badge" id="bookedBadge">
-      <div class="booked-badge-icon">✅</div>
-      <div>
-        <div class="booked-badge-text">Session booked! Check your email for the calendar invite.</div>
-        <div class="booked-badge-sub">Continue below to complete your session prep.</div>
-      </div>
-    </div>
-
-    <!-- Calendly popup trigger -->
-    <div style="text-align:center;padding:2.5rem 1rem 1.5rem">
-      <p style="font-size:.85rem;color:rgba(255,255,255,.35);margin-bottom:1.5rem">
-        Your session takes place at MagnaCon 2026 · Louisville, KY · June 10–12
-      </p>
-      <button id="openCalendlyBtn" onclick="openCalendly()" class="btn-next" style="font-size:1rem;padding:1.1rem 2.5rem;border-radius:8px;border:none;cursor:pointer">
-        📅 &nbsp;Choose My Time Slot
-      </button>
-      <p style="font-size:.75rem;color:rgba(255,255,255,.25);margin-top:1rem">
-        Calendly will open — pick your slot, enter your details, and return here to continue.
-      </p>
-    </div>
-
-    <div class="step-nav">
-      <button class="btn-prev show" onclick="goPrev(2)">← Back</button>
-      <span class="step-count">Step 2 of 3</span>
-      <button class="btn-next" id="nextFromCalendly" onclick="goNext(2)" disabled>
-        Next — Session Prep →
-      </button>
-    </div>
-  </div>
-
-  <!-- ── STEP 3: Session Prep ── -->
-  <div class="step-panel" id="step-3">
     <h2 class="step-title">Session Prep</h2>
     <p class="step-subtitle">Takes about 5 minutes. The more detail you give us, the better the final content.</p>
 
@@ -371,9 +335,41 @@
     </div>
 
     <div class="step-nav">
+      <button class="btn-prev show" onclick="goPrev(2)">← Back</button>
+      <span class="step-count">Step 2 of 3</span>
+      <button class="btn-next green" id="submitBtn" onclick="submitBooking()">Next — Book My Slot →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 3: Schedule via Calendly ── -->
+  <div class="step-panel" id="step-3">
+    <h2 class="step-title">Book Your Session</h2>
+    <p class="step-subtitle">Pick a 15-minute slot on June 10 or 11. You'll get an automatic confirmation from Calendly.</p>
+
+    <!-- Booked confirmation — appears after Calendly fires event_scheduled -->
+    <div class="booked-badge" id="bookedBadge">
+      <div class="booked-badge-icon">✅</div>
+      <div>
+        <div class="booked-badge-text">Session booked! Check your email for the calendar invite.</div>
+        <div class="booked-badge-sub">You're all set — we'll see you at MagnaCon!</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:2.5rem 1rem 1.5rem">
+      <p style="font-size:.85rem;color:rgba(255,255,255,.35);margin-bottom:1.5rem">
+        Your session takes place at MagnaCon 2026 · Louisville, KY · June 10–11
+      </p>
+      <button id="openCalendlyBtn" onclick="openCalendly()" class="btn-next" style="font-size:1rem;padding:1.1rem 2.5rem;border-radius:8px;border:none;cursor:pointer">
+        📅 &nbsp;Choose My Time Slot
+      </button>
+      <p style="font-size:.75rem;color:rgba(255,255,255,.25);margin-top:1rem">
+        Calendly will open — pick your slot, enter your details, and you're done.
+      </p>
+    </div>
+
+    <div class="step-nav">
       <button class="btn-prev show" onclick="goPrev(3)">← Back</button>
       <span class="step-count">Step 3 of 3</span>
-      <button class="btn-next green" id="submitBtn" onclick="submitBooking()">Submit Prep Info ✓</button>
     </div>
   </div>
 
@@ -558,15 +554,14 @@
   window.addEventListener('message', function (e) {
     if (e.data && e.data.event === 'calendly.event_scheduled') {
       state.calendlyBooked = true;
-      // Hide the "choose slot" button, show booked badge
       document.getElementById('openCalendlyBtn').style.display = 'none';
       document.getElementById('bookedBadge').classList.add('show');
-      // Enable + highlight the Next button
-      var btn = document.getElementById('nextFromCalendly');
-      btn.disabled = false;
-      btn.classList.add('green');
-      btn.textContent = 'Continue to Session Prep →';
-      btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(function () {
+        document.getElementById('step-3').classList.remove('active');
+        document.getElementById('stepIndicator').style.display = 'none';
+        document.getElementById('successPanel').classList.add('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 1800);
     }
   });
 
@@ -608,10 +603,7 @@
       var data = await res.json();
 
       if (data.success) {
-        document.getElementById('step-3').classList.remove('active');
-        document.getElementById('stepIndicator').style.display = 'none';
-        document.getElementById('successPanel').classList.add('show');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showStep(3, false);
       } else {
         btn.disabled = false;
         btn.textContent = 'Submit Prep Info ✓';
