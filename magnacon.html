@@ -102,7 +102,7 @@
     .form-textarea { resize:vertical;min-height:80px; }
 
     /* ── Nav buttons ── */
-    .step-nav { display:flex;align-items:center;gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07); }
+    .step-nav { display:flex;align-items:center;gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07);position:relative; }
     .btn-prev { font-family:var(--font);font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);background:none;border:1.5px solid rgba(255,255,255,.12);border-radius:6px;padding:.8rem 1.5rem;cursor:pointer;transition:all .2s;display:none; }
     .btn-prev:hover { border-color:rgba(255,255,255,.3);color:#fff; }
     .btn-prev.show { display:block; }
@@ -111,7 +111,7 @@
     .btn-next.green { background:var(--green); }
     .btn-next.green:hover { background:#00a87e; }
     .btn-next:disabled { opacity:.4;cursor:not-allowed;transform:none; }
-    .step-count { font-size:.75rem;color:rgba(255,255,255,.3);font-weight:600;flex:1;text-align:center; }
+    .step-count { font-size:.75rem;color:rgba(255,255,255,.3);font-weight:600;position:absolute;left:50%;transform:translateX(-50%);pointer-events:none; }
 
     /* ── Success ── */
     .success-panel { display:none;text-align:center;padding:3rem 1rem; }
