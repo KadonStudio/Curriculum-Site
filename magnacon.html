@@ -537,8 +537,11 @@
       return;
     }
 
-    // Save form data — email is sent only after Calendly booking completes
-    prepPayload = {
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    var payload = {
       access_key:     W3F_KEY,
       to:             'ahmad@thumbprint.consulting',
       subject:        'MagnaCon Session Prep — ' + state.pkg + ' Package',
@@ -556,26 +559,32 @@
       extra_notes:    document.getElementById('extra_notes').value.trim()    || '—'
     };
 
-    showStep(3, false);
+    fetch('https://api.web3forms.com/submit', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body:    JSON.stringify(payload)
+    }).then(function(res) { return res.json(); }).then(function(data) {
+      if (data.success) {
+        showStep(3, false);
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Next — Book My Slot →';
+        alert('Something went wrong. Please try again.');
+      }
+    }).catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'Next — Book My Slot →';
+      alert('Network error — please check your connection and try again.');
+    });
   }
 
-  /* ── Listen for Calendly booking completion → send email → redirect ── */
+  /* ── Listen for Calendly booking completion → redirect to payment ── */
   window.addEventListener('message', function (e) {
     if (e.data && e.data.event === 'calendly.event_scheduled') {
       state.calendlyBooked = true;
       document.getElementById('openCalendlyBtn').style.display = 'none';
       document.getElementById('bookedBadge').classList.add('show');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      // Send session prep email now that the slot is confirmed
-      if (prepPayload) {
-        fetch('https://api.web3forms.com/submit', {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body:    JSON.stringify(prepPayload)
-        }).catch(function() {}); // fire-and-forget — don't block the redirect
-      }
-
       setTimeout(function () {
         window.location.href = 'magnacon-pay.html?pkg=' + encodeURIComponent(state.pkg) + '&booked=1';
       }, 2000);
