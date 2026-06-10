@@ -414,24 +414,27 @@
     btn.disabled = true;
     btn.textContent = 'Submitting…';
 
+    var name  = document.getElementById('your_name').value.trim();
+    var email = document.getElementById('your_email').value.trim();
+
     var payload = {
-      access_key:     W3F_KEY,
-      to:             'ahmad@thumbprint.consulting',
-      subject:        'MagnaCon Session Prep — ' + selectedPkg + ' (standalone form)',
-      from_name:      document.getElementById('your_name').value.trim(),
-      submitter_name: document.getElementById('your_name').value.trim(),
-      submitter_email:document.getElementById('your_email').value.trim(),
-      package:        selectedPkg,
-      business_name:  document.getElementById('biz_name').value.trim()      || '—',
-      what_you_do:    document.getElementById('biz_statement').value.trim()  || '—',
-      ideal_customer: document.getElementById('icp').value.trim()            || '—',
-      key_cta:        document.getElementById('cta').value.trim()            || '—',
-      content_types:  getChips('chips-content'),
-      platforms:      getChips('chips-platform'),
-      tone:           getChips('chips-tone'),
-      hard_limits:    document.getElementById('hard_limits').value.trim()    || '—',
-      brand_colors:   document.getElementById('brand').value.trim()          || '—',
-      extra_notes:    document.getElementById('extra_notes').value.trim()    || '—'
+      access_key:  W3F_KEY,
+      subject:     'MagnaCon Session Prep — ' + selectedPkg + ' — ' + name,
+      from_name:   name,
+      replyto:     email,
+      'Name':      name,
+      'Email':     email,
+      'Package':   selectedPkg,
+      'Business Name':  document.getElementById('biz_name').value.trim()      || '—',
+      'What You Do':    document.getElementById('biz_statement').value.trim()  || '—',
+      'Ideal Customer': document.getElementById('icp').value.trim()            || '—',
+      'Key CTA':        document.getElementById('cta').value.trim()            || '—',
+      'Content Types':  getChips('chips-content'),
+      'Platforms':      getChips('chips-platform'),
+      'Tone':           getChips('chips-tone'),
+      'Hard Limits':    document.getElementById('hard_limits').value.trim()    || '—',
+      'Brand Colors':   document.getElementById('brand').value.trim()          || '—',
+      'Extra Notes':    document.getElementById('extra_notes').value.trim()    || '—'
     };
 
     fetch('https://api.web3forms.com/submit', {
