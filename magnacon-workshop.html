@@ -586,8 +586,8 @@
       <div style="width:52px;height:52px;border-radius:50%;background:rgba(34,174,228,.15);border:1.5px solid rgba(34,174,228,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem">
         <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <h4 style="font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:-.015em;margin-bottom:.4rem">You're good to go.</h4>
-      <p style="font-size:.83rem;color:rgba(255,255,255,.4);line-height:1.6;margin-bottom:1.4rem">Click below to save your copy.</p>
+      <h4 style="font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:-.015em;margin-bottom:.4rem">Check your inbox!</h4>
+      <p style="font-size:.83rem;color:rgba(255,255,255,.4);line-height:1.6;margin-bottom:1.4rem">We've sent it to your email. You can also grab it directly below.</p>
       <a id="dlLink" href="#" download style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(34,174,228,.12);color:var(--blue-bright);text-decoration:none;border:1px solid rgba(34,174,228,.3);border-radius:8px;padding:.8rem 1.8rem;font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-family:inherit">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download Now
@@ -596,8 +596,15 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="nav.js"></script>
 <script>
+  var EMAILJS_PUBLIC_KEY  = 'REPLACE_PUBLIC_KEY';
+  var EMAILJS_SERVICE_ID  = 'REPLACE_SERVICE_ID';
+  var EMAILJS_TEMPLATE_ID = 'REPLACE_TEMPLATE_ID';
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
   var dlFile = '';
 
   function openDlModal(title, file) {
@@ -607,10 +614,9 @@
     document.getElementById('dlSuccess').style.display = 'none';
     document.getElementById('dlName').value = '';
     document.getElementById('dlEmail').value = '';
-    document.getElementById('dlBtn').textContent = 'Unlock Download';
+    document.getElementById('dlBtn').textContent = 'Get My Free Copy →';
     document.getElementById('dlBtn').disabled = false;
-    var modal = document.getElementById('dlModal');
-    modal.style.display = 'flex';
+    document.getElementById('dlModal').style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
 
@@ -627,13 +633,27 @@
     var name  = document.getElementById('dlName').value.trim();
     var email = document.getElementById('dlEmail').value.trim();
     if (!name || !email) {
-      if (!name) document.getElementById('dlName').style.borderColor = '#ef4444';
+      if (!name)  document.getElementById('dlName').style.borderColor  = '#ef4444';
       if (!email) document.getElementById('dlEmail').style.borderColor = '#ef4444';
       return;
     }
-    document.getElementById('dlLink').href = dlFile;
+    var btn = document.getElementById('dlBtn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    var downloadUrl = 'https://thumbprintcurriculum.com/' + encodeURIComponent(dlFile);
+
+    // Show success immediately so the user isn't blocked if email is slow
+    document.getElementById('dlLink').href = downloadUrl;
     document.getElementById('dlFormWrap').style.display = 'none';
     document.getElementById('dlSuccess').style.display = 'block';
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_name:       name,
+      to_email:      email,
+      resource_name: document.getElementById('dlTitle').textContent,
+      download_url:  downloadUrl
+    });
   }
 </script>
 </body>
