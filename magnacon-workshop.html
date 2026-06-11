@@ -651,11 +651,10 @@
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
         access_key: W3F_KEY,
-        subject:    'MagnaCon Download — ' + document.getElementById('dlTitle').textContent,
-        from_name:  'Workshop Site',
-        'Name':     name,
-        'Email':    email,
-        'Resource': document.getElementById('dlTitle').textContent
+        subject:    'Download: ' + name + ' — ' + email,
+        from_name:  name,
+        replyto:    email,
+        message:    name + '\n' + email + '\n' + document.getElementById('dlTitle').textContent
       })
     });
   }
