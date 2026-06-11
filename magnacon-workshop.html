@@ -596,23 +596,17 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="nav.js"></script>
 <script>
-  var EMAILJS_PUBLIC_KEY  = 'REPLACE_PUBLIC_KEY';
-  var EMAILJS_SERVICE_ID  = 'REPLACE_SERVICE_ID';
-  var EMAILJS_TEMPLATE_ID = 'REPLACE_TEMPLATE_ID';
-
-  emailjs.init(EMAILJS_PUBLIC_KEY);
-
-  var dlFile = '';
+  var W3F_KEY = '8c53abda-9930-4595-97ad-25a2514794df';
+  var dlFile  = '';
 
   function openDlModal(title, file) {
     dlFile = file;
     document.getElementById('dlTitle').textContent = title;
     document.getElementById('dlFormWrap').style.display = 'block';
     document.getElementById('dlSuccess').style.display = 'none';
-    document.getElementById('dlName').value = '';
+    document.getElementById('dlName').value  = '';
     document.getElementById('dlEmail').value = '';
     document.getElementById('dlBtn').textContent = 'Get My Free Copy →';
     document.getElementById('dlBtn').disabled = false;
@@ -629,7 +623,7 @@
     if (e.target === this) closeDlModal();
   });
 
-  function submitDlForm() {
+  async function submitDlForm() {
     var name  = document.getElementById('dlName').value.trim();
     var email = document.getElementById('dlEmail').value.trim();
     if (!name || !email) {
@@ -638,21 +632,31 @@
       return;
     }
     var btn = document.getElementById('dlBtn');
-    btn.textContent = 'Sending…';
+    btn.textContent = 'Unlocking…';
     btn.disabled = true;
 
-    var downloadUrl = 'https://thumbprintcurriculum.com/' + encodeURIComponent(dlFile);
+    // Trigger download immediately
+    var a = document.createElement('a');
+    a.href = dlFile; a.download = ''; a.style.display = 'none';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
 
-    // Show success immediately so the user isn't blocked if email is slow
-    document.getElementById('dlLink').href = downloadUrl;
+    // Show success screen
+    document.getElementById('dlLink').href = dlFile;
     document.getElementById('dlFormWrap').style.display = 'none';
     document.getElementById('dlSuccess').style.display = 'block';
 
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      to_name:       name,
-      to_email:      email,
-      resource_name: document.getElementById('dlTitle').textContent,
-      download_url:  downloadUrl
+    // Log download to inbox — fire and forget
+    fetch('https://api.web3forms.com/submit', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: W3F_KEY,
+        subject:    'MagnaCon Download — ' + document.getElementById('dlTitle').textContent,
+        from_name:  'Workshop Site',
+        'Name':     name,
+        'Email':    email,
+        'Resource': document.getElementById('dlTitle').textContent
+      })
     });
   }
 </script>
