@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -30,14 +30,14 @@
       padding: 3rem clamp(1.5rem,4vw,2rem) 5rem;
     }
 
-    /* ── Section labels ── */
+    /* â”€â”€ Section labels â”€â”€ */
     .prep-section-label {
       font-size:.65rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
       color:rgba(255,255,255,.3);margin:2rem 0 1rem;display:block;
     }
     .prep-section-label:first-child { margin-top:0; }
 
-    /* ── Form fields ── */
+    /* â”€â”€ Form fields â”€â”€ */
     .field-grid { display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem; }
     .field-grid.single { grid-template-columns:1fr; }
     .form-field { display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.2rem; }
@@ -65,7 +65,7 @@
     }
     .field-error { border-color:#f87171 !important; }
 
-    /* ── Package selector ── */
+    /* â”€â”€ Package selector â”€â”€ */
     .pkg-pick { display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.4rem; }
     .pkg-pill {
       display:flex;flex-direction:column;align-items:center;
@@ -88,7 +88,7 @@
       border-radius:20px;display:inline-block;margin-top:.3rem;
     }
 
-    /* ── Chips ── */
+    /* â”€â”€ Chips â”€â”€ */
     .chip-group { display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem;margin-bottom:.4rem; }
     .chip-group.chip-error { outline:1.5px solid #f87171;border-radius:8px;padding:.4rem; }
     .chip {
@@ -100,7 +100,7 @@
     .chip:hover { border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.8); }
     .chip.selected { background:rgba(34,174,228,.12);border-color:var(--blue-bright);color:var(--blue-bright); }
 
-    /* ── Submit button ── */
+    /* â”€â”€ Submit button â”€â”€ */
     .prep-submit-wrap { margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07); }
     .btn-submit {
       font-family:var(--font);font-size:.88rem;font-weight:800;letter-spacing:.08em;
@@ -115,7 +115,7 @@
       margin-top:.75rem;line-height:1.5;
     }
 
-    /* ── Success ── */
+    /* â”€â”€ Success â”€â”€ */
     .success-panel { display:none;text-align:center;padding:3rem 1rem; }
     .success-panel.show { display:block; }
     .success-icon {
@@ -152,7 +152,7 @@
     </a>
     <ul class="nav-links">
       <li class="hide-sm"><a href="magnacon.html">MagnaCon</a></li>
-      <li class="hide-sm"><a href="todd-workshop.html">Workshop Resources</a></li>
+      <li class="hide-sm"><a href="magnacon-workshop.html">Workshop Resources</a></li>
       <li><a href="magnacon-pay.html" class="nav-cta">Pay Now</a></li>
     </ul>
   </div>
@@ -292,7 +292,7 @@
       </div>
 
       <div class="prep-submit-wrap">
-        <button class="btn-submit" id="submitBtn" onclick="submitPrep()">Submit My Prep Info →</button>
+        <button class="btn-submit" id="submitBtn" onclick="submitPrep()">Submit My Prep Info â†’</button>
         <p class="submit-note">Your answers go directly to the Thumbprint team so they can prepare your session in advance.</p>
       </div>
 
@@ -305,8 +305,8 @@
       </div>
       <h2>You're all set.</h2>
       <p>The Thumbprint team has your prep info and will be ready to hit the ground running at your session. See you at MagnaCon!</p>
-      <a href="todd-workshop.html" class="btn btn-primary" style="display:inline-flex;margin-right:.75rem">Check Out Todd's AI Resources</a>
-      <a href="magnacon-pay.html" class="btn btn-dark" style="display:inline-flex;margin-top:.75rem">Complete Payment →</a>
+      <a href="magnacon-workshop.html" class="btn btn-primary" style="display:inline-flex;margin-right:.75rem">Check Out Workshop Resources</a>
+      <a href="magnacon-pay.html" class="btn btn-dark" style="display:inline-flex;margin-top:.75rem">Complete Payment â†’</a>
     </div>
 
   </div><!-- /prep-body -->
@@ -332,7 +332,7 @@
         <ul class="footer-links">
           <li><a href="magnacon.html">MagnaCon Overview</a></li>
           <li><a href="magnacon-pay.html">Pay Now</a></li>
-          <li><a href="todd-workshop.html">Todd's Workshop</a></li>
+          <li><a href="magnacon-workshop.html">Workshop Resources</a></li>
           <li><a href="contact.html">Questions?</a></li>
         </ul>
       </div>
@@ -353,7 +353,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2026 Thumbprint Curriculum. All rights reserved.</span>
+      <span class="footer-copy">Â© 2026 Thumbprint Curriculum. All rights reserved.</span>
       <div class="footer-socials">
         <a href="https://www.linkedin.com/company/thumbprint-curriculum/" target="_blank" title="LinkedIn">in</a>
       </div>
@@ -450,14 +450,14 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         btn.disabled = false;
-        btn.textContent = 'Submit My Prep Info →';
+        btn.textContent = 'Submit My Prep Info â†’';
         document.getElementById('errorBanner').textContent = 'Something went wrong — please try again.';
         document.getElementById('errorBanner').classList.add('show');
       }
     })
     .catch(function() {
       btn.disabled = false;
-      btn.textContent = 'Submit My Prep Info →';
+      btn.textContent = 'Submit My Prep Info â†’';
       document.getElementById('errorBanner').textContent = 'Network error — please check your connection and try again.';
       document.getElementById('errorBanner').classList.add('show');
     });
@@ -465,3 +465,4 @@
 </script>
 </body>
 </html>
+
