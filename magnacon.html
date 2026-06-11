@@ -199,7 +199,7 @@
     <h2 class="step-title">Choose Your Package</h2>
     <p class="step-subtitle">Conference-exclusive pricing — half the retail rate, available this week only.</p>
     <div class="pkg-grid">
-      <div class="pkg-card" onclick="selectPkg('Standard','$197','$394',this)">
+      <div class="pkg-card selected" onclick="selectPkg('Standard','$197','$394',this)">
         <div class="pkg-card-name">Standard</div>
         <div class="pkg-card-price">$197</div>
         <div class="pkg-card-retail">Retail $394</div>
@@ -210,7 +210,7 @@
           <li>Delivered in 5–7 business days</li>
         </ul>
       </div>
-      <div class="pkg-card selected" onclick="selectPkg('Pro','$297','$594',this)">
+      <div class="pkg-card" onclick="selectPkg('Pro','$297','$594',this)">
         <div class="pkg-card-name">Pro</div>
         <div class="pkg-card-price">$297</div>
         <div class="pkg-card-retail">Retail $594</div>
@@ -443,7 +443,7 @@
 <script src="nav.js"></script>
 <script>
   var currentStep = 1;
-  var state = { pkg: 'Pro', pkgPrice: '$297', calendlyBooked: false };
+  var state = { pkg: 'Standard', pkgPrice: '$197', calendlyBooked: false };
 
   /* ── Package selection ── */
   function selectPkg(name, price, retail, el) {

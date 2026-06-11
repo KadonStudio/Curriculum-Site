@@ -190,11 +190,11 @@
       <span class="prep-section-label">Which package did you book?</span>
 
       <div class="pkg-pick">
-        <div class="pkg-pill" onclick="pickPkg(this,'Standard')">
+        <div class="pkg-pill selected" onclick="pickPkg(this,'Standard')">
           <div class="pkg-pill-name">Standard</div>
           <div class="pkg-pill-price">$197</div>
         </div>
-        <div class="pkg-pill selected" onclick="pickPkg(this,'Pro')">
+        <div class="pkg-pill" onclick="pickPkg(this,'Pro')">
           <div class="pkg-pill-name">Pro</div>
           <div class="pkg-pill-price">$297</div>
           <div class="pkg-pill-tag">Popular</div>
@@ -364,7 +364,7 @@
 <script src="nav.js"></script>
 <script>
   var W3F_KEY = '8c53abda-9930-4595-97ad-25a2514794df';
-  var selectedPkg = 'Pro';
+  var selectedPkg = 'Standard';
 
   function pickPkg(el, name) {
     document.querySelectorAll('.pkg-pill').forEach(function(p) { p.classList.remove('selected'); });
