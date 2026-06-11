@@ -1,8 +1,9 @@
-# Hooves and Hounds PEMF — Synthesia Video Script
+# Hooves and Hounds PEMF — Intro Video Script (Synthesia)
 
-**Title:** "Feel Good From Nose to Tail" — Meet Hooves and Hounds PEMF
-**Runtime:** ~90 seconds (perfect for a website hero video or social post)
-**Tone:** Warm, fun, energetic, a little playful
+**Title:** "Hi, We're Hooves and Hounds PEMF" — Meet the Team
+**Type:** Intro / "Welcome, meet us" video for the website homepage
+**Runtime:** ~45–60 seconds
+**Tone:** Warm, friendly, welcoming, a little playful
 **Featuring:** Sen Beever ("Mister Beever") & Alex Ricci
 **Service area:** Mobile across the Bay Area (Oakland, CA + beyond)
 
@@ -11,78 +12,49 @@
 ## How to use this in Synthesia
 - Each **SCENE** = one Synthesia scene. Paste the **VOICEOVER** line into the script box for your avatar.
 - **ON-SCREEN TEXT** = the big caption/overlay to add on that scene.
-- **B-ROLL / VISUAL** = what to show (stock clips of horses, dogs, cats, the MagnaWave machine, happy animals, etc.).
-- Suggested avatar: a friendly, approachable presenter. Suggested voice: upbeat and warm.
+- **B-ROLL / VISUAL** = what to show (horses, dogs, cats, the MagnaWave machine, happy animals).
+- Suggested avatar: a friendly, approachable presenter. Suggested voice: warm and welcoming.
 - Recommended background music: light, uplifting acoustic.
 
 ---
 
-## SCENE 1 — Hook (0:00–0:08)
-**B-ROLL / VISUAL:** Slow-mo of a horse trotting in a sunny pasture, then a dog wagging its tail, then a cat stretching.
-**ON-SCREEN TEXT:** Your animals can't tell you where it hurts. 🐴🐶🐱
+## SCENE 1 — Warm welcome (0:00–0:09)
+**B-ROLL / VISUAL:** Sunny opening montage — a horse in a pasture, a dog wagging its tail, a cat stretching. Logo fades in.
+**ON-SCREEN TEXT:** Hi, we're Hooves and Hounds PEMF 👋🐴🐶🐱
 **VOICEOVER:**
-"Your horse can't say 'my hip is sore.' Your dog can't tell you his joints ache. But their bodies are talking — and we know how to listen."
+"Hi there, and welcome! We're Hooves and Hounds PEMF — and for over twenty years, we've been helping animals and the people who love them feel their very best."
 
 ---
 
-## SCENE 2 — Introduce the brand (0:08–0:18)
-**B-ROLL / VISUAL:** Logo reveal for Hooves and Hounds PEMF. Quick montage of a horse, a dog, and a cat looking relaxed and happy.
-**ON-SCREEN TEXT:** Hooves and Hounds PEMF • Caring for your whole animal family since 2000
+## SCENE 2 — Meet Mister Beever (0:09–0:23)
+**B-ROLL / VISUAL:** Sen with a horse; Kansas farm imagery; gentle hands-on training moments.
+**ON-SCREEN TEXT:** Meet Sen — "Mister Beever" 🐎 Vet Tech • PEMF Practitioner • Do-No-Harm Trainer
 **VOICEOVER:**
-"Welcome to Hooves and Hounds PEMF — where for over twenty years we've been helping animals feel their absolute best, from nose to tail and hoof to paw."
+"I'm Sen Beever — but the animals call me Mister Beever. I grew up on a Kansas horse farm surrounded by every critter you can imagine, and after twenty-plus years as a vet tech and PEMF practitioner, I'm a 'do no harm' trainer — just science, patience, and a whole lot of heart."
 
 ---
 
-## SCENE 3 — Meet Mister Beever (0:18–0:32)
-**B-ROLL / VISUAL:** Photo or clip of Sen with a horse. Kansas farm imagery. Gentle, hands-on training moments.
-**ON-SCREEN TEXT:** Meet Sen Beever — "Mister Beever" 🐎 Vet Tech • PEMF Practitioner • Do-No-Harm Trainer
+## SCENE 3 — Meet Alex Ricci (0:23–0:37)
+**B-ROLL / VISUAL:** Alex working with an animal; a quick Pilates/movement moment; a cat being adored.
+**ON-SCREEN TEXT:** Meet Alex 🐱 CEO • MagnaWave PEMF Practitioner • Pilates Teacher • Certified Cat Pro
 **VOICEOVER:**
-"Meet Sen Beever — or as the animals know him, Mister Beever. He grew up on a Kansas horse farm surrounded by every critter you can imagine. With over twenty years as a vet tech and PEMF practitioner, he's a 'do no harm' trainer — no prongs, no shocks, just science, patience, and a whole lot of heart."
+"And I'm Alex Ricci — CEO, MagnaWave practitioner, Pilates teacher, and certified cat whisperer. For over two decades I've worked with humans and animals alike. Together, the two of us make a pretty unstoppable wellness team."
 
 ---
 
-## SCENE 4 — Meet Alex Ricci (0:32–0:46)
-**B-ROLL / VISUAL:** Photo or clip of Alex working with an animal, plus a quick Pilates/movement moment. A cat being adored.
-**ON-SCREEN TEXT:** Meet Alex Ricci 🐱 CEO • PEMF MagnaWave Practitioner • Pilates Teacher • Certified Cat Pro
+## SCENE 4 — What we do (0:37–0:50)
+**B-ROLL / VISUAL:** MagnaWave machine in action on a calm, dozing horse or dog; soft pulsing graphics; happy farm animals and a smiling human.
+**ON-SCREEN TEXT:** Gentle, drug-free PEMF therapy ⚡ For horses, dogs, cats, farm animals — and you!
 **VOICEOVER:**
-"And meet Alex Ricci — CEO, MagnaWave practitioner, Pilates teacher, and certified cat whisperer. For over two decades Alex has worked with humans and animals alike, blending bodywork know-how with serious cat-charming skills. Yes, that's a real specialty."
+"Using gentle, drug-free PEMF therapy, we help ease pain, calm inflammation, and get bodies moving and feeling great — for horses, dogs, cats, farm animals, and even you. We're fully mobile, seven days a week, so we come right to you."
 
 ---
 
-## SCENE 5 — What is PEMF? (0:46–1:02)
-**B-ROLL / VISUAL:** Animated cells "lighting up." The MagnaWave machine in action on a calm, dozing horse or dog. Soft pulsing graphics.
-**ON-SCREEN TEXT:** What's PEMF? Pulsed ElectroMagnetic Field therapy ⚡ Gentle. Non-invasive. Drug-free.
+## SCENE 5 — Friendly close (0:50–0:58)
+**B-ROLL / VISUAL:** Logo; a final heart-melting shot of a relaxed, happy animal; contact info on screen.
+**ON-SCREEN TEXT:** You & your animal's wellbeing matter 💛 senvettech@gmail.com • Hooves and Hounds PEMF
 **VOICEOVER:**
-"So what's the magic? It's PEMF — Pulsed ElectroMagnetic Field therapy. Using our MagnaWave machine, gentle pulses recharge the body at the cellular level. That means less pain, less inflammation, better circulation, easier movement — and a happier, more relaxed animal. No drugs, no surgery, no stress."
-
----
-
-## SCENE 6 — Who it helps (1:02–1:14)
-**B-ROLL / VISUAL:** Rapid-fire happy clips: horse, dog, cat, farm animals (goat/cow), and a smiling human getting a session.
-**ON-SCREEN TEXT:** For horses 🐴 dogs 🐶 cats 🐱 farm animals 🐐 — and YOU too! 🙌
-**VOICEOVER:**
-"And here's the best part — PEMF isn't just for hooves and hounds. We treat horses, dogs, cats, farm animals... and even you. Because your wellbeing matters just as much as theirs."
-
----
-
-## SCENE 7 — Why choose them (1:14–1:24)
-**B-ROLL / VISUAL:** Mobile van / arriving at a barn or home. Sen and Alex working as a team with an animal. Warm, trustworthy vibe.
-**ON-SCREEN TEXT:** We come to you 🚗 7 days a week • Bay Area & beyond • We work WITH your vet
-**VOICEOVER:**
-"We're fully mobile, seven days a week, right here in the Bay Area — and we happily coordinate with your vet or doctor at no extra charge. We come to you, so your animal stays comfy in the place they love most: home."
-
----
-
-## SCENE 8 — Call to action (1:24–1:32)
-**B-ROLL / VISUAL:** Logo, contact info on screen, a final heart-melting shot of a relaxed, happy animal.
-**ON-SCREEN TEXT:** Book a session today! 📩 senvettech@gmail.com • Hooves and Hounds PEMF • Your animal's wellbeing matters
-**VOICEOVER:**
-"Ready to help your animal family feel amazing? Reach out to Hooves and Hounds PEMF today — and let's get those tails wagging, those hooves dancing, and those purrs purring. Because you and your animals deserve to feel your very best."
-
----
-
-## Optional shorter version (for a 30-second social cut)
-Use **SCENE 1**, **SCENE 5**, **SCENE 6**, and **SCENE 8** back to back.
+"Because here's what we believe — you and your animal's wellbeing matter. We can't wait to meet you and your whole animal family. Come say hi!"
 
 ---
 
@@ -97,4 +69,4 @@ Use **SCENE 1**, **SCENE 5**, **SCENE 6**, and **SCENE 8** back to back.
 - **Coordinates with vets/doctors at no extra charge**
 - **Contact:** senvettech@gmail.com
 
-*Note: Keep any specific pricing out of the video unless you want it locked in publicly (animal sessions run ~$195–$295, ROC add-on ~$75).*
+*Note on voice: Scenes 2 and 3 are written in first person, as if Sen and Alex are introducing themselves. If you'd rather have a single narrator introduce them both, just change "I'm" to "This is" / "Meet" and "I" to "he/she" accordingly.*
