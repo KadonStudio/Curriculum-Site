@@ -328,7 +328,7 @@ section { width:100%; }
 
 /* ── PROXIMITY QUOTE ── */
 .proximity-quote {
-  background: linear-gradient(180deg, var(--black) 0%, #1c1c24 55%, var(--dark) 100%);
+  background: linear-gradient(180deg, var(--black) 0%, #1c1c24 20%, var(--dark) 50%, #1c1c24 80%, var(--black) 100%);
   padding: clamp(4rem,8vw,6.5rem) clamp(1.5rem,5vw,4rem);
   text-align: center;
   position: relative;
