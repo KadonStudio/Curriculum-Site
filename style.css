@@ -342,6 +342,18 @@ section { width:100%; }
   width: 70vw; height: 60%;
   background: radial-gradient(ellipse at bottom, rgba(34,174,228,.09) 0%, transparent 70%);
   pointer-events: none;
+  z-index: 0;
+}
+
+/* Gradient overlay fades the blue text into the gray below */
+.proximity-quote::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 45%;
+  background: linear-gradient(to bottom, transparent 0%, var(--dark) 100%);
+  pointer-events: none;
+  z-index: 3;
 }
 .proximity-inner {
   position: relative;
