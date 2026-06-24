@@ -2,8 +2,8 @@
   var LINKS = [
     { href: 'products.html',    text: 'Products' },
     { href: 'about.html',       text: 'About' },
+    { href: 'resources.html',   text: 'Resources' },
     { href: 'contact.html',     text: 'Contact' },
-    { href: 'magnacon.html',    text: 'MagnaCon 2026' },
     { href: 'get-started.html', text: 'Get Started', cta: true }
   ];
 
