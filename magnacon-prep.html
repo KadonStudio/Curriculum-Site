@@ -1,0 +1,468 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MagnaCon 2026 — Session Prep Form</title>
+  <meta name="description" content="Fill out your session prep form before your MagnaCon avatar creation session. Takes about 5 minutes." />
+  <link rel="icon" type="image/png" href="fingerprint-logo.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background: #111118; }
+
+    .prep-hero {
+      padding: calc(var(--nav-h) + 2.5rem) clamp(1.5rem,5vw,4rem) 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .prep-hero-eyebrow {
+      font-size:.72rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+      color:var(--green);margin-bottom:.8rem;
+    }
+    .prep-hero h1 {
+      font-size:clamp(1.7rem,3.5vw,2.4rem);font-weight:800;color:var(--white);
+      letter-spacing:-.02em;margin-bottom:.4rem;
+    }
+    .prep-hero p { font-size:.92rem;color:rgba(255,255,255,.45);line-height:1.6;max-width:560px; }
+
+    .prep-body {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 3rem clamp(1.5rem,4vw,2rem) 5rem;
+    }
+
+    /* â”€â”€ Section labels â”€â”€ */
+    .prep-section-label {
+      font-size:.65rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+      color:rgba(255,255,255,.3);margin:2rem 0 1rem;display:block;
+    }
+    .prep-section-label:first-child { margin-top:0; }
+
+    /* â”€â”€ Form fields â”€â”€ */
+    .field-grid { display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem; }
+    .field-grid.single { grid-template-columns:1fr; }
+    .form-field { display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.2rem; }
+    .form-label {
+      font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(255,255,255,.4);
+    }
+    .form-input,.form-textarea {
+      font-family:var(--font);font-size:.88rem;font-weight:500;
+      padding:.8rem 1rem;border-radius:7px;
+      border:1.5px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);color:var(--white);
+      outline:none;transition:border-color .2s;width:100%;box-sizing:border-box;
+    }
+    .form-input::placeholder,.form-textarea::placeholder { color:rgba(255,255,255,.22); }
+    .form-input:focus,.form-textarea:focus { border-color:var(--blue-bright); }
+    .form-textarea { resize:vertical;min-height:80px; }
+    .form-hint {
+      font-size:.75rem;color:rgba(255,255,255,.3);
+      margin:.05rem 0 .3rem;line-height:1.4;display:block;
+    }
+    .form-hint-inline {
+      font-size:.7rem;color:rgba(255,255,255,.3);
+      font-weight:400;letter-spacing:0;text-transform:none;margin-left:.4rem;
+    }
+    .field-error { border-color:#f87171 !important; }
+
+    /* â”€â”€ Package selector â”€â”€ */
+    .pkg-pick { display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.4rem; }
+    .pkg-pill {
+      display:flex;flex-direction:column;align-items:center;
+      border:1.5px solid rgba(255,255,255,.1);border-radius:10px;
+      padding:.75rem 1.2rem;cursor:pointer;background:rgba(255,255,255,.03);
+      transition:all .18s;flex:1;min-width:120px;text-align:center;
+    }
+    .pkg-pill:hover { border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.05); }
+    .pkg-pill.selected { border-color:var(--blue-bright);background:rgba(34,174,228,.07); }
+    .pkg-pill-name {
+      font-size:.82rem;font-weight:800;color:rgba(255,255,255,.5);
+      letter-spacing:.08em;text-transform:uppercase;margin-bottom:.2rem;
+    }
+    .pkg-pill.selected .pkg-pill-name { color:var(--blue-bright); }
+    .pkg-pill-price { font-size:1.1rem;font-weight:800;color:var(--white); }
+    .pkg-pill.selected .pkg-pill-price { color:var(--blue-bright); }
+    .pkg-pill-tag {
+      font-size:.52rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+      background:var(--blue-bright);color:#fff;padding:.15rem .45rem;
+      border-radius:20px;display:inline-block;margin-top:.3rem;
+    }
+
+    /* â”€â”€ Chips â”€â”€ */
+    .chip-group { display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem;margin-bottom:.4rem; }
+    .chip-group.chip-error { outline:1.5px solid #f87171;border-radius:8px;padding:.4rem; }
+    .chip {
+      font-family:var(--font);font-size:.8rem;font-weight:600;
+      color:rgba(255,255,255,.5);background:rgba(255,255,255,.05);
+      border:1.5px solid rgba(255,255,255,.1);border-radius:100px;
+      padding:.45rem .95rem;cursor:pointer;transition:all .18s;letter-spacing:.02em;
+    }
+    .chip:hover { border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.8); }
+    .chip.selected { background:rgba(34,174,228,.12);border-color:var(--blue-bright);color:var(--blue-bright); }
+
+    /* â”€â”€ Submit button â”€â”€ */
+    .prep-submit-wrap { margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07); }
+    .btn-submit {
+      font-family:var(--font);font-size:.88rem;font-weight:800;letter-spacing:.08em;
+      text-transform:uppercase;background:var(--green);color:#fff;
+      border:none;border-radius:8px;padding:1rem 2.5rem;cursor:pointer;
+      transition:background .2s,transform .15s;width:100%;
+    }
+    .btn-submit:hover { background:#00a87e;transform:translateY(-1px); }
+    .btn-submit:disabled { opacity:.4;cursor:not-allowed;transform:none; }
+    .submit-note {
+      font-size:.72rem;color:rgba(255,255,255,.25);text-align:center;
+      margin-top:.75rem;line-height:1.5;
+    }
+
+    /* â”€â”€ Success â”€â”€ */
+    .success-panel { display:none;text-align:center;padding:3rem 1rem; }
+    .success-panel.show { display:block; }
+    .success-icon {
+      width:64px;height:64px;border-radius:50%;
+      background:rgba(0,200,150,.12);border:1.5px solid rgba(0,200,150,.3);
+      display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;
+    }
+    .success-panel h2 { font-size:1.8rem;font-weight:800;color:var(--white);margin-bottom:.6rem; }
+    .success-panel p { font-size:.92rem;color:rgba(255,255,255,.5);line-height:1.75;max-width:460px;margin:0 auto 1.8rem; }
+
+    .error-banner {
+      display:none;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);
+      border-radius:8px;padding:.75rem 1rem;font-size:.82rem;color:#f87171;
+      font-weight:600;margin-bottom:1.2rem;
+    }
+    .error-banner.show { display:block; }
+
+    @media(max-width:540px) {
+      .field-grid { grid-template-columns:1fr; }
+      .pkg-pick { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-img-crop" aria-hidden="true"><img src="final logo tp.png" alt="" /></div>
+      <div class="nav-logo-wrap">
+        <span><span class="thumb">THUMB</span><span class="print">PRINT</span></span>
+        <span class="nav-sub">Curriculum</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li class="hide-sm"><a href="magnacon">MagnaCon</a></li>
+      <li class="hide-sm"><a href="magnacon-workshop">Workshop Resources</a></li>
+      <li><a href="magnacon-pay" class="nav-cta">Pay Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-body">
+
+  <div class="prep-hero">
+    <p class="prep-hero-eyebrow">MagnaCon 2026 · Louisville, KY · June 10–11</p>
+    <h1>Session Prep Form</h1>
+    <p>You're booked — nice work. Fill this out before your session so the team can hit the ground running. Takes about 5 minutes and makes a huge difference in the final content.</p>
+  </div>
+
+  <div class="prep-body">
+
+    <div id="prepForm">
+
+      <div class="error-banner" id="errorBanner">Please fill in all required fields before submitting.</div>
+
+      <!-- YOUR INFO -->
+      <span class="prep-section-label">Your Info</span>
+
+      <div class="field-grid">
+        <div class="form-field">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" type="text" id="your_name" placeholder="First and last name" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Your Email</label>
+          <input class="form-input" type="email" id="your_email" placeholder="you@yourbusiness.com" />
+        </div>
+      </div>
+
+      <!-- PACKAGE -->
+      <span class="prep-section-label">Which package did you book?</span>
+
+      <div class="pkg-pick">
+        <div class="pkg-pill selected" onclick="pickPkg(this,'Standard')">
+          <div class="pkg-pill-name">Standard</div>
+          <div class="pkg-pill-price">$197</div>
+        </div>
+        <div class="pkg-pill" onclick="pickPkg(this,'Pro')">
+          <div class="pkg-pill-name">Pro</div>
+          <div class="pkg-pill-price">$297</div>
+          <div class="pkg-pill-tag">Popular</div>
+        </div>
+        <div class="pkg-pill" onclick="pickPkg(this,'VIP')">
+          <div class="pkg-pill-name">VIP</div>
+          <div class="pkg-pill-price">$497</div>
+        </div>
+      </div>
+
+      <!-- ABOUT YOUR PRACTICE -->
+      <span class="prep-section-label">About Your Practice</span>
+
+      <div class="form-field">
+        <label class="form-label">Practice or business name</label>
+        <input class="form-input" type="text" id="biz_name" placeholder="e.g. Dr. Sarah Lane — Equine Performance Studio" />
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">What do you do and who do you help?</label>
+        <span class="form-hint">Not your job title — what problem do you solve and for whom?</span>
+        <textarea class="form-textarea" id="biz_statement" placeholder="e.g. I help barrel racers recover faster from soft tissue injuries using PEMF therapy, usually 1–2 sessions per week over 4–6 weeks."></textarea>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">Who is your ideal customer?</label>
+        <span class="form-hint">Who are they, what do they want, and what holds them back?</span>
+        <textarea class="form-textarea" id="icp" placeholder="e.g. Horse owners aged 35–55 who compete regionally, spend heavily on their animals, but are skeptical of anything that isn't vet-approved."></textarea>
+      </div>
+
+      <!-- CONTENT GOALS -->
+      <span class="prep-section-label">Your Content Goals</span>
+
+      <div class="form-field">
+        <label class="form-label">Key message or call to action</label>
+        <span class="form-hint">A specific call to action, promotion, or key belief you want to plant.</span>
+        <textarea class="form-textarea" id="cta" placeholder="e.g. Book a free 20-minute consult at my booth, or follow me to see real horse recovery videos."></textarea>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">Content type <span class="form-hint-inline">Pick all that apply</span></label>
+        <div class="chip-group" id="chips-content">
+          <button type="button" class="chip" onclick="toggleChip(this)">Short video (15–60 sec)</button>
+          <button type="button" class="chip" onclick="toggleChip(this)">Talking head / explainer</button>
+          <button type="button" class="chip" onclick="toggleChip(this)">Testimonial-style</button>
+          <button type="button" class="chip" onclick="toggleChip(this)">Not sure — you decide</button>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">Primary platforms <span class="form-hint-inline">Pick all that apply</span></label>
+        <div class="chip-group" id="chips-platform">
+          <button type="button" class="chip" onclick="toggleChip(this)">Instagram</button>
+          <button type="button" class="chip" onclick="toggleChip(this)">Facebook</button>
+          <button type="button" class="chip" onclick="toggleChip(this)">LinkedIn</button>
+          <button type="button" class="chip" onclick="toggleChip(this)">TikTok</button>
+          <button type="button" class="chip" onclick="toggleChip(this)">YouTube</button>
+        </div>
+      </div>
+
+      <!-- TONE & DELIVERY -->
+      <span class="prep-section-label">Tone &amp; Delivery</span>
+
+      <div class="form-field">
+        <label class="form-label">Pick the vibe that fits your brand</label>
+        <div class="chip-group" id="chips-tone">
+          <button type="button" class="chip" onclick="toggleChip(this)">Professional &amp; credible</button>
+          <button type="button" class="chip" onclick="toggleChip(this)">Warm &amp; personal</button>
+          <button type="button" class="chip" onclick="toggleChip(this)">Educational &amp; informative</button>
+          <button type="button" class="chip" onclick="toggleChip(this)">Energetic &amp; bold</button>
+          <button type="button" class="chip" onclick="toggleChip(this)">Calm &amp; reassuring</button>
+          <button type="button" class="chip" onclick="toggleChip(this)">Funny / relatable</button>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">Hard limits</label>
+        <span class="form-hint">Things to avoid — tone, words, angles that don't fit your brand.</span>
+        <input class="form-input" type="text" id="hard_limits" placeholder="e.g. Salesy, pseudoscientific, too corporate, too casual…" />
+      </div>
+
+      <!-- AVATAR SPECIFICS -->
+      <span class="prep-section-label">Avatar Specifics</span>
+
+      <div class="form-field">
+        <label class="form-label">Brand colors</label>
+        <span class="form-hint">Describe or bring files. Include hex codes if you have them.</span>
+        <input class="form-input" type="text" id="brand" placeholder="e.g. Navy blue and gold, minimalist. Logo is a horse silhouette." />
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">Additional notes <span class="form-hint-inline">Optional but helpful</span></label>
+        <span class="form-hint">Competitors to avoid, pronouns, industry jargon you want used or avoided, etc.</span>
+        <textarea class="form-textarea" id="extra_notes" placeholder="Optional but helpful."></textarea>
+      </div>
+
+      <div class="prep-submit-wrap">
+        <button class="btn-submit" id="submitBtn" onclick="submitPrep()">Submit My Prep Info â†’</button>
+        <p class="submit-note">Your answers go directly to the Thumbprint team so they can prepare your session in advance.</p>
+      </div>
+
+    </div><!-- /prepForm -->
+
+    <!-- SUCCESS -->
+    <div class="success-panel" id="successPanel">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>You're all set.</h2>
+      <p>The Thumbprint team has your prep info and will be ready to hit the ground running at your session. See you at MagnaCon!</p>
+      <a href="magnacon-workshop" class="btn btn-primary" style="display:inline-flex;margin-right:.75rem">Check Out Workshop Resources</a>
+      <a href="magnacon-pay" class="btn btn-dark" style="display:inline-flex;margin-top:.75rem">Complete Payment â†’</a>
+    </div>
+
+  </div><!-- /prep-body -->
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <a href="/" class="nav-logo">
+          <div class="nav-logo-img-crop footer-sz" aria-hidden="true"><img src="final logo tp.png" alt="" /></div>
+          <div class="nav-logo-wrap">
+            <span><span class="thumb">THUMB</span><span class="print">PRINT</span></span>
+            <span class="nav-sub">Curriculum</span>
+          </div>
+        </a>
+        <p class="footer-tagline">Strategic curriculum design that shapes futures and leaves a lasting impression.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Conference</p>
+        <ul class="footer-links">
+          <li><a href="magnacon">MagnaCon Overview</a></li>
+          <li><a href="magnacon-pay">Pay Now</a></li>
+          <li><a href="magnacon-workshop">Workshop Resources</a></li>
+          <li><a href="contact">Questions?</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Products</p>
+        <ul class="footer-links">
+          <li><a href="signature">Thumbprint Signature</a></li>
+          <li><a href="amplify">Thumbprint Amplify</a></li>
+          <li><a href="circle">Thumbprint Circle</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Questions?</p>
+        <ul class="footer-links">
+          <li><a href="mailto:kadon@thumbprint.consulting">kadon@thumbprint.consulting</a></li>
+          <li><a href="contact">Send a Message</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">Â© 2026 Thumbprint Curriculum. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/thumbprint-curriculum/" target="_blank" title="LinkedIn">in</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="nav.js"></script>
+<script>
+  var W3F_KEY = '8c53abda-9930-4595-97ad-25a2514794df';
+  var selectedPkg = 'Standard';
+
+  function pickPkg(el, name) {
+    document.querySelectorAll('.pkg-pill').forEach(function(p) { p.classList.remove('selected'); });
+    el.classList.add('selected');
+    selectedPkg = name;
+  }
+
+  function toggleChip(el) { el.classList.toggle('selected'); }
+
+  function getChips(id) {
+    return Array.from(document.querySelectorAll('#' + id + ' .chip.selected'))
+      .map(function(c) { return c.textContent.trim(); }).join(', ') || '—';
+  }
+
+  function submitPrep() {
+    // Clear errors
+    ['your_name','your_email','biz_name','biz_statement','icp','cta'].forEach(function(id) {
+      document.getElementById(id).classList.remove('field-error');
+    });
+    ['chips-content','chips-platform','chips-tone'].forEach(function(id) {
+      document.getElementById(id).classList.remove('chip-error');
+    });
+    document.getElementById('errorBanner').classList.remove('show');
+
+    var firstError = null;
+    function markErr(el) { el.classList.add('field-error'); if (!firstError) firstError = el; }
+
+    ['your_name','your_email','biz_name','biz_statement','icp','cta'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el.value.trim()) markErr(el);
+    });
+    ['chips-content','chips-platform','chips-tone'].forEach(function(id) {
+      var grp = document.getElementById(id);
+      if (!grp.querySelector('.chip.selected')) {
+        grp.classList.add('chip-error');
+        if (!firstError) firstError = grp;
+      }
+    });
+
+    if (firstError) {
+      document.getElementById('errorBanner').classList.add('show');
+      firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    var name  = document.getElementById('your_name').value.trim();
+    var email = document.getElementById('your_email').value.trim();
+
+    var payload = {
+      access_key:  W3F_KEY,
+      subject:     'MagnaCon Session Prep — ' + selectedPkg + ' — ' + name,
+      from_name:   name,
+      replyto:     email,
+      'Name':      name,
+      'Email':     email,
+      'Package':   selectedPkg,
+      'Business Name':  document.getElementById('biz_name').value.trim()      || '—',
+      'What You Do':    document.getElementById('biz_statement').value.trim()  || '—',
+      'Ideal Customer': document.getElementById('icp').value.trim()            || '—',
+      'Key CTA':        document.getElementById('cta').value.trim()            || '—',
+      'Content Types':  getChips('chips-content'),
+      'Platforms':      getChips('chips-platform'),
+      'Tone':           getChips('chips-tone'),
+      'Hard Limits':    document.getElementById('hard_limits').value.trim()    || '—',
+      'Brand Colors':   document.getElementById('brand').value.trim()          || '—',
+      'Extra Notes':    document.getElementById('extra_notes').value.trim()    || '—'
+    };
+
+    fetch('https://api.web3forms.com/submit', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body:    JSON.stringify(payload)
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.success) {
+        document.getElementById('prepForm').style.display = 'none';
+        document.getElementById('successPanel').classList.add('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Submit My Prep Info â†’';
+        document.getElementById('errorBanner').textContent = 'Something went wrong — please try again.';
+        document.getElementById('errorBanner').classList.add('show');
+      }
+    })
+    .catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'Submit My Prep Info â†’';
+      document.getElementById('errorBanner').textContent = 'Network error — please check your connection and try again.';
+      document.getElementById('errorBanner').classList.add('show');
+    });
+  }
+</script>
+</body>
+</html>
+

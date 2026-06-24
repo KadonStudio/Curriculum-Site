@@ -1,0 +1,418 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MagnaCon 2026 — Complete Your Booking</title>
+  <link rel="icon" type="image/png" href="fingerprint-logo.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background: #111118; }
+
+    .pay-hero {
+      padding: calc(var(--nav-h) + 2.5rem) clamp(1.5rem,5vw,4rem) 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .pay-hero-eyebrow { font-size:.72rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--green);margin-bottom:.8rem; }
+    .pay-hero h1 { font-size:clamp(1.7rem,3.5vw,2.4rem);font-weight:800;color:var(--white);letter-spacing:-.02em;margin-bottom:.4rem; }
+    .pay-hero p { font-size:.92rem;color:rgba(255,255,255,.45);line-height:1.6; }
+
+    .pay-layout {
+      max-width: 920px; margin: 0 auto;
+      padding: 3rem clamp(1.5rem,4vw,2rem) 5rem;
+      display: grid; grid-template-columns: 1fr 420px; gap: 2.5rem; align-items: start;
+    }
+
+    /* ── Package label & selector ── */
+    .pkg-label { font-size:.65rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1rem;display:block; }
+    .pkg-list { display:flex;flex-direction:column;gap:.75rem; }
+    .pkg-row {
+      border:1.5px solid rgba(255,255,255,.1); border-radius:10px; padding:1.1rem 1.2rem;
+      cursor:pointer; background:rgba(255,255,255,.03); transition:all .18s;
+      display:flex; align-items:center; gap:1rem;
+    }
+    .pkg-row:hover { border-color:rgba(255,255,255,.25); background:rgba(255,255,255,.05); }
+    .pkg-row.selected { border-color:var(--blue-bright); background:rgba(34,174,228,.07); }
+    .pkg-radio {
+      width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.2);
+      flex-shrink:0;transition:all .18s;display:flex;align-items:center;justify-content:center;
+    }
+    .pkg-row.selected .pkg-radio { border-color:var(--blue-bright); }
+    .pkg-radio::after {
+      content:'';width:8px;height:8px;border-radius:50%;background:var(--blue-bright);
+      opacity:0;transition:opacity .18s;
+    }
+    .pkg-row.selected .pkg-radio::after { opacity:1; }
+    .pkg-info { flex:1; }
+    .pkg-name { font-size:.88rem;font-weight:800;color:var(--white);margin-bottom:.15rem; }
+    .pkg-row.selected .pkg-name { color:var(--blue-bright); }
+    .pkg-desc { font-size:.75rem;color:rgba(255,255,255,.38);line-height:1.4; }
+    .pkg-pricing { text-align:right;flex-shrink:0; }
+    .pkg-conf-price { font-size:1.2rem;font-weight:800;color:var(--white); }
+    .pkg-row.selected .pkg-conf-price { color:var(--blue-bright); }
+    .pkg-retail { font-size:.65rem;color:rgba(255,255,255,.28);text-decoration:line-through; }
+    .pkg-popular-tag {
+      font-size:.55rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+      background:var(--blue-bright);color:#fff;padding:.18rem .5rem;border-radius:20px;
+      display:inline-block;margin-top:.2rem;
+    }
+
+    /* ── Confirmed package card ── */
+    .pkg-confirmed-card {
+      border:1.5px solid rgba(0,200,150,.3); border-radius:10px;
+      background:rgba(0,200,150,.05); overflow:hidden;
+    }
+    .pkg-confirmed-header {
+      display:flex;align-items:center;gap:.45rem;
+      font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--green);padding:.65rem 1.1rem;
+      border-bottom:1px solid rgba(0,200,150,.15);background:rgba(0,200,150,.04);
+    }
+    .pkg-confirmed-body {
+      display:flex;align-items:center;justify-content:space-between;gap:1rem;
+      padding:1.1rem 1.2rem;
+    }
+    .pkg-confirmed-name { font-size:1rem;font-weight:800;color:var(--white);margin-bottom:.2rem; }
+    .pkg-confirmed-desc { font-size:.75rem;color:rgba(255,255,255,.4);line-height:1.4; }
+    .pkg-confirmed-pricing { text-align:right;flex-shrink:0; }
+    .pkg-confirmed-price { font-size:1.3rem;font-weight:800;color:var(--white); }
+
+    /* ── What's included ── */
+    .includes-section { margin-top:2rem; }
+    .includes-title { font-size:.65rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.8rem;display:block; }
+    .includes-list { list-style:none;display:flex;flex-direction:column;gap:.5rem; }
+    .includes-list li { font-size:.82rem;color:rgba(255,255,255,.45);display:flex;align-items:flex-start;gap:.6rem;line-height:1.45; }
+    .includes-list li::before { content:'—';color:rgba(34,174,228,.5);flex-shrink:0;margin-top:.05rem; }
+    #includesList li.active { color:rgba(255,255,255,.7); }
+    #includesList li.active::before { color:var(--green); }
+
+    /* ── Order card ── */
+    .order-card {
+      background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.08);
+      border-radius:14px;padding:1.8rem;position:sticky;top:calc(var(--nav-h) + 1.5rem);
+    }
+    .order-card-title { font-size:.65rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1.2rem;display:block; }
+    .order-badge {
+      display:inline-flex;align-items:center;gap:.4rem;
+      font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--green);background:rgba(0,200,150,.08);border:1px solid rgba(0,200,150,.2);
+      border-radius:100px;padding:.3rem .75rem;margin-bottom:1.2rem;
+    }
+    .order-line { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.6rem; }
+    .order-line-label { font-size:.82rem;color:rgba(255,255,255,.4); }
+    .order-line-val { font-size:.88rem;font-weight:700;color:var(--white); }
+    .order-divider { height:1px;background:rgba(255,255,255,.07);margin:1rem 0; }
+    .order-total-row { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.4rem; }
+    .order-total-label { font-size:.88rem;font-weight:700;color:rgba(255,255,255,.6); }
+    .order-total-val { font-size:1.5rem;font-weight:800;color:var(--white); }
+
+    .stripe-btn {
+      display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;
+      font-family:var(--font);font-size:.88rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+      background:var(--blue-bright);color:#fff;border:none;border-radius:8px;
+      padding:1rem;cursor:pointer;text-decoration:none;
+      transition:background .2s,transform .15s;
+    }
+    .stripe-btn:hover { background:var(--blue-dark);transform:translateY(-1px); }
+    .stripe-btn svg { flex-shrink:0; }
+    .stripe-secure { font-size:.7rem;color:rgba(255,255,255,.28);text-align:center;margin-top:.7rem;line-height:1.4; }
+    .stripe-url { font-size:.68rem;color:rgba(255,255,255,.25);text-align:center;margin-top:.3rem;word-break:break-all; }
+    .stripe-url a { color:rgba(34,174,228,.5);text-decoration:none; }
+    .stripe-url a:hover { color:var(--blue-bright); }
+
+    .back-link {
+      display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:700;
+      color:rgba(255,255,255,.35);text-decoration:none;margin-bottom:2rem;
+      transition:color .2s;
+    }
+    .back-link:hover { color:rgba(255,255,255,.7); }
+
+    @media (max-width:720px) {
+      .pay-layout { grid-template-columns:1fr; }
+      .order-card { position:static; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-img-crop" aria-hidden="true"><img src="final logo tp.png" alt="" /></div>
+      <div class="nav-logo-wrap">
+        <span><span class="thumb">THUMB</span><span class="print">PRINT</span></span>
+        <span class="nav-sub">Curriculum</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li class="hide-sm"><a href="products">Products</a></li>
+      <li class="hide-sm"><a href="about">About</a></li>
+      <li class="hide-sm"><a href="contact">Contact</a></li>
+      <li><a href="magnacon" class="nav-cta">Back to MagnaCon</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-body">
+
+  <div class="pay-hero">
+    <p class="pay-hero-eyebrow">MagnaCon 2026 · Louisville, KY</p>
+    <h1>Complete Your Booking</h1>
+    <p id="heroSub">Conference-exclusive pricing — half the retail rate, available June 10–11 only.</p>
+  </div>
+
+  <div class="pay-layout">
+
+    <!-- LEFT: Package selection + includes -->
+    <div>
+      <a href="magnacon" class="back-link">← Back to MagnaCon</a>
+
+      <!-- Shown after Calendly is booked (?booked=1) -->
+      <div id="lockedView" style="display:none">
+        <span class="pkg-label">Your Package</span>
+        <div class="pkg-confirmed-card">
+          <div class="pkg-confirmed-header">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="var(--green)" stroke-width="1.3"/><path d="M4 6.5l1.8 1.8L9 4.5" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Slot Booked · Package Locked In
+          </div>
+          <div class="pkg-confirmed-body">
+            <div>
+              <div class="pkg-confirmed-name" id="confirmedName"></div>
+              <div class="pkg-confirmed-desc" id="confirmedDesc"></div>
+            </div>
+            <div class="pkg-confirmed-pricing">
+              <div class="pkg-confirmed-price" id="confirmedPrice"></div>
+              <div class="pkg-retail" id="confirmedRetail"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shown on direct access (no ?booked=1) -->
+      <div id="selectView">
+        <span class="pkg-label">Choose Your Package</span>
+        <div class="pkg-list">
+
+          <div class="pkg-row" onclick="selectPkg(this,'Standard','$197','$394')">
+            <div class="pkg-radio"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">Standard</div>
+              <div class="pkg-desc">Avatar tailored to your brand + 5 platform-ready social posts</div>
+            </div>
+            <div class="pkg-pricing">
+              <div class="pkg-conf-price">$197</div>
+              <div class="pkg-retail">Retail $394</div>
+            </div>
+          </div>
+
+          <div class="pkg-row selected" onclick="selectPkg(this,'Pro','$297','$594')">
+            <div class="pkg-radio"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">Pro</div>
+              <div class="pkg-desc">Enhanced customization, priority queue + extended teleprompter session</div>
+            </div>
+            <div class="pkg-pricing">
+              <div class="pkg-conf-price">$297</div>
+              <div class="pkg-retail">Retail $594</div>
+              <div class="pkg-popular-tag">Popular</div>
+            </div>
+          </div>
+
+          <div class="pkg-row" onclick="selectPkg(this,'VIP','$497','$994')">
+            <div class="pkg-radio"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">VIP</div>
+              <div class="pkg-desc">Multiple avatar variations + white-glove onboarding to Amplify</div>
+            </div>
+            <div class="pkg-pricing">
+              <div class="pkg-conf-price">$497</div>
+              <div class="pkg-retail">Retail $994</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="includes-section">
+        <span class="includes-title">What's Included</span>
+        <ul class="includes-list" id="includesList">
+          <li class="active">AI avatar built live at the conference on green screen</li>
+          <li class="active">15-minute on-site session with the Thumbprint team</li>
+          <li class="active">5 platform-ready social posts delivered within 5–7 business days</li>
+          <li id="inc-pro" class="active">Enhanced customization + priority delivery queue</li>
+          <li id="inc-pro2" class="active">Extended teleprompter session</li>
+          <li id="inc-vip" style="display:none">Multiple avatar variations</li>
+          <li id="inc-vip2" style="display:none">White-glove onboarding to Thumbprint Amplify</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RIGHT: Order summary + Stripe -->
+    <div>
+      <div class="order-card">
+        <span class="order-card-title">Order Summary</span>
+        <div class="order-badge">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.2"/><path d="M3 5l1.5 1.5L7 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Conference Rate
+        </div>
+        <div class="order-line">
+          <span class="order-line-label" id="orderLabel">Avatar Session — Pro</span>
+          <span class="order-line-val" id="orderAmt">$297</span>
+        </div>
+        <div class="order-line">
+          <span class="order-line-label">You save</span>
+          <span class="order-line-val" style="color:var(--green)" id="orderSavings">$297</span>
+        </div>
+        <div class="order-line">
+          <span class="order-line-label">One-time payment</span>
+          <span class="order-line-val" style="color:var(--blue-bright)">✓</span>
+        </div>
+        <div class="order-divider"></div>
+        <div class="order-total-row">
+          <span class="order-total-label">Total Due Today</span>
+          <span class="order-total-val" id="orderTotal">$297</span>
+        </div>
+
+        <a id="stripeBtn" href="#" target="_blank" class="stripe-btn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 2H2a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V3a1 1 0 00-1-1z" stroke="white" stroke-width="1.2"/><path d="M1 6h14" stroke="white" stroke-width="1.2"/></svg>
+          Continue to Checkout
+        </a>
+        <p class="stripe-secure">🔒 Secured by Stripe — you won't enter card details on this page</p>
+        <p class="stripe-url">🔗 <a id="stripeUrlText" href="#" target="_blank">buy.stripe.com</a></p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <a href="/" class="nav-logo">
+          <div class="nav-logo-img-crop footer-sz" aria-hidden="true"><img src="final logo tp.png" alt="" /></div>
+          <div class="nav-logo-wrap">
+            <span><span class="thumb">THUMB</span><span class="print">PRINT</span></span>
+            <span class="nav-sub">Curriculum</span>
+          </div>
+        </a>
+        <p class="footer-tagline">Strategic curriculum design that shapes futures and leaves a lasting impression.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Conference</p>
+        <ul class="footer-links">
+          <li><a href="magnacon">MagnaCon Overview</a></li>
+          <li><a href="magnacon">Book Your Session</a></li>
+          <li><a href="magnacon-workshop">Workshop Resources</a></li>
+          <li><a href="contact">Questions?</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Products</p>
+        <ul class="footer-links">
+          <li><a href="signature">Thumbprint Signature</a></li>
+          <li><a href="amplify">Thumbprint Amplify</a></li>
+          <li><a href="circle">Thumbprint Circle</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Questions?</p>
+        <ul class="footer-links">
+          <li><a href="mailto:kadon@thumbprint.consulting">kadon@thumbprint.consulting</a></li>
+          <li><a href="contact">Send a Message</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Thumbprint Curriculum. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/thumbprint-curriculum/" target="_blank" title="LinkedIn">in</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var STRIPE_LINKS = {
+    Standard: 'https://buy.stripe.com/cNi6oG7e82Yd25q3TDc7u0c',
+    Pro:      'https://buy.stripe.com/fZu4gy9mggP339u3TDc7u0b',
+    VIP:      'https://buy.stripe.com/aFa5kC0PKfKZh0keyhc7u0a'
+  };
+
+  var PKG_DATA = {
+    Standard: { confPrice: '$197', retailPrice: '$394' },
+    Pro:      { confPrice: '$297', retailPrice: '$594' },
+    VIP:      { confPrice: '$497', retailPrice: '$994' }
+  };
+
+  var SAVINGS = { Standard: '$197', Pro: '$297', VIP: '$497' };
+
+  var PKG_DESCS = {
+    Standard: 'Avatar tailored to your brand + 5 platform-ready social posts',
+    Pro:      'Enhanced customization, priority queue + extended teleprompter session',
+    VIP:      'Multiple avatar variations + white-glove onboarding to Amplify'
+  };
+
+  function updateOrderSummary(name) {
+    var d = PKG_DATA[name];
+    document.getElementById('orderLabel').textContent = 'Avatar Session — ' + name;
+    document.getElementById('orderAmt').textContent = d.confPrice;
+    document.getElementById('orderTotal').textContent = d.confPrice;
+    document.getElementById('orderSavings').textContent = SAVINGS[name];
+    var url = STRIPE_LINKS[name];
+    document.getElementById('stripeBtn').href = url;
+    document.getElementById('stripeUrlText').href = url;
+    document.getElementById('stripeUrlText').textContent = url.replace('https://', '');
+    var proItems = [document.getElementById('inc-pro'), document.getElementById('inc-pro2')];
+    var vipItems = [document.getElementById('inc-vip'), document.getElementById('inc-vip2')];
+    proItems.forEach(function(el) { el.style.display = (name === 'Pro' || name === 'VIP') ? '' : 'none'; });
+    vipItems.forEach(function(el) { el.style.display = name === 'VIP' ? '' : 'none'; });
+  }
+
+  // Used by the selector (direct-access mode)
+  function selectPkg(el, name, confPrice, retailPrice) {
+    document.querySelectorAll('.pkg-row').forEach(function(r) { r.classList.remove('selected'); });
+    el.classList.add('selected');
+    updateOrderSummary(name);
+  }
+
+  // Init — ?booked=1 means arriving from Calendly; show locked card. Otherwise show selector.
+  (function () {
+    var params   = new URLSearchParams(window.location.search);
+    var urlPkg   = params.get('pkg');
+    var booked   = params.get('booked') === '1';
+    var validPkgs = ['Standard', 'Pro', 'VIP'];
+    var chosen   = validPkgs.includes(urlPkg) ? urlPkg : 'Pro';
+
+    if (booked) {
+      // Locked view: hide selector, show confirmed card
+      document.getElementById('selectView').style.display = 'none';
+      document.getElementById('lockedView').style.display = 'block';
+      var d = PKG_DATA[chosen];
+      document.getElementById('confirmedName').textContent  = chosen;
+      document.getElementById('confirmedDesc').textContent  = PKG_DESCS[chosen];
+      document.getElementById('confirmedPrice').textContent = d.confPrice;
+      document.getElementById('confirmedRetail').textContent = 'Retail ' + d.retailPrice;
+      document.getElementById('heroSub').textContent = 'Your time slot is confirmed — complete your payment below to lock in your session.';
+    } else {
+      // Selector view: pre-select matching row (or default Pro)
+      var rows = document.querySelectorAll('.pkg-row');
+      rows.forEach(function(row) {
+        var onclick = row.getAttribute('onclick') || '';
+        if (onclick.indexOf("'" + chosen + "'") !== -1) { row.classList.add('selected'); }
+        else { row.classList.remove('selected'); }
+      });
+    }
+
+    updateOrderSummary(chosen);
+  })();
+</script>
+
+<script src="nav.js"></script>
+</body>
+</html>
+
+
+
