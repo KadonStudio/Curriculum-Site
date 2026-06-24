@@ -380,7 +380,7 @@ section { width:100%; }
 .proximity-big {
   font-size: clamp(5.5rem, 17vw, 14rem);
   font-weight: 800;
-  letter-spacing: -.04em;
+  letter-spacing: .02em;
   line-height: .88;
   color: var(--blue-bright);
   display: block;
