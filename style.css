@@ -76,6 +76,7 @@ nav::after {
   height: 100%;
   object-fit: contain;
   display: block;
+  mix-blend-mode: screen;
 }
 .nav-logo-img-crop.footer-sz {
   width: 48px;
